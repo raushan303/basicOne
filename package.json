@@ -2,14 +2,57 @@
   "name": "basic_one",
   "version": "0.1.0",
   "private": true,
+  "babelMacros": {
+    "twin": {
+      "preset": "styled-components",
+      "styled": "styled-components",
+      "config": "./src/tailwind.config.js",
+      "format": "auto"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
+  "babel": {
+    "plugins": [
+      "babel-plugin-macros",
+      [
+        "styled-components",
+        {
+          "ssr": true,
+          "displayName": true,
+          "preprocess": false
+        }
+      ]
+    ],
+    "presets": [
+      "next/babel"
+    ]
+  },
   "dependencies": {
+    "@ant-design/icons": "4.2.2",
+    "@material-ui/core": "4.11.0",
+    "@material-ui/icons": "^4.11.2",
+    "@mui-treasury/components": "^1.9.2",
+    "@u-wave/react-vimeo": "^0.9.2",
+    "antd": "4.6.6",
+    "axios": "^0.21.0",
+    "moment": "^2.29.1",
     "next": "10.0.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-loadingg": "^1.7.2",
+    "react-router-dom": "^5.2.0",
+    "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-preset-react-app": "^9.1.1"
   }
 }
