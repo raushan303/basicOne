@@ -1,0 +1,29 @@
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  .link {
+    text-decoration: none;
+  }
+  .t-test {
+    height: 91%;
+    width: 100%;
+  }
+
+  .t-subject {
+    height: 15%;
+    width: 60%;
+    margin-left: 20%;
+    background-color: blue;
+    margin-top: 4%;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .t-subject h3 {
+    margin-top: 4%;
+    display: inline-block;
+    color: white;
+  }
+`;
+
+export default Wrapper;
