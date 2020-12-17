@@ -6,12 +6,11 @@ const SubjectWrapper = styled.div`
   flex: 1;
 
   .image-container {
-    display: flex;
     justify-content: space-around;
     padding: 50px 0px;
     img {
-      height: 500px;
-      width: 500px;
+      height: 100%;
+      width: 100%;
     }
   }
 
@@ -22,38 +21,19 @@ const SubjectWrapper = styled.div`
   }
 
   .subject-card-container {
-    display: flex;
     justify-content: space-around;
     padding: 50px 0px 80px 0px;
-  }
-
-  .subject-card {
-    width: 300px;
-    height: 100px;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 22px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  @media only screen and (max-width: 600px) {
-    .sub-subject-container {
-      height: 90%;
-      flex-direction: column;
-    }
-    .sub-subject-link {
-      width: 70%;
-      margin-left: 15%;
-      height: 15%;
-      margin-top: 6%;
-    }
-    .sub-subject h3 {
-      margin-top: 4%;
+    .subject-card {
+      height: 100px;
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      cursor: pointer;
     }
   }
 
@@ -75,26 +55,44 @@ const SubjectWrapper = styled.div`
 
   .chapter-card-container {
     width: 100%;
-    padding: 60px 0px;
+    padding: 80px 0px 60px 0px;
     background-color: #f2f4f8;
+  }
+
+  .slick-slider {
     position: relative;
   }
 
-  .chapter-card-inner-container {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    transition: all 1.5s;
+  .slick-arrow {
+    position: absolute;
+  }
+
+  .slick-track {
     display: flex;
+  }
+  .slick-slide {
+    padding: 0px 25px;
+  }
+  .slick-prev,
+  .slick-next {
+    top: -60px;
+  }
+  .slick-prev {
+    right: 70px;
+    left: auto;
+  }
+  .slick-next {
+    right: 15px;
   }
 
   .chapter-card {
     padding: 30px;
     background-color: white;
-    border-radius: 5%;
+    border-radius: 20px;
     text-align: center;
-    margin-left: 50px;
+    height: 260px;
     img {
-      width: 250px;
+      width: 100%;
       height: 100px;
     }
     .chapter-name {
@@ -107,32 +105,6 @@ const SubjectWrapper = styled.div`
       font-size: 16px;
       margin-top: 20px;
     }
-  }
-
-  .sub-left-slider {
-    position: absolute;
-    border: none;
-    top: 45%;
-    left: 50px;
-    cursor: pointer;
-  }
-
-  .sub-right-slider {
-    position: absolute;
-    border: none;
-    top: 45%;
-    left: auto;
-    right: 50px;
-    cursor: pointer;
-  }
-
-  .sub-left-slider img {
-    height: 50px;
-    width: 50px;
-  }
-  .sub-right-slider img {
-    height: 50px;
-    width: 50px;
   }
 `;
 
