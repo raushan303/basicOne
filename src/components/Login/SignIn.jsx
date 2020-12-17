@@ -1,20 +1,15 @@
 import React from 'react';
 import { login } from '../../shared/http';
+import { useRouter } from 'next/router';
 
-export default function SignIn({
-  input,
-  changestate,
-  changeHome,
-  changeLoading,
-}) {
-
+export default function SignIn({ setPath }) {
+  const router = useRouter();
   const myinput = {
     num: '',
     pass: '',
   };
 
   const handlesubmit = async (event) => {
-    changeLoading(true);
     event.preventDefault();
 
     var res = await login(myinput.num.value, myinput.pass.value);
@@ -23,10 +18,8 @@ export default function SignIn({
       console.log(res.err);
     }
     if (res.token) {
-      localStorage.token = res.token;
-      changestate(true);
+      router.push('/subject', '/subject');
     }
-    changeLoading(false);
   };
 
   return (
@@ -53,10 +46,14 @@ export default function SignIn({
         required
       />
       <div className='login-text'> Not Connected Yet ?</div>
-      <NavLink className='nav-link login-nav-link' to='/signup'>
+      <div
+        className='nav-link login-nav-link'
+        onClick={() => {
+          setPath('signUp');
+        }}
+      >
         Create Account Now !
-      </NavLink>
-      {/* <NavLink onClick={()=>{changeHome(true);}} className="nav-link login-nav-link" to='#'>Return back to home !</NavLink> */}
+      </div>
     </form>
   );
 }

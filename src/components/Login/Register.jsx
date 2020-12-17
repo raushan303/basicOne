@@ -1,7 +1,9 @@
 import React from 'react';
 import { register } from '../../shared/http';
+import { useRouter } from 'next/router';
 
-export default function Register({ input, changestate, contactnumber }) {
+export default function Register({ contactnumber }) {
+  const router = useRouter();
   const myinput = {
     fname: '',
     lname: '',
@@ -28,8 +30,8 @@ export default function Register({ input, changestate, contactnumber }) {
     );
     console.log(res, '2');
     if (res.message == 'Successfully registered') {
-      localStorage.setItem('token', res.token);
-      changestate(true);
+      // localStorage.setItem('token', res.token);
+      router.push('/subject', '/subject');
     }
   };
 

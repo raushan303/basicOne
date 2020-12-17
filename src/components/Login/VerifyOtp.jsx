@@ -1,7 +1,7 @@
 import React from 'react';
 import { verifyotp } from '../../shared/http';
 
-export default function Votp({ input, contactnumber, assignnumber }) {
+export default function Votp({ contactnumber, setPath }) {
   const myinput = {
     otp: '',
   };
@@ -10,8 +10,9 @@ export default function Votp({ input, contactnumber, assignnumber }) {
     event.preventDefault();
     var res = await verifyotp(myinput.otp.value, contactnumber);
     if (res.message == 'OTP Verified') {
+      setPath('register');
     } else {
-      assignnumber(null);
+      setPath('signUp');
     }
   };
 

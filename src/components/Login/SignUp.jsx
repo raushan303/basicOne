@@ -1,7 +1,7 @@
 import React from 'react';
 import { sendotp } from '../../shared/http';
 
-export default function SignUp({ input, assignnumber }) {
+export default function SignUp({ setContactNumber, setPath }) {
   const myinput = {
     num: '',
   };
@@ -11,7 +11,8 @@ export default function SignUp({ input, assignnumber }) {
     var res = await sendotp(myinput.num.value);
     console.log(res.message, 'otp');
     if (res.message == 'OTP Sent') {
-      assignnumber(myinput.num.value);
+      setContactNumber(myinput.num.value);
+      setPath('verifyOtp');
     }
   };
 
@@ -26,7 +27,14 @@ export default function SignUp({ input, assignnumber }) {
       />
       <input type='submit' id='login-submit' required value='Next' />
       <div className='login-text'> Already Registered ?</div>
-      <div className='nav-link login-nav-link'>Login Here</div>
+      <div
+        onClick={() => {
+          setPath('signIn');
+        }}
+        className='nav-link login-nav-link'
+      >
+        Login Here
+      </div>
     </form>
   );
 }

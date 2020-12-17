@@ -1,77 +1,43 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
+import Wrapper from './style';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.input = React.createRef();
-    this.state = {
-      contactnumber: null,
-    };
-    this.assignnumber = this.assignnumber.bind(this);
-  }
+import SignIn from './SignIn';
+import Register from './Register';
+import VerifyOtp from './VerifyOtp';
+import SignUp from './SignUp';
 
-  assignnumber(num) {
-    this.setState({
-      contactnumber: num,
-    });
-  }
+function Login() {
+  const [contactNumber, setContactNumber] = useState(null);
+  const [path, setPath] = useState('signIn');
 
-  render() {
-    return (
+  const component = (
+    <>
+      {path === 'signIn' && <SignIn setPath={setPath} />}
+      {path === 'signUp' && (
+        <SignUp setPath={setPath} setContactNumber={setContactNumber} />
+      )}
+      {path === 'verifyOtp' && (
+        <VerifyOtp contactNumber={contactNumber} setPath={setPath} />
+      )}
+      {path === 'register' && <Register contactNumber={contactNumber} />}
+    </>
+  );
+
+  return (
+    <Wrapper>
       <div className='login-container clearfix'>
         <div className='login-first-col'>
-          <img src='./assets/undraw_press_play.svg' alt='student'></img>
+          <img src='./images/undraw_press_play.svg' alt='student' />
         </div>
         <div className='login-second-col'>
           <h1>
             <span>Quick</span> Study
           </h1>
-
-          <Route
-            path='/signin'
-            component={() => (
-              <SignIn
-                input={this.input}
-                changestate={this.props.changestate}
-                changeHome={this.props.changeHome}
-                changeLoading={this.props.changeLoading}
-              />
-            )}
-          />
-          <Route
-            path='/signup'
-            component={() => (
-              <SignUp
-                input={this.input}
-                assignnumber={this.assignnumber}
-                changeHome={this.props.changeHome}
-              />
-            )}
-          />
-          <Route
-            path='/verifyotp'
-            component={() => (
-              <Votp
-                input={this.input}
-                contactnumber={this.state.contactnumber}
-                assignnumber={this.assignnumber}
-              />
-            )}
-          />
-          <Route
-            path='/register'
-            component={() => (
-              <Register
-                input={this.input}
-                changestate={this.props.changestate}
-                contactnumber={this.state.contactnumber}
-              />
-            )}
-          />
+          {component}
         </div>
       </div>
-    );
-  }
+    </Wrapper>
+  );
 }
 export default Login;

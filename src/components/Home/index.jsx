@@ -17,7 +17,11 @@ export default function HomeComponent(props) {
 
           <div className='h-button-group'>
             <div className='h-button1 h-button'>
-              <button className='h-btn h-header__btn'>Register / Login</button>
+              <Link href='/login'>
+                <button className='h-btn h-header__btn'>
+                  Register / Login
+                </button>
+              </Link>
             </div>
             <div className='h-button2 h-button'>
               <Link href='/subject'>
