@@ -15,14 +15,6 @@ const TopicCardWrapper = styled.div`
     line-height: normal;
   }
 
-  .chap-topic-card-container {
-    float: left;
-    width: 30%;
-    height: 100%;
-    margin-left: 3%;
-    overflow-y: scroll;
-  }
-
   .chap-topic-card {
     background: #fff;
     width: 84%;

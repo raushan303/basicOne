@@ -4,6 +4,8 @@ import { questions } from '../../shared/questions';
 import Radio from '@material-ui/core/Radio';
 import Wrapper from './style';
 
+import Link from 'next/link';
+
 var correct = 0,
   total = 0,
   skip = 0;
@@ -24,7 +26,6 @@ export class Testform extends Component {
     this.skip = this.skip.bind(this);
     this.setthis = this.setthis.bind(this);
     this.setthis2 = this.setthis2.bind(this);
-    this.handlefinish = this.handlefinish.bind(this);
     this.check = this.check.bind(this);
   }
 
@@ -115,10 +116,6 @@ export class Testform extends Component {
     }
   }
 
-  handlefinish() {
-    this.props.history.push('/test');
-  }
-
   render() {
     if (this.state.isfinish) {
       return (
@@ -134,9 +131,9 @@ export class Testform extends Component {
                 No of wrong attempt - {total - correct}
               </h3>
               <h3 className='test-result'>No of skip - {skip}</h3>
-              <button className='test-finish' onClick={this.handlefinish}>
-                Finish
-              </button>
+              <Link href='/test'>
+                <button className='test-finish'>Finish</button>
+              </Link>
             </div>
           </div>
         </Wrapper>

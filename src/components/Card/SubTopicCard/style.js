@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
 const SubTopicCardWrapper = styled.div`
-  .chap-subject-card-container {
-    float: left;
-    width: 65%;
-    margin-left: 2%;
-    height: 100%;
-    overflow-y: scroll;
+  .chap-box-shadow {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.06),
+      0 1px 18px 0 rgba(0, 0, 0, 0.12) !important;
   }
-
   .chap-subject-card {
     background: #fff;
     width: 35%;

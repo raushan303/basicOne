@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { baseurl2 } from '../../shared/baseurl';
+import Link from 'next/link';
 
 import HeaderWrapper from './style';
 
@@ -25,7 +27,7 @@ function Navbar(props) {
 
           <div className='main-navbar-content'>
             <div className='main-app-logo'>
-              <img src='./images/logo-main3.jfif' />
+              <img src={baseurl2 + 'assets/logo-main3.jfif'} />
             </div>
             <div className='main-sep'>|</div>
             <div className='main-page-name'>{props.title}</div>
@@ -55,7 +57,7 @@ function Navbar(props) {
                   handleClose();
                 }}
               >
-                My Profile
+                <Link href='/profile'>My Profile</Link>
               </MenuItem>
               <MenuItem
                 onClick={() => {

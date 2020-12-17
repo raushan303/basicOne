@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const ProfileWrapper = styled.div`
+  flex: 1;
   .wrapper {
     display: flex;
     flex-direction: column;
