@@ -45,7 +45,7 @@ const SideBarWrapper = styled.div`
     z-index: 200;
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 767px) {
     display: none;
   }
 `;
