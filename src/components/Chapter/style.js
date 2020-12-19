@@ -4,30 +4,27 @@ const ChapterWrapper = styled.div`
   flex: 1;
   overflow-y: scroll;
   overflow-x: hidden;
-  .chap-component-container {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+
+  .tab-container {
+    padding: 30px 100px;
+  }
+  .ant-tabs-nav-operations {
+    display: none !important;
+  }
+  .sub-topic-card-container {
+    display: flex;
+    justify-content: center;
   }
 
-  .chap-component-container h1 {
-    font-weight: 500;
-    margin-top: 1%;
-    margin-left: 3%;
+  @media only screen and (max-width: 767px) {
+    .tab-container {
+      padding: 30px 0px 50px 30px;
+    }
   }
-  .chap-topic-card-container {
-    float: left;
-    width: 30%;
-    height: 100%;
-    margin-left: 3%;
-    overflow-y: scroll;
-  }
-  .chap-subject-card-container {
-    float: left;
-    width: 65%;
-    margin-left: 2%;
-    height: 100%;
-    overflow-y: scroll;
+  @media only screen and (max-width: 576px) {
+    .tab-container {
+      padding: 30px 0px 50px 10px;
+    }
   }
 `;
 

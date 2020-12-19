@@ -8,13 +8,13 @@ function Banner(props) {
       <div className='arrow'>
         <img src='../images/left-arrow.png' />
       </div>
-      <div className='h1'>{props.subject}</div>
-      <div className='h2'>
+      <div className='banner-title'>{props.subject}</div>
+      <div className='banner-info1'>
         Chapters - {props.chapterCount} &nbsp;&nbsp;Videos- {props.videoCount}
       </div>
       <div style={{ display: 'flex' }}>
-        <div className='h3'>{props.learnt}% Learnt</div>
-        <div className='h3 ml-20'>{props.practice}% Practiced</div>
+        <div className='banner-info2'>{props.learnt}% Learnt</div>
+        <div className='banner-info2 ml-20'>{props.practice}% Practiced</div>
       </div>
     </Wrapper>
   );

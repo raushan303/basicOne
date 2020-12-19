@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   background-color: #280098;
-  padding: 20px 50px 40px 50px;
+  padding: 20px 30px 40px 50px;
   width: 100%;
   .arrow {
     padding: 10px;
@@ -15,23 +15,26 @@ const Wrapper = styled.div`
       width: 30px;
     }
   }
-  .h1 {
+  .banner-title {
     margin-top: 20px;
     font-size: 20px;
     color: white;
   }
-  .h2 {
+  .banner-info1 {
     margin-top: 20px;
     font-size: 16px;
     color: white;
   }
-  .h3 {
+  .banner-info2 {
     margin-top: 30px;
     background-color: white;
     padding: 5px 15px;
     border-radius: 20px;
     color: #280098;
     text-align: center;
+  }
+  @media only screen and (max-width: 767px) {
+    padding: 20px 30px 40px 20px;
   }
 `;
 
