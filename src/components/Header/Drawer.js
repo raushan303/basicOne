@@ -14,6 +14,7 @@ export default function drawer(props) {
       visible={props.isDrawerVisible}
     >
       <DrawerWrapper>
+      <Link href='/subject'>
         <div className='container'>
           <img
             className='svg-image'
@@ -21,6 +22,8 @@ export default function drawer(props) {
           />
           <div className='text'>Subject</div>
         </div>
+        </Link>
+        <Link href='/test'>
         <div className='container'>
           <img
             className='svg-image'
@@ -28,6 +31,8 @@ export default function drawer(props) {
           />
           <div className='text'>Test</div>
         </div>
+        </Link>
+        <Link href='/chat'>
         <div className='container'>
           <img
             className='svg-image'
@@ -35,6 +40,8 @@ export default function drawer(props) {
           />
           <div className='text'>Chat</div>
         </div>
+        </Link>
+        <Link href='/profile'>
         <div className='container'>
           <img
             className='svg-image'
@@ -42,6 +49,7 @@ export default function drawer(props) {
           />
           <div className='text'>Profile</div>
         </div>
+        </Link>
       </DrawerWrapper>
     </Drawer>
   );

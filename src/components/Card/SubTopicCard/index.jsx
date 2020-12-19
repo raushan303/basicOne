@@ -8,7 +8,7 @@ function SubTopicCard(props) {
       <SubTopicCardWrapper>
         <div class='chap-subject-card chap-box-shadow'>
           <div class='chap-subject-card-img-box'>
-            <img src='https://toppscholar-upload.s3.ap-southeast-1.amazonaws.com/content-package/7491303a-9de3-48e4-a8a1-41c873460896.jpg' />
+            <img src='https://web.toppscholars.com/assets/chapter-place-1.png' />
           </div>
 
           <div class='chap-subject-card-content-box'>

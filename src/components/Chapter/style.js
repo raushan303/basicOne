@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const ChapterWrapper = styled.div`
   flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
   .chap-component-container {
     height: 100%;
     width: 100%;
