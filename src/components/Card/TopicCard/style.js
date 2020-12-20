@@ -15,20 +15,37 @@ const TopicCardWrapper = styled.div`
         width: 100%;
       }
     }
+    .topic-card-content {
+      padding: 0 10px;
+      .title {
+        font-weight: bold;
+        text-align: center;
+        color: black;
+      }
 
-    .title {
-      font-weight: bold;
-      text-align: center;
-      color: black;
-    }
+      .concepts-videos {
+        display: flex;
+        margin-top: 3px;
 
-    .content1,
-    .content2 {
-      display: flex;
-    }
-
-    .text {
-      width: 80px;
+        li {
+          width: 90px;
+          list-style: disc;
+          font-size: 12px;
+          color: black;
+          font-weight: 400;
+        }
+      }
+      .learnt-practiced {
+        display: flex;
+        margin-top: 3px;
+        li {
+          width: 90px;
+          list-style: disc;
+          font-size: 12px;
+          color: black;
+          font-weight: 400;
+        }
+      }
     }
   }
   .box-shadow {

@@ -38,8 +38,6 @@ function Chapter() {
   const selectTopic = async (index, name) => {
     setTopicLoading(true);
     let temp = await fetchSubTopics(subject, name);
-    temp = [...temp, ...temp];
-    console.log(temp, subject);
     setTopicList(temp);
     setTopicLoading(false);
   };

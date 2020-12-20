@@ -8,8 +8,8 @@ const SubTopicCardWrapper = styled.div`
   }
   .sub-topic-card {
     background: #fff;
-    width: 250px;
-    height: 200px;
+    width: 260px;
+    height: 210px;
     border-radius: 8px;
     padding: 20px;
     cursor: pointer;
@@ -25,11 +25,27 @@ const SubTopicCardWrapper = styled.div`
       }
     }
     .sub-topic-card-content {
+      .title {
+        font-weight: bold;
+        text-align: center;
+        color: black;
+      }
       .concepts-videos {
         display: flex;
+        margin-top: 3px;
+
+        li {
+          width: 120px;
+          list-style: disc;
+        }
       }
       .learnt-practiced {
         display: flex;
+        margin-top: 3px;
+        li {
+          width: 120px;
+          list-style: disc;
+        }
       }
     }
   }

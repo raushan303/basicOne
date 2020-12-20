@@ -9,14 +9,18 @@ function TopicCard(props) {
         <div class='img-box'>
           <img src='../images/sub.jpg' />
         </div>
-        <div class='h1 title'>{props.details}</div>
-        <div className='content1'>
-          <div className='text regular14 ml-20'>12 Concepts</div>
-          <div className='text regular14 ml-10'>23 Videos</div>
-        </div>
-        <div className='content2'>
-          <div className='text regular14 ml-20'>0% Learnt</div>
-          <div className='text regular14 ml-10'>0% Practiced</div>
+        <div className='topic-card-content'>
+          <div class='h1 title'>{props.details}</div>
+
+          <div className='concepts-videos'>
+            <li>12 Concepts</li>
+            <li>23 Videos</li>
+          </div>
+
+          <div className='learnt-practiced'>
+            <li>0% Learnt</li>
+            <li>0% Practiced</li>
+          </div>
         </div>
       </div>
     </TopicCardWrapper>

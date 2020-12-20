@@ -20,8 +20,8 @@ function SubTopicCard(props) {
             </div>
 
             <div className='learnt-practiced'>
-              <li>{props.details.learn}% Learnt</li>
-              <li>{props.details.practice}% Practiced</li>
+              <li>{props.details.learn || 0}% Learnt</li>
+              <li>{props.details.practice || 0}% Practiced</li>
             </div>
           </div>
         </div>

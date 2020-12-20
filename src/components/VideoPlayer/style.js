@@ -98,4 +98,112 @@ const VideoPlayerWrapper = styled.div`
   }
 `;
 
-export default VideoPlayerWrapper;
+const CollapsibleWrap = styled.div`
+  overflow: hidden;
+  .playlistTitle {
+  }
+
+  .goalCount {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #12121d;
+  }
+`;
+
+const CollapsiblePlayListWrapper = styled.div`
+  .topicName {
+    background: #f8fbff !important;
+    min-height: 82px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+
+    h5 {
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 30px;
+      color: black;
+      mix-blend-mode: normal;
+    }
+
+    p {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 10px;
+      line-height: 14px;
+      letter-spacing: 0.4px;
+      color: black;
+      mix-blend-mode: normal;
+    }
+
+    .anticon {
+      color: black;
+      margin-left: 10px;
+      font-size: 20px;
+    }
+  }
+
+  .playListTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & > span {
+      margin-top: 2px;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  }
+
+  .Collapsible {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+
+    h6 {
+      font-family: Poppins;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+      color: rgba(0, 0, 0, 0.87);
+      mix-blend-mode: normal;
+      margin-top: 15px;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    p {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      display: flex;
+      align-items: flex-end;
+      letter-spacing: 0.25px;
+      color: rgba(0, 0, 0, 0.6);
+      mix-blend-mode: normal;
+      margin-bottom: 15px;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    .wrapper {
+      width: auto !important;
+      box-shadow: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+  }
+`;
+
+export { VideoPlayerWrapper, CollapsibleWrap, CollapsiblePlayListWrapper };
