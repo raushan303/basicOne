@@ -22,11 +22,35 @@ const VideoPlayerWrapper = styled.div`
     }
   }
 
+  .collapsible-head {
+    margin-top: 30px;
+    padding: 0px 10%;
+    height: 60px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: rgba(18, 18, 29, 0.05);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .is-open {
+    .collapsible-head {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+  }
+
   .content-container {
-    margin-top: 20px;
     padding: 20px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 0px;
+
+    background-color: rgba(18, 18, 29, 0.05);
+    // background-color: rgba(237, 242, 247, 1);
   }
 
   .other-videos-container {
@@ -39,7 +63,7 @@ const VideoPlayerWrapper = styled.div`
     padding: 50px 30px;
     .vimeo-container {
       padding: 30px;
-      height: 330px;
+      height: 440px;
     }
   }
 
@@ -58,7 +82,7 @@ const VideoPlayerWrapper = styled.div`
     padding: 0;
     .vimeo-container {
       padding: 0px;
-      height: 240px;
+      height: 250px;
     }
   }
 `;

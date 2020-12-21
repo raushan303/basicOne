@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Vimeo from '@u-wave/react-vimeo';
 
 import { updateVideoTime, getVideoTime } from '../../shared/http';
+import Collapsible from 'react-collapsible';
 
 import { VideoPlayerWrapper } from './style';
 
@@ -9,7 +10,10 @@ import Loader from '../Loader';
 
 import { Row, Col } from 'antd';
 
-import Collapsible from './collapsible';
+import CollapsibleList from './collapsible';
+import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
+import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
+import Icon from 'react-icons-kit';
 
 const videos = [
   {
@@ -152,13 +156,13 @@ function index() {
     return (
       <VideoPlayerWrapper>
         <Row className='outer-container'>
-          <Col xs={24} sm={22} md={15} lg={16} xl={16}>
+          <Col xs={24} sm={22} md={22} lg={16} xl={16}>
             <div class='vimeo-container'>
               <Vimeo
                 className='vimeo-player'
                 video={video.id}
-                width={1000}
-                height={570}
+                // width={1000}
+                // height={570}
                 autoplay
                 speed={true}
                 start={Math.max(0, startTime - 15)}
@@ -167,20 +171,44 @@ function index() {
                 onProgress={onProgressHandler}
               />
             </div>
+            <Collapsible
+              trigger={
+                <div className='collapsible-head'>
+                  <span>Note</span>
+                  <Icon
+                    icon={ic_expand_more}
+                    size={30}
+                    style={{ color: 'rgba(18, 18, 29, 0.6)' }}
+                  />
+                </div>
+              }
+              triggerWhenOpen={
+                <div className='collapsible-head'>
+                  <span>Note</span>
+                  <Icon
+                    icon={ic_expand_less}
+                    size={30}
+                    style={{ color: 'rgba(18, 18, 29, 0.6)' }}
+                  />
+                </div>
+              }
+            >
+              <div className='content-container'>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged
+              </div>
+            </Collapsible>
 
-            <div className='content-container'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged
-            </div>
+            {/* <div className='content-container'></div> */}
           </Col>
-          <Col xs={24} sm={22} md={9} lg={8} xl={7}>
+          <Col xs={24} sm={22} md={22} lg={8} xl={7}>
             <div className='other-videos-container'>
               {tvideos.map((choice, index) => (
-                <Collapsible
+                <CollapsibleList
                   chapter={choice}
                   activeChapterId={activeChapterId}
                   setActiveChapterId={setActiveChapterId}
