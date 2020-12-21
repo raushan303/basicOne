@@ -7,6 +7,10 @@ import { VideoPlayerWrapper } from './style';
 
 import Loader from '../Loader';
 
+import { Row, Col } from 'antd';
+
+import Collapsible from './collapsible';
+
 const videos = [
   {
     id: 115783408,
@@ -50,52 +54,90 @@ const videos = [
   },
 ];
 
+const tvideos = [
+  {
+    chapterId: 1,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    chapterId: 2,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    chapterId: 3,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    chapterId: 4,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+];
+
+const ttvideos = [
+  {
+    topicId: 1,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    topicId: 2,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    topicId: 3,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+  {
+    topicId: 4,
+    chapterName: 'current',
+    topicCount: 10,
+  },
+];
+
 function index() {
   const [videoIndex, setVideoIndex] = useState(0);
-  const [videoList, setVideoList] = useState([]);
   const [progress, setProgress] = useState({});
   const [startTime, setStartTime] = useState(0);
   const [timeFetched, setTimeFetched] = useState(0);
 
-  const selectVideo = async (index) => {
-    // await this.setState({isLoading: true});
-    await setVideoIndex(index);
-    await setTimeFetched(0);
-    var res = await getVideoTime(videos[videoIndex].id);
+  const [activeChapterId, setActiveChapterId] = useState(null);
+  const [activeChapterTopics, setActiveChapterTopics] = useState(ttvideos);
+  const [activeTopicId, setActiveTopicId] = useState(null);
 
-    if (res.message == 'Success !') {
-      console.log(res, parseInt(res.data.time), 'time!!');
+  const selectVideo = async (index) => {
+    setVideoIndex(index);
+    setTimeFetched(0);
+    var res = await getVideoTime(videos[index].id);
+    if (res.message == 'Sucdcess !') {
       setStartTime(parseInt(res.data.time));
     } else setStartTime(0);
     setTimeFetched(1);
-    // await this.setState({isLoading: false});
   };
 
   const handlePlayerPause = async () => {
     var res = await updateVideoTime(videos[videoIndex].id, progress.seconds);
-    console.log('Paused', res);
   };
 
   useEffect(() => {
     const getTime = async () => {
       var res = await getVideoTime(videos[videoIndex].id);
-
-      if (res.data) {
+      if (res.datab) {
         console.log(res, parseInt(res.data.time), 'time!!');
         setStartTime(parseInt(res.data.time));
       } else setStartTime(0);
       setTimeFetched(1);
     };
     getTime();
-    // await this.setState({isLoading: false});
   }, []);
 
-  const onEnd = async () => {
-    var res = await updateVideoTime(
-      videos[videoIndex].id,
-      progress.duration - 1
-    );
-    console.log('Ended!!!!');
+  const onEnd = () => {
+    updateVideoTime(videos[videoIndex].id, progress.duration - 1);
   };
 
   const onProgressHandler = (e) => {
@@ -109,50 +151,48 @@ function index() {
   else {
     return (
       <VideoPlayerWrapper>
-        <div className='vid-component-container'>
-          <div className='vid-video-container'>
-            <div class='vid-video-vimeo-container'>
+        <Row className='outer-container'>
+          <Col xs={24} sm={22} md={15} lg={16} xl={16}>
+            <div class='vimeo-container'>
               <Vimeo
+                className='vimeo-player'
                 video={video.id}
                 width={1000}
                 height={570}
                 autoplay
                 speed={true}
                 start={Math.max(0, startTime - 15)}
-                // volume={volume}
-                // paused={paused}
                 onEnd={onEnd}
                 onPause={handlePlayerPause}
-                // onPlay={this.handlePlayerPlay}
                 onProgress={onProgressHandler}
               />
             </div>
 
-            <p className='vid-video-content'>
+            <div className='content-container'>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries, but also the leap into
               electronic typesetting, remaining essentially unchanged
-            </p>
-          </div>
-
-          <div className='vid-other-videos-container'>
-            {videos.map((choice, index) => (
-              <a
-                href={`#!/video/${index}`}
-                className={`${video === choice ? 'active' : ''}`}
-                onClick={() => selectVideo(index)}
-              >
-                <div className='vid-other-videos clearfix'>
-                  <img src={choice.image} />
-                  <div class='vid-other-videos-text'>{choice.name}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+            </div>
+          </Col>
+          <Col xs={24} sm={22} md={9} lg={8} xl={7}>
+            <div className='other-videos-container'>
+              {tvideos.map((choice, index) => (
+                <Collapsible
+                  chapter={choice}
+                  activeChapterId={activeChapterId}
+                  setActiveChapterId={setActiveChapterId}
+                  activeChapterTopics={activeChapterTopics}
+                  setActiveChapterTopics={setActiveChapterTopics}
+                  activeTopicId={activeTopicId}
+                  setActiveTopicId={setActiveTopicId}
+                />
+              ))}
+            </div>
+          </Col>
+        </Row>
       </VideoPlayerWrapper>
     );
   }

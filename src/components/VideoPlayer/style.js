@@ -1,119 +1,69 @@
 import styled from 'styled-components';
 
 const VideoPlayerWrapper = styled.div`
-  .clearfix::after {
-    content: '';
-    display: table;
-    clear: both;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1;
+  padding: 50px;
+  .outer-container {
+    justify-content: center;
+  }
+  .vimeo-container {
+    padding: 50px;
+    height: 525px;
+    background-color: rgba(18, 18, 29, 0.05);
+    .vimeo-player {
+      width: 100%;
+      height: 100%;
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
-  .vid-component-container {
-    height: 100%;
-    width: 100%;
-  }
-
-  .vid-video-container {
-    float: left;
-    width: 65%;
-    height: 100%;
-    text-align: justify;
-    padding-right: 20px;
-    overflow-y: scroll;
-  }
-
-  .vid-video-vimeo-container {
-    height: 78%;
-    width: 95%;
-    margin-left: 4%;
-    margin-top: 4%;
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-    height: auto;
-  }
-
-  .vid-video-vimeo-container iframe,
-  .vid-video-vimeo-container object,
-  .vid-video-vimeo-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .vid-video-content {
-    width: 95%;
-    margin-top: 15px;
-    margin-left: 4%;
-    padding: 10px;
-    padding-bottom: 40px;
+  .content-container {
+    margin-top: 20px;
+    padding: 20px;
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 0px;
   }
 
-  .vid-other-videos-container {
-    float: left;
-    width: 32.2%;
-    height: 100%;
-    text-align: center;
+  .other-videos-container {
+    padding: 0px 20px;
+    height: 70vh;
     overflow-y: scroll;
-    margin-left: 1%;
   }
 
-  .vid-other-videos {
-    width: 85%;
-    height: 25%;
-    margin-top: 8%;
-    margin-left: 4%;
-    background-color: #f2f4f8;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 6px 10px 0px;
-    border-radius: 8px;
-    transition: all 0.5s;
-    cursor: pointer;
+  @media only screen and (max-width: 991px) {
+    padding: 50px 30px;
+    .vimeo-container {
+      padding: 30px;
+      height: 330px;
+    }
   }
 
-  .vid-other-videos:hover {
-    width: 88%;
-    margin-left: 3%;
+  @media only screen and (max-width: 767px) {
+    padding: 30px 20px;
+    .vimeo-container {
+      padding: 20px;
+      height: 350px;
+    }
+    .other-videos-container {
+      padding: 0 5px;
+    }
   }
 
-  .vid-other-videos img {
-    width: 50%;
-    height: 70%;
-    margin-left: 4%;
-    margin-top: 5%;
-    border-radius: 5%;
-    float: left;
-  }
-
-  .vid-other-videos-text {
-    float: left;
-    width: 40%;
-    height: 100%;
-    margin-left: 5%;
-    margin-top: 8%;
+  @media only screen and (max-width: 576px) {
+    padding: 0;
+    .vimeo-container {
+      padding: 0px;
+      height: 240px;
+    }
   }
 `;
 
 const CollapsibleWrap = styled.div`
-  overflow: hidden;
-  .playlistTitle {
-  }
-
-  .goalCount {
-    font-family: Poppins;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 16px;
-    color: #12121d;
-  }
-`;
-
-const CollapsiblePlayListWrapper = styled.div`
   .topicName {
     background: #f8fbff !important;
     min-height: 82px;
@@ -150,7 +100,7 @@ const CollapsiblePlayListWrapper = styled.div`
     }
   }
 
-  .playListTitle {
+  .chapter-title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -162,10 +112,28 @@ const CollapsiblePlayListWrapper = styled.div`
       margin-right: 15px;
     }
   }
+  .topic-count {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #12121d;
+  }
 
   .Collapsible {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     cursor: pointer;
+
+    .Collapsible__contentInner {
+      display: flex;
+      overflow-x: scroll;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
     h6 {
       font-family: Poppins;
@@ -206,4 +174,4 @@ const CollapsiblePlayListWrapper = styled.div`
   }
 `;
 
-export { VideoPlayerWrapper, CollapsibleWrap, CollapsiblePlayListWrapper };
+export { VideoPlayerWrapper, CollapsibleWrap };
