@@ -15,6 +15,8 @@ import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
 
+import { LOGIN } from '../../lib/api';
+
 const videos = [
   {
     id: 115783408,
@@ -130,6 +132,8 @@ function index() {
 
   useEffect(() => {
     const getTime = async () => {
+      console.log('reached');
+      LOGIN({ hwllo: '123', geelo: '345' });
       var res = await getVideoTime(videos[videoIndex].id);
       if (res.datab) {
         console.log(res, parseInt(res.data.time), 'time!!');
@@ -161,8 +165,6 @@ function index() {
               <Vimeo
                 className='vimeo-player'
                 video={video.id}
-                // width={1000}
-                // height={570}
                 autoplay
                 speed={true}
                 start={Math.max(0, startTime - 15)}
@@ -202,8 +204,6 @@ function index() {
                 electronic typesetting, remaining essentially unchanged
               </div>
             </Collapsible>
-
-            {/* <div className='content-container'></div> */}
           </Col>
           <Col xs={24} sm={22} md={22} lg={8} xl={7}>
             <div className='other-videos-container'>

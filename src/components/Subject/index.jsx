@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { connect } from 'react-redux';
+
+import Slider from 'react-slick';
 
 import { Row, Col } from 'antd';
 
-import { SUBJECTS, PHYSICS } from '../../shared/subjects';
-import Link from 'next/link';
 import SubjectWrapper from './style';
 
-import Slider from 'react-slick';
+import { SUBJECTS, PHYSICS } from '../../shared/subjects';
+import { getSubjects } from '../../redux/action/courses';
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -37,41 +40,52 @@ function SamplePrevArrow(props) {
   );
 }
 
-function Subject() {
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 700,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1324,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
+const settings = {
+  dots: false,
+  infinite: false,
+  speed: 700,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+  responsive: [
+    {
+      breakpoint: 1324,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
       },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
       },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
       },
-    ],
-  };
+    },
+  ],
+};
+
+function Subject(props) {
+
+  const [subjectList, setSubjectList] = useState([]);
+
+  useEffect(() => {
+    props.getSubjects();
+  }, []);
+
+  useEffect(()=>{
+    console.log(props.getSubjectsData);
+  },[props.getSubjectsData])
 
   return (
     <SubjectWrapper>
@@ -131,4 +145,13 @@ function Subject() {
   );
 }
 
-export default Subject;
+function mapStateToProps(state) {
+  return {
+    getSubjectsData: state.courses.getSubjects,
+  };
+}
+
+export default connect(mapStateToProps, {
+  getSubjects,
+})(Subject);
+
