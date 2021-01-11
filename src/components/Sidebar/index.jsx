@@ -26,15 +26,6 @@ function Sidebar() {
             <div className='image-text'>Mock Test</div>
           </a>
         </Link>
-        <Link href='/chat' passHref>
-          <a className="sidebar-icon-container">
-            <img
-              className='svg-image'
-              src={baseurl2 + 'assets/undraw_chat.svg'}
-            />
-            <div className='image-text'>Chat</div>
-          </a>
-        </Link>
         <Link href='/profile' passHref>
           <a className="sidebar-icon-container">
             <img
