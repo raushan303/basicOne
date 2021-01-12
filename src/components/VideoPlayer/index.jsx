@@ -15,7 +15,6 @@ import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
 
-import { LOGIN } from '../../lib/api';
 
 const videos = [
   {
@@ -132,8 +131,6 @@ function index() {
 
   useEffect(() => {
     const getTime = async () => {
-      console.log('reached');
-      LOGIN({ hwllo: '123', geelo: '345' });
       var res = await getVideoTime(videos[videoIndex].id);
       if (res.datab) {
         console.log(res, parseInt(res.data.time), 'time!!');
