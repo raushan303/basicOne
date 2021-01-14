@@ -4,11 +4,24 @@ const Wrapper = styled.div`
   display: flex;
   padding: 60px;
   flex: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  @media (max-width: 991px) {
+    padding: 30px;
+  }
+  @media (max-width: 767px) {
+    padding: 0;
+    flex-direction: column;
+  }
 `;
 
 const TabWrapper = styled.div`
   padding: 10px 50px;
   flex: 1;
+  @media (max-width: 767px) {
+    padding: 0;
+    flex-direction: column;
+  }
 
   .ant-tabs-tab-btn {
     font-family: Roboto;

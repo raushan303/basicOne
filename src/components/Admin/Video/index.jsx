@@ -1,45 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from './style';
-import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button } from 'antd';
+import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
 
 const { Option } = Select;
 
 const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
-
-const tmpData = [
-  {
-    grade: '10th',
-    subject: [
-      {
-        subjectName: 'Math',
-        chapter: [
-          {
-            chapterName: 'Calculus',
-            topic: [
-              {
-                TopicName: 'left diff',
-              },
-              {
-                TopicName: 'left diff',
-              },
-            ],
-          },
-          {
-            chapterName: 'Calculus',
-            topic: [
-              {
-                TopicName: 'left diff',
-              },
-              {
-                TopicName: 'left diff',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
 
 function index() {
   const [addMode, setAddMode] = useState(false);
@@ -52,9 +17,55 @@ function index() {
     VideoLink: null,
     VideoTime: null,
     Note: null,
-    image: null,
+    Image: null,
+    AddField: null,
   });
-  const [addState, setAddState] = useState([0, 0, 0, 0]);
+  const [addState, setAddState] = useState({ Grade: 0, Subject: 0, Chapter: 0, Topic: 0 });
+  const [selectList, setSelectList] = useState({
+    Grade: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'],
+    Subject: [],
+    Chapter: [],
+    Topic: [],
+  });
+
+  const handleSelectChange = (field) => (val, child) => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      [field]: val,
+    }));
+  };
+
+  const handleAddChange = (field) => {
+    let formatAddState = { ...addState };
+    data.forEach((str) => {
+      formatAddState[str] = 0;
+    });
+    formatAddState[field] = 1;
+    setAddState(formatAddState);
+  };
+
+  const handleInputChange = (field) => (e) => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      [field]: field === 'VideoTime' ? e : e.target.value,
+    }));
+  };
+
+  const handleAddSelectValue = (field) => {
+    // console.log('field');
+    if (!videoDetails.AddField) {
+      message.error('Enter the value');
+      return;
+    }
+    setSelectList((prevState) => ({
+      ...prevState,
+      [field]: [...prevState[field], videoDetails.AddField],
+    }));
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      AddField: null,
+    }));
+  };
 
   return (
     <Wrapper>
@@ -67,16 +78,54 @@ function index() {
       {addMode ? (
         <div>
           <Row>
-            {data.map((str) => (
-              <div className='select-container'>
-                <Select placeholder={`Select ${str}`}>
-                  <Option>op1</Option>
-                </Select>
-                <div className='add'>+</div>
-              </div>
-            ))}
+            {data.map((str, index) => {
+              let isDisbaled = false;
+              data.forEach((str2, index2) => {
+                if (index2 < index && !videoDetails[str2]) isDisbaled = true;
+              });
+              return (
+                <div className='select-container'>
+                  <Select
+                    disabled={isDisbaled}
+                    placeholder={`Select ${str}`}
+                    onChange={handleSelectChange(str)}
+                  >
+                    {selectList[str].length ? (
+                      selectList[str].map((val) => <Option value={val}>{val}</Option>)
+                    ) : (
+                      <Option value={null}>Add an option</Option>
+                    )}
+                  </Select>
+                  <div
+                    className='add'
+                    onClick={() => {
+                      if (!isDisbaled) handleAddChange(str);
+                    }}
+                  >
+                    +
+                  </div>
+                </div>
+              );
+            })}
           </Row>
-          <Row className='mt-50 ml-50' style={{ alignItems: 'center' }}>
+          {data.map((str) => {
+            if (addState[str]) {
+              return (
+                <Row className='add-field-container'>
+                  <Col className='add-field' style={{ width: '100px' }}>
+                    Add&nbsp;{str}
+                  </Col>
+                  <Col className='add-field' style={{ maxWidth: '360px' }}>
+                    <Input value={videoDetails.AddField} onChange={handleInputChange('AddField')} />
+                  </Col>
+                  <Col className='add-field' style={{ width: '80px' }}>
+                    <Button onClick={() => handleAddSelectValue(str)}>Add</Button>
+                  </Col>
+                </Row>
+              );
+            }
+          })}
+          <Row className='form-container' style={{ alignItems: 'center' }}>
             <div className='video-form-container'>
               <Form>
                 {data.map((str) => (
@@ -88,16 +137,16 @@ function index() {
                 ))}
 
                 <Form.Item label='Title'>
-                  <Input />
+                  <Input onChange={handleInputChange('Title')} />
                 </Form.Item>
                 <Form.Item label='Video Link'>
-                  <Input />
+                  <Input onChange={handleInputChange('VideoLink')} />
                 </Form.Item>
                 <Form.Item label='Video Time'>
-                  <InputNumber />
+                  <InputNumber onChange={handleInputChange('VideoTime')} />
                 </Form.Item>
                 <Form.Item label='Note'>
-                  <Input.TextArea />
+                  <Input.TextArea onChange={handleInputChange('Note')} />
                 </Form.Item>
                 <Form.Item label='Image'>
                   <Upload>
@@ -106,7 +155,7 @@ function index() {
                 </Form.Item>
               </Form>
             </div>
-            <div className='ml-100'>
+            <div className='upload-container'>
               <Button
                 style={{ height: '100px', width: '100px', fontWeight: 500, borderRadius: '12px' }}
               >
