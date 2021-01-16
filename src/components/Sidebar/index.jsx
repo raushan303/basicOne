@@ -30,8 +30,8 @@ function Sidebar() {
           <a className='sidebar-icon-container'>
             <img
               className='svg-image'
-              // src={baseurl2 + 'assets/undraw_add_notes.svg'}
-              src={baseurl2 + 'assets/undraw_profile.svg'}
+              src='/images/undraw_dashboard.svg'
+              // src={baseurl2 + 'assets/undraw_profile.svg'}
             />
             <div className='image-text'>Author</div>
           </a>
