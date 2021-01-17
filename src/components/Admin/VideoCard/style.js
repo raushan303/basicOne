@@ -68,7 +68,7 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 
-    padding: 10px 30px;
+    padding: 20px 30px;
     .sub-text {
       font-style: Roboto;
       letter-spacing: 1.5px;

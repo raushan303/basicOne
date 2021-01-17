@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Profile from './Profile';
+import Profile from './ProfileCard';
 import { Wrapper, TabWrapper } from './style';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
