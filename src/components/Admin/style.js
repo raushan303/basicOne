@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 60px;
+  padding: 30px 50px;
   flex: 1;
+  background: #f5f6f8;
   overflow-x: hidden;
   overflow-y: scroll;
   @media (max-width: 991px) {
@@ -16,7 +17,9 @@ const Wrapper = styled.div`
 `;
 
 const TabWrapper = styled.div`
-  padding: 10px 50px;
+  // padding: 10px 50px;
+  padding-left: 50px;
+  height: fit-content;
   flex: 1;
   @media (max-width: 767px) {
     padding: 0;
@@ -53,9 +56,23 @@ const TabWrapper = styled.div`
     padding-bottom: 15px;
   }
 
+  .ant-tabs-nav {
+    background: white;
+    padding: 5px 0 0 5px;
+  }
   .ant-tabs-nav .ant-tabs-tab-active {
     padding-left: 5%;
     padding-right: 5%;
+  }
+  .ant-tabs-content-holder {
+    background: white;
+    padding: 30px;
+    @media (max-width: 576px) {
+      padding: 30px 10px;
+    }
+    @media (max-width: 360px) {
+      padding: 30px 0;
+    }
   }
 
   .ant-tabs-ink-bar {
