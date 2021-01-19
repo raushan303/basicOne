@@ -24,7 +24,8 @@ export const Wrapper = styled.div`
   }
 
   .form-container {
-    margin: 30px 0 0 10px;
+    margin-top: 30px;
+    justify-content: center;
     .video-form-container {
       padding: 30px;
       background-color: #f5f6f8;
@@ -44,7 +45,7 @@ export const Wrapper = styled.div`
     .upload-container {
       margin-left: 100px;
       @media (max-width: 1156px) {
-        margin: 30px 0;
+        margin: 50px 0 0 0;
       }
     }
     @media (max-width: 1156px) {

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display: flex;
   padding: 30px 50px;
+  height: fit-content;
+  min-height: 100%;
   flex: 1;
   background: #f5f6f8;
   overflow-x: hidden;
