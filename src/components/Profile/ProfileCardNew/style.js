@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   background: white;
   width: 280px;
+  min-height: fit-content;
   .upper-container {
     display: flex;
     flex-direction: column;
@@ -53,11 +54,27 @@ export const Wrapper = styled.div`
     padding: 15px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
+    justify-content: space-around;
   }
   .about {
     padding: 30px;
     text-align: center;
+  }
+  .social-links {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .follow-container {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin: 30px 0;
+    .follow {
+      padding: 10px 50px;
+      background: #1abc9c;
+      color: white;
+      font-family: 'Poppins';
+    }
   }
 `;
