@@ -26,22 +26,22 @@ function index() {
       </div>
       <div className='icon-box'>
         <div>
-          <div>
+          <div className='center-align'>
             <Icon icon={commenting} />
           </div>
-          <div>110</div>
+          <div className='center-align'>110</div>
         </div>
         <div>
-          <div>
+          <div className='center-align'>
             <Icon icon={userPlus} />
           </div>
-          <div>110</div>
+          <div className='center-align'>110</div>
         </div>
         <div>
-          <div>
+          <div className='center-align'>
             <Icon icon={ic_feedback} />
           </div>
-          <div>110</div>
+          <div className='center-align'>110</div>
         </div>
       </div>
       <div className='about'>

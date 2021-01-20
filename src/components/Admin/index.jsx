@@ -11,17 +11,19 @@ import Question from './Question';
 function index() {
   return (
     <Wrapper>
-      <Profile />
-      <TabWrapper>
-        <Tabs defaultActiveKey='1'>
-          <TabPane tab='Video Contribution' key='1'>
-            <Video />
-          </TabPane>
-          <TabPane tab='Question Contribution' key='2'>
-            <Question />
-          </TabPane>
-        </Tabs>
-      </TabWrapper>
+      <div className='author-container'>
+        <Profile />
+        <TabWrapper>
+          <Tabs defaultActiveKey='1'>
+            <TabPane tab='Video Contribution' key='1'>
+              <Video />
+            </TabPane>
+            <TabPane tab='Question Contribution' key='2'>
+              <Question />
+            </TabPane>
+          </Tabs>
+        </TabWrapper>
+      </div>
     </Wrapper>
   );
 }

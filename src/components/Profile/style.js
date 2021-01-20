@@ -7,6 +7,11 @@ const Wrapper = styled.div`
   background: #f5f6f8;
   overflow-x: hidden;
   overflow-y: scroll;
+  .profile-container {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+  }
   @media (max-width: 991px) {
     padding: 30px;
   }

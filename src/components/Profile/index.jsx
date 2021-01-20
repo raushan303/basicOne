@@ -11,12 +11,7 @@ import Question from './Question';
 function index() {
   return (
     <Wrapper>
-      <div
-        style={{
-          display: 'flex',
-          height: 'fit-content',
-        }}
-      >
+      <div className='profile-container'>
         <Profile />
         <TabWrapper>
           <Tabs defaultActiveKey='1'>

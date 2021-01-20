@@ -48,13 +48,15 @@ export const Wrapper = styled.div`
   }
 
   .icon-box {
-    background: #f1f2f6;
     background: #eaf2f8;
-    // background: #F7F9F9;
     padding: 15px;
     width: 100%;
     display: flex;
     justify-content: space-around;
+    .center-align {
+      width: 50px;
+      text-align: center;
+    }
   }
   .about {
     padding: 30px;
