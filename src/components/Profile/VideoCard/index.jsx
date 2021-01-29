@@ -1,54 +1,38 @@
 import React from 'react';
 import { Wrapper } from './style';
-import { Form } from 'antd';
-const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
+import { Progress } from 'antd';
+import Icon from 'react-icons-kit';
+import { ic_bookmark_border } from 'react-icons-kit/md/ic_bookmark_border';
+import { ic_bookmark } from 'react-icons-kit/md/ic_bookmark';
+import { share2 } from 'react-icons-kit/feather/share2';
 
 function index(props) {
   return (
     <Wrapper>
-      <div className='card video-card '>
-        <div className='card__side card__side--front'>
-          <div className='img-box'>
-            <img src={props.img} />
-          </div>
-          <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-              fontSize: '18px',
-              lineHeight: '24px',
-              fontWeight: 500,
-              padding: '10px',
-            }}
-          >
-            Electrical Potential Energy
-          </div>
-          <div className='stats-container mt-10'>
-            <div className='stats'>
-              <div className='view'>
-                <div style={{ fontSize: '12px' }}>views</div>
-                <div>20</div>
-              </div>
-              <div className='like'>
-                <div>like</div>
-                <div>20</div>
-              </div>
-              <div className='comment'>
-                <div>comment</div>
-                <div>20</div>
-              </div>
-            </div>
-          </div>
+      <div className='video-card'>
+        <div className='heavy-18 roboto font-1'>
+          Factors affecting adsorption of gases on solids
         </div>
-        <div className='card__side card__side--back'>
-          <Form>
-            {data.map((str) => (
-              <Form.Item label={str}>
-                <div className='sub-text'>{str}</div>
-              </Form.Item>
-            ))}
-          </Form>
-          <a class='btn btn--orange mt-30'>Learn Now!</a>
+        <div className='regular-14 font-3 poppins mt-10'>
+          Chemistry, Surface Chemistry, adsorption
+        </div>
+        <Progress strokeColor="#303F9F" percent={30} size="small" />
+        <div className='mt-10 icon-container'>
+          <Icon
+            icon={ic_bookmark_border}
+            style={{
+              color: 'rgba(18, 18, 29, 0.6)',
+            }}
+            size={20}
+          />
+          <Icon
+            icon={share2}
+            style={{
+              color: 'rgba(18, 18, 29, 0.6)',
+              margin: '0 0 0 20px',
+            }}
+            size={18}
+          />
         </div>
       </div>
     </Wrapper>

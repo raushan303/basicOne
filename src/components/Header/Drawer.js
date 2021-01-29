@@ -14,41 +14,29 @@ export default function drawer(props) {
       visible={props.isDrawerVisible}
     >
       <DrawerWrapper>
-      <Link href='/subject'>
-        <div className='container'>
-          <img
-            className='svg-image'
-            src={baseurl2 + 'assets/undraw_online2.svg'}
-          />
-          <div className='text'>Subject</div>
-        </div>
+        <Link href='/subject'>
+          <div className='container'>
+            <img className='svg-image' src={baseurl2 + 'assets/undraw_online2.svg'} />
+            <div className='text'>Subject</div>
+          </div>
         </Link>
         <Link href='/test'>
-        <div className='container'>
-          <img
-            className='svg-image'
-            src={baseurl2 + 'assets/undraw_speech.svg'}
-          />
-          <div className='text'>Test</div>
-        </div>
-        </Link>
-        <Link href='/chat'>
-        <div className='container'>
-          <img
-            className='svg-image'
-            src={baseurl2 + 'assets/undraw_chat.svg'}
-          />
-          <div className='text'>Chat</div>
-        </div>
+          <div className='container'>
+            <img className='svg-image' src={baseurl2 + 'assets/undraw_speech.svg'} />
+            <div className='text'>Test</div>
+          </div>
         </Link>
         <Link href='/profile'>
-        <div className='container'>
-          <img
-            className='svg-image'
-            src={baseurl2 + 'assets/undraw_profile.svg'}
-          />
-          <div className='text'>Profile</div>
-        </div>
+          <div className='container'>
+            <img className='svg-image' src={baseurl2 + 'assets/undraw_profile.svg'} />
+            <div className='text'>Profile</div>
+          </div>
+        </Link>
+        <Link href='/author'>
+          <div className='container'>
+            <img className='svg-image' src='/images/undraw_dashboard.svg' />
+            <div className='text'>Author</div>
+          </div>
         </Link>
       </DrawerWrapper>
     </Drawer>

@@ -94,10 +94,15 @@ export const Wrapper = styled.div`
         }
       }
     }
-
     @media (max-width: 767px) {
-      padding: 10px;
+      padding: 10px 50px;
       justify-content: center;
+    }
+    @media (max-width: 500px) {
+      padding: 10px 20px;
+    }
+    @media (max-width: 400px) {
+      padding: 10px;
     }
   }
 
