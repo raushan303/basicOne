@@ -17,7 +17,9 @@ const Wrapper = styled.div`
   }
   @media (max-width: 767px) {
     padding: 0;
-    flex-direction: column;
+    .profile-container {
+      flex-direction: column;
+    }
   }
 `;
 

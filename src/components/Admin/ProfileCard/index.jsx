@@ -1,22 +1,87 @@
 import React from 'react';
 import { Wrapper } from './style';
 
+import { Progress } from 'antd';
+import Icon from 'react-icons-kit';
+import { userPlus } from 'react-icons-kit/fa/userPlus';
+import { commenting } from 'react-icons-kit/fa/commenting';
+import { ic_feedback } from 'react-icons-kit/md/ic_feedback';
+import { facebook } from 'react-icons-kit/icomoon/facebook';
+import { twitter } from 'react-icons-kit/icomoon/twitter';
+import { linkedin2 } from 'react-icons-kit/icomoon/linkedin2';
+import { socialInstagram } from 'react-icons-kit/ionicons/socialInstagram';
+
 function index() {
   return (
     <Wrapper>
-      <div className='avatar-container'>
-        <img alt='profile' src='/images/undraw6.svg' />
+      <div className='upper-container'>
+        <div className='avatar-container'>
+          <img alt='profile' src='/images/undraw6.svg' />
+        </div>
+        <div className='author-name'>Raushan Kumar</div>
+        <div className='designation'>Project Manager</div>
+        <div className='progress-container'>
+          <Progress percent={30} steps={4} />
+        </div>
+        <div className='follow-container'>
+          <div className='follow'>Follow</div>
+        </div>
       </div>
-      <div className='content-container'>
-        <div className='bold-16 author-name' style={{ alignSelf: 'flex-start' }}>
-          Raushan Kumar
+      <div className="lower-container">
+        <div className='icon-box'>
+          <div>
+            <div className='center-align'>
+              <Icon icon={commenting} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
+          <div>
+            <div className='center-align'>
+              <Icon icon={userPlus} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
+          <div>
+            <div className='center-align'>
+              <Icon icon={ic_feedback} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
         </div>
-        <div className='normal-14 font-5 mt-10'>
-          Marketing Leader, Author & Founder Women Leaders of Sarjapur Rd | Ex KPMG Achieving
-          business outcomes through strategic marketing I Speaker
+         <div className='author-name'>Raushan Kumar</div>
+        <div className='designation'>Project Manager</div>
+        <div className='about'>
+          He is truly devoted person to his work. positive and energetic. Person who inspires the
+          entire team with his energy
         </div>
-        <div className='normal-14 font-5 mt-10' style={{ alignSelf: 'flex-start' }}>
-          20 Videos 40 Question
+        <div className='social-links'>
+          <Icon icon={facebook} />
+          <Icon icon={twitter} />
+          <Icon icon={linkedin2} />
+          <Icon icon={socialInstagram} />
+        </div>
+        <div className='follow-container'>
+          <div className='follow'>Follow</div>
+        </div>
+        <div className='icon-box2'>
+          <div>
+            <div className='center-align'>
+              <Icon icon={commenting} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
+          <div>
+            <div className='center-align'>
+              <Icon icon={userPlus} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
+          <div>
+            <div className='center-align'>
+              <Icon icon={ic_feedback} />
+            </div>
+            <div className='center-align'>110</div>
+          </div>
         </div>
       </div>
     </Wrapper>

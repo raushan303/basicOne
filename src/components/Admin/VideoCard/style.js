@@ -20,7 +20,8 @@ export const Wrapper = styled.div`
     left: 0;
     backface-visibility: hidden;
     overflow: hidden;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.06), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !important;
+    // box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.06), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 1px 2px 6px 2px rgba(0,0,0,.05);
   }
   .card__side--front {
     background: #fff;
