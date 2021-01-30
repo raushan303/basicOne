@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Wrapper } from './style';
-
+import EditModal from '../EditModal';
 function index() {
+  const [visible, setVisible] = useState(false);
   return (
     <Wrapper>
-      <div className='avatar-container'>
+      <EditModal visible={visible} setVisible={setVisible} />
+      <div onClick={() => setVisible(true)} className='avatar-container'>
         <img alt='profile' src='/images/undraw6.svg' />
       </div>
       <div className='content-container'>

@@ -53,6 +53,12 @@ function index() {
       <Row className='mt-10'>
         <QuestionCard />
         <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
+        <QuestionCard />
       </Row>
     </Wrapper>
   );

@@ -1,0 +1,43 @@
+
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 54px;
+  z-index: 2;
+  /* top: 90px; */
+}
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+.avatar-upload .avatar-edit input + label {
+  display: inline-block;
+  width: 130px;
+  height: 130px;
+  margin-bottom: 0;
+  border-radius: 100%;
+  border: 1px solid #d2d6de;
+  background-color: #00000040;
+  /* opacity: 0.3; */
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+
+.avatar-upload .avatar-edit input + label:after {
+  content: "";
+  font-family: "FontAwesome";
+  color: #337AB7;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 34px;
+  margin: auto;
+}

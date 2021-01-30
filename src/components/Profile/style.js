@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     display: flex;
     height: fit-content;
     width: 100%;
+    min-height: 100%;
   }
   @media (max-width: 991px) {
     padding: 30px;

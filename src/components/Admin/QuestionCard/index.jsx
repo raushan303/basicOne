@@ -1,7 +1,5 @@
 import React from 'react';
 import { Wrapper } from './style';
-import { Form } from 'antd';
-const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
 
 function index(props) {
   return (
