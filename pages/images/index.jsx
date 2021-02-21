@@ -12,7 +12,9 @@ export default function Index() {
         <title>Create Next App</title>
       </Head>
       <div
-        style={{ display: 'flex', flexWrap: 'wrap', overflowY: 'scroll', flex: 1, padding: '50px' }}
+        style={{
+          display: 'flex', flexWrap: 'wrap', overflowY: 'scroll', flex: 1, padding: '50px',
+        }}
       >
         {images.map((img) => (
           <div style={{ padding: '30px' }}>
