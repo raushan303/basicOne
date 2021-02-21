@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const VideoPlayerWrapper = styled.div`
-  overflow-y: scroll;
-  overflow-x: hidden;
-  flex: 1;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
+  // flex: 1;
   padding: 50px;
   .outer-container {
     justify-content: center;
