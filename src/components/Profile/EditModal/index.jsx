@@ -46,25 +46,10 @@ const labelText = {
 };
 
 export default function EditProfile({ visible, setVisible }) {
-  const [file, setFile] = useState(null);
-  const [uploadingImage, setUploadingImage] = useState(false);
   const [initialData, setInitialData] = useState(null);
-  const [otherCompanySelection, setOtherCompanySelection] = useState(null);
-  const [otherPedigreeSelection, setOtherPedigreeSelection] = useState(null);
-  const [companySelection, setCompanySelection] = useState(null);
-  const [pedigreeSelection, setPedigreeSelection] = useState(null);
-  const [alternateEmailUpdated, setAlternateEmailUpdated] = useState(false);
+ 
   const [imageURL, setImageURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const [pedigreeList, setPedigreeList] = useState([]);
-  const [companyList, setCompanyList] = useState([]);
-  const [showExCompanies, setShowExCompanies] = useState([]);
-  const [showTopVoices, setShowTopVoices] = useState([]);
-  const [showPedigree, setShowPedigree] = useState([]);
-  const [showCompanies, setShowCompanies] = useState([]);
-  const [companyLength, setCompanyLength] = useState(0);
-  const [exCompanyLength, setExCompanyLength] = useState(0);
 
   return (
     <Modal
