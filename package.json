@@ -13,7 +13,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint ./pages --ext js,jsx",
+    "lintfix": "eslint ./pages --ext js,jsx --fix"
   },
   "babel": {
     "plugins": [
@@ -62,6 +64,15 @@
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-    "babel-preset-react-app": "^9.1.1"
-  }
+    "babel-eslint": "^10.1.0",
+    "babel-preset-react-app": "^9.1.1",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit":"lint"
+
 }
