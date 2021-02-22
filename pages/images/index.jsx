@@ -19,7 +19,7 @@ export default function Index() {
         {images.map((img) => (
           <div style={{ padding: '30px' }}>
             <p>{img.substring(8)}</p>
-            <img style={{ height: '180px', width: '200px' }} src={img} />
+            <img style={{ height: '180px', width: '200px' }} src={img} alt="Loading error" />
           </div>
         ))}
       </div>

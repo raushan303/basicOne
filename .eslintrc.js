@@ -25,7 +25,7 @@ module.exports = {
     "react/jsx-props-no-spreading":"off",
     "react/prop-types":"off",
     "jsx-a11y/alt-text":"off",
-    "max-len":"off",
+    "max-len":["error", { "code": 120 }],
     "jsx-a11y/anchor-is-valid": ["error", {
       "components": ["Link"],
       "specialLink": ["hrefLeft", "hrefRight"],

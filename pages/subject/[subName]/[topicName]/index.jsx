@@ -11,7 +11,7 @@ export default function Index() {
         <title>Create Next App</title>
       </Head>
       <VideoPlayer />
-      <CommunityForm background='#F7F7F7' />
+      <CommunityForm background="#F7F7F7" />
     </Layout>
   );
 }
