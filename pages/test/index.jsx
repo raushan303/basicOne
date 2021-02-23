@@ -1,6 +1,5 @@
 import Head from 'next/head';
-
-import TestSubject from '../../src/components/TestSubject';
+import TestBanner from '../../src/components/Test/TestBanner';
 import Layout from '../../src/components/Layout';
 
 export default function Index() {
@@ -9,7 +8,7 @@ export default function Index() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <TestSubject />
+      <TestBanner />
     </Layout>
   );
 }
