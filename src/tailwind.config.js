@@ -20,6 +20,8 @@ module.exports = {
       'dark-white':'#F7F7F7',
       'cream-white':'#fafafa',
       'white-s':'#F5F6F8',
+      'white-b':'#ebebeb',
+      'white-m':'#b9b9b9',
 
       primary: {
         100: '#a273ff',
