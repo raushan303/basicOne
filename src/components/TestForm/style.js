@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  flex: 1;
+  height: 100%;
   .test-wrapper {
     height: 100%;
     width: 100%;
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    overflow-y: scroll;
+    // overflow-y: scroll;
   }
 
   .test-container {
