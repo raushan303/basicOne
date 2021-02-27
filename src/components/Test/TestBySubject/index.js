@@ -9,7 +9,7 @@ import { question } from 'react-icons-kit/icomoon/question';
 import Link from 'next/link';
 
 const Container = tw.div`bg-pink-300 px-20 pb-24`;
-const ColumnContainer = tw.div`flex justify-between`;
+const ColumnContainer = tw.div`flex justify-between mb-24`;
 
 const LeftColumn = tw.div`px-4 md:px-8 lg:px-12 py-4 md:py-8 lg:py-10 lg:w-6/12 font-display flex flex-col`;
 const RightColumn = tw.div`lg:w-6/12`;
