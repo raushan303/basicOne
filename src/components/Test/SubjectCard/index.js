@@ -18,22 +18,22 @@ import { Progress } from 'antd';
 const Container = tw.div`relative`;
 
 const ThreeColumnContainer = styled.div`
-  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-xl mx-auto py-20 md:py-24`}
+  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-xl mx-auto py-12 md:py-24`}
 `;
-const Heading = tw(SectionHeading)`w-full`;
+const Heading = tw(SectionHeading)`w-full text-3xl px-2`;
 
 const Column = styled.div`
-  ${tw`md:w-1/2 lg:w-1/3 px-6 flex`}
+  ${tw`md:w-1/2 lg:w-1/3 px-4 md:px-6 flex`}
 `;
 
 const Card = styled.div`
-  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-10 border-2 border-dashed rounded-lg mt-12`}
+  ${tw`flex flex-col mx-auto max-w-xs items-center px-6 py-6 md:py-10 border-2 border-dashed rounded-lg mt-12`}
   .imageContainer {
-    ${tw`border-2 border-primary-500 text-center rounded-full p-6 flex-shrink-0 relative`}
+    ${tw`border-2 border-primary-500 text-center rounded-full p-4 md:p-6 flex-shrink-0 relative`}
   }
 
   .textContainer {
-    ${tw`mt-6 text-center`}
+    ${tw`mt-3 md:mt-6 text-center`}
   }
 
   .title {
@@ -54,7 +54,7 @@ export default ({ heading, data, background }) => {
           <Column key={i}>
             <Card style={{ borderColor: '#01579b' }}>
               <span className='imageContainer'>
-                <Progress type='circle' percent={30} width={80} />
+                <Progress type='circle' percent={card.percent} width={80} />
               </span>
               <span className='textContainer'>
                 <span className='title heading'>{card.title}</span>
