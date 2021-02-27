@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
 import QuestionCard from '../QuestionCard';
+import TestModal from '../TestCard'
 const { Option } = Select;
 
 const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
@@ -25,6 +26,8 @@ function index() {
       [field]: val,
     }));
   };
+
+  const [openModal,setOpenModal] =useState(false);
 
   return (
     <Wrapper>
@@ -50,7 +53,7 @@ function index() {
           );
         })}
       </Row>
-      <Row className='mt-10'>
+      <Row className='mt-10' onClick={()=>{setOpenModal(true)}}>
         <QuestionCard />
         <QuestionCard />
         <QuestionCard />
@@ -60,6 +63,7 @@ function index() {
         <QuestionCard />
         <QuestionCard />
       </Row>
+      <TestModal setOpenModal={setOpenModal} openModal={openModal}/>
     </Wrapper>
   );
 }
