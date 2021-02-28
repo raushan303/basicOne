@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from '../../../../misc/Headings.js';
+import { PrimaryButton as PrimaryButtonBase } from '../../../../misc/Buttons';
 import { SectionDescription } from '../../../../misc/Typography.js';
 import { Container, ContentWithPaddingXl } from '../../../../misc/Layouts';
 
@@ -22,20 +23,22 @@ const CardSlider = styled(Slider)`
   .slick-track {
     ${tw`flex`}
   }
+  .slick-list {
+    overflow: hidden;
+  }
   .slick-slide {
     ${tw`h-auto flex justify-center mb-1`}
   }
 `;
-
-const PlansContainer = tw.div`flex flex-wrap justify-between flex-col lg:flex-row place-content-around items-center lg:items-stretch relative`;
 const Plan = styled.div`
-  ${tw`w-full max-w-sm mt-16 lg:last:mr-0 text-center px-8 rounded-lg shadow-inner shadow-md relative pt-2 text-gray-900 bg-white flex flex-col cursor-pointer`}
+  ${tw`w-full h-full max-w-sm lg:last:mr-0 text-center px-8 rounded-lg shadow-inner shadow-md relative pt-2 text-gray-900 bg-white flex flex-col cursor-pointer`}
   .planHighlight {
     ${tw`rounded-t-lg absolute top-0 inset-x-0 h-2`}
     background: #01579b;
     background: linear-gradient(135deg, #0584e8 0%, #01579b 100%) #01579b;
   }
   box-shadow: 0 4px 14px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
 
   ${(props) =>
     props.color &&
@@ -82,6 +85,21 @@ const PlanFeatures = styled.div`
   }
 `;
 
+const HeadingWithControl = tw.div`flex flex-col items-center sm:items-stretch sm:flex-row max-w-screen-xl w-full self-center justify-end`;
+const Controls = tw.div`flex items-center`;
+const ControlButton = styled(PrimaryButtonBase)`
+  ${tw`mt-4 sm:mt-0 first:ml-0 ml-6 rounded-full p-2 bg-dark-blue! hover:bg-dark-blue! border-0! cursor-pointer`}
+  svg {
+    ${tw`w-6 h-6`}
+  }
+  &:hover {
+    background: #01579b;
+  }
+  &:focus {
+    background: #01579b;
+  }
+`;
+
 const PrevButton = tw(ControlButton)``;
 const NextButton = tw(ControlButton)``;
 
@@ -91,7 +109,28 @@ const Wrapper = styled.div`
   }
 `;
 
-export default ({ subHeading, heading, cardsList, color, background, featured }) => {
+export default ({ subHeading, heading, cardsList }) => {
+  const sliderSettings = {
+    arrows: false,
+    infinite: false,
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+  const [sliderRef, setSliderRef] = useState(null);
   return (
     <Wrapper style={{ background: '#fff' }}>
       <Container>
@@ -100,7 +139,18 @@ export default ({ subHeading, heading, cardsList, color, background, featured })
             {heading && <Heading className='heading'>{heading}</Heading>}
             {subHeading && <Description className='sub-heading'>{subHeading}</Description>}
           </HeaderContainer>
-          <PlansContainer>
+          <HeadingWithControl>
+            <Controls>
+              <PrevButton onClick={sliderRef?.slickPrev}>
+                <Icon icon={ic_keyboard_arrow_left} size={24} alt='' />
+              </PrevButton>
+              <NextButton onClick={sliderRef?.slickNext}>
+                <Icon icon={ic_keyboard_arrow_right} size={24} alt='' />
+              </NextButton>
+            </Controls>
+          </HeadingWithControl>
+
+          <CardSlider ref={setSliderRef} {...sliderSettings}>
             {cardsList?.map((item, index) => (
               <Plan key={index}>
                 <PlanHeader>
@@ -111,7 +161,7 @@ export default ({ subHeading, heading, cardsList, color, background, featured })
                 </PlanFeatures>
               </Plan>
             ))}
-          </PlansContainer>
+          </CardSlider>
         </ContentWithPaddingXl>
       </Container>
     </Wrapper>

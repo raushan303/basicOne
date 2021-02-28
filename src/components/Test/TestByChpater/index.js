@@ -12,7 +12,7 @@ import SubjectCardList from './SubjectCardList';
 import ChapterCardList from './ChapterCardList';
 
 const ExperienceContent = {
-  heading: "Online Mock Tests: A Key To A New World Of Education",
+  heading: 'Online Mock Tests: A Key To A New World Of Education',
   data: [
     {
       title: 'Maths',
@@ -55,6 +55,12 @@ const PurposeCardsWhiteContent = {
     {
       title: 'Chemistry',
       content: 'Chemistry is the study of matter and the chemical reactions between substances.',
+      percent: 64,
+    },
+    {
+      title: 'Bilogy',
+      content:
+        'Biology focuses on the study of living organisms. What is life? How organisms survive at the molecular, cellular, and anatomical levels',
       percent: 64,
     },
   ],

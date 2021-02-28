@@ -2,24 +2,26 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   height: 100%;
+  width: 100%;
   .test-wrapper {
     height: 100%;
     width: 100%;
     background-color: #eee;
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url('../SVG/test1.jpeg');
+      url('/images/test1.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    // overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .test-container {
     background-color: white;
-    margin-left: 30%;
-    margin-top: 2.5%;
+    // margin-left: 30%;
     width: 40%;
-    height: 90%;
+    // height: 90%;
     z-index: 9999;
     background-color: white;
     border-bottom-left-radius: 50px;
@@ -29,8 +31,8 @@ const Wrapper = styled.div`
 
   .test-question {
     width: 100%;
-    height: 22%;
-    margin-top: 4%;
+    height: 140px;
+    margin-top: 20px;
     display: inline-block;
     border-bottom: 1px solid #009688;
     border-bottom-left-radius: 50px;
@@ -39,7 +41,7 @@ const Wrapper = styled.div`
   }
 
   .test-option {
-    height: 13.2%;
+    height: 85px;
     width: 100%;
     border-bottom: 0.9px solid #009688;
     border-bottom-left-radius: 50px;
@@ -48,7 +50,7 @@ const Wrapper = styled.div`
 
   .test-option:last-child {
     border: none;
-    height: 19%;
+    height: 120px;
   }
 
   .test-check {
