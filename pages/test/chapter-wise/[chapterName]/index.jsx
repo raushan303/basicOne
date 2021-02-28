@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import Layout from '../../../../src/components/Layout/withoutSideBar';
+import Layout from '../../../../src/components/Layout/withHeader';
 import TestForm from '../../../../src/components/TestForm';
 
 export default function Index() {

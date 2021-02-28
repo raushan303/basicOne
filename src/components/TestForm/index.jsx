@@ -152,7 +152,7 @@ export class Testform extends Component {
               <div className='test-option'>
                 <div
                   onClick={() => this.setthis2('1')}
-                  className='test-check clearfix'
+                  className='test-check'
                 >
                   <div className='test-radio'>
                     <Radio
@@ -172,7 +172,7 @@ export class Testform extends Component {
               <div className='test-option'>
                 <div
                   onClick={() => this.setthis2('2')}
-                  className='test-check clearfix'
+                  className='test-check'
                 >
                   <div className='test-radio'>
                     <Radio
@@ -192,7 +192,7 @@ export class Testform extends Component {
               <div className='test-option'>
                 <div
                   onClick={() => this.setthis2('3')}
-                  className='test-check clearfix'
+                  className='test-check'
                 >
                   <div className='test-radio'>
                     <Radio
@@ -212,7 +212,7 @@ export class Testform extends Component {
               <div className='test-option'>
                 <div
                   onClick={() => this.setthis2('4')}
-                  className='test-check clearfix'
+                  className='test-check'
                 >
                   <div className='test-radio'>
                     <Radio
@@ -230,7 +230,7 @@ export class Testform extends Component {
               </div>
 
               {!this.state.attempt ? (
-                <div className='test-option'>
+                <div className='test-btn-container'>
                   <button
                     className='test-btn-skip'
                     onClick={() => {
@@ -249,7 +249,7 @@ export class Testform extends Component {
                   </button>
                 </div>
               ) : (
-                <div className='test-option'>
+                <div className='test-btn-container'>
                   <button
                     className='test-btn-continue'
                     onClick={() => {

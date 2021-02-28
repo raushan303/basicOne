@@ -88,7 +88,7 @@ const PlanFeatures = styled.div`
 const HeadingWithControl = tw.div`flex flex-col items-center sm:items-stretch sm:flex-row max-w-screen-xl w-full self-center justify-end`;
 const Controls = tw.div`flex items-center`;
 const ControlButton = styled(PrimaryButtonBase)`
-  ${tw`mt-4 sm:mt-0 first:ml-0 ml-6 rounded-full p-2 bg-dark-blue! hover:bg-dark-blue! border-0! cursor-pointer`}
+  ${tw`mt-4 p-2! sm:mt-0 first:ml-0 ml-6 rounded-full bg-dark-blue! hover:bg-dark-blue! border-0! cursor-pointer`}
   svg {
     ${tw`w-6 h-6`}
   }
