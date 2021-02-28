@@ -9,6 +9,7 @@ import { question } from 'react-icons-kit/icomoon/question';
 import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left';
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import Slider from 'react-slick';
+import Link from 'next/link';
 
 const CardSlider = styled(Slider)`
   ${tw`mt-12`}
@@ -20,15 +21,15 @@ const CardSlider = styled(Slider)`
   }
 `;
 
-const Container = tw.div`bg-white-s h-full flex flex-col justify-center`;
-const ColumnContainer = tw.div`mt-24 first:mt-0 flex! max-w-screen-xl bg-white`;
+const Container = tw.div`py-8 lg:py-0 bg-white-s h-full flex flex-col lg:justify-center`;
+const ColumnContainer = tw.div`flex! flex-col-reverse lg:flex-row max-w-screen-xl bg-white`;
 
-const LeftColumn = tw.div`px-12 py-10 lg:w-6/12 font-display flex flex-col`;
+const LeftColumn = tw.div`px-4 md:px-8 lg:px-12 py-4 md:py-8 lg:py-10 lg:w-6/12 font-display flex flex-col`;
 const RightColumn = tw.div`lg:w-6/12`;
-const BottomBox = tw.div`mt-auto border-0 border-t-2 border-solid border-white-b w-full pt-4 flex`;
+const BottomBox = tw.div`mt-8 lg:mt-auto border-0 border-t-2 border-solid border-white-b w-full pt-4 flex`;
 
-const Heading = tw.h1`text-dark-blue font-semibold font-display text-3xl md:text-4xl leading-tight max-w-3xl`;
-const Paragraph = tw.p`my-1 text-sm lg:text-base font-medium font-poppins text-gray-600 max-w-lg mx-auto lg:mx-0`;
+const Heading = tw.h1`text-dark-blue font-semibold font-display text-2xl sm:text-3xl md:text-4xl leading-tight max-w-3xl`;
+const Paragraph = tw.p`my-1 text-sm lg:text-base font-medium font-poppins text-gray-600 max-w-lg`;
 
 const PrimaryButton = tw(
   PrimaryButtonBase
@@ -67,6 +68,7 @@ export default () => {
       testSeriesCount: 10,
       questionCount: 230,
       img: '/images/testPage.jpg',
+      link: '/test/subject-wise',
     },
     {
       heading: 'My advice is, never do tomorrow what you can do today',
@@ -75,11 +77,12 @@ export default () => {
       testSeriesCount: 14,
       questionCount: 315,
       img: '/images/testPage4.jpg',
+      link: '/test/chapter-wise',
     },
   ];
   return (
     <Container>
-      <Heading tw='self-center max-w-screen-xl! text-green-500!'>
+      <Heading tw='text-center max-w-full! text-green-500!'>
         Here You can attempt test subject or chapter wise
       </Heading>
       <HeadingWithControl>
@@ -98,7 +101,9 @@ export default () => {
             <LeftColumn>
               <Heading>{obj.heading}</Heading>
               <Paragraph>{obj.subHeading}</Paragraph>
-              <PrimaryButton>Get Started</PrimaryButton>
+              <Link href={obj.link}>
+                <PrimaryButton>Get Started</PrimaryButton>
+              </Link>
               <BottomBox>
                 <Icon style={{ color: '#b9b9b9' }} size={20} icon={book} />
                 <span tw='pl-2 pr-8 text-white-m'>{obj.testSeriesCount} Test Series</span>

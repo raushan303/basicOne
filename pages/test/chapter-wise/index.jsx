@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
-import Layout from '../../../src/components/Layout';
-import TestForm from '../../../src/components/TestForm';
+import Layout from '../../../src/components/Layout/withoutSideBar';
+import SubjectChapterList from '../../../src/components/Test/TestByChpater';
 
 export default function Index() {
   return (
@@ -9,7 +9,7 @@ export default function Index() {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <TestForm />
+      <SubjectChapterList />
     </Layout>
   );
 }
