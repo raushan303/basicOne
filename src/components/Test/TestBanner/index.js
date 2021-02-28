@@ -68,6 +68,7 @@ export default () => {
       testSeriesCount: 10,
       questionCount: 230,
       img: '/images/testPage.jpg',
+      link: '/test/subject-wise',
     },
     {
       heading: 'My advice is, never do tomorrow what you can do today',
@@ -76,6 +77,7 @@ export default () => {
       testSeriesCount: 14,
       questionCount: 315,
       img: '/images/testPage4.jpg',
+      link: '/test/chapter-wise',
     },
   ];
   return (
@@ -99,7 +101,7 @@ export default () => {
             <LeftColumn>
               <Heading>{obj.heading}</Heading>
               <Paragraph>{obj.subHeading}</Paragraph>
-              <Link href='/test/subject-wise'>
+              <Link href={obj.link}>
                 <PrimaryButton>Get Started</PrimaryButton>
               </Link>
               <BottomBox>

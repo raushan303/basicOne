@@ -1,19 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-//eslint-disable-next-line
 import { css } from 'styled-components/macro';
-import { SectionHeading } from '../../../misc/Headings';
+import { SectionHeading } from '../../../../misc/Headings';
 import { Progress } from 'antd';
-
-// import defaultCardImage from "../../images/shield-icon.svg";
-
-// import SupportIconImage from "../../images/support-icon.svg";
-// import ShieldIconImage from "../../images/shield-icon.svg";
-// import CustomizeIconImage from "../../images/customize-icon.svg";
-// import FastIconImage from "../../images/fast-icon.svg";
-// import ReliableIconImage from "../../images/reliable-icon.svg";
-// import SimpleIconImage from "../../images/simple-icon.svg";
+import Link from 'next/link';
 
 const Container = tw.div`relative`;
 
@@ -23,7 +14,7 @@ const ThreeColumnContainer = styled.div`
 const Heading = tw(SectionHeading)`w-full text-3xl px-2`;
 
 const Column = styled.div`
-  ${tw`md:w-1/2 lg:w-1/3 px-4 md:px-6 flex`}
+  ${tw`md:w-1/2 lg:w-1/3 px-4 md:px-6 flex cursor-pointer`}
 `;
 
 const Card = styled.div`
@@ -51,17 +42,19 @@ export default ({ heading, data, background }) => {
       <ThreeColumnContainer>
         <Heading className='heading'>{heading}</Heading>
         {data.map((card, i) => (
-          <Column key={i}>
-            <Card style={{ borderColor: '#01579b' }}>
-              <span className='imageContainer'>
-                <Progress type='circle' percent={card.percent} width={80} />
-              </span>
-              <span className='textContainer'>
-                <span className='title heading'>{card.title}</span>
-                <p className='description sub-heading'>{card.content}</p>
-              </span>
-            </Card>
-          </Column>
+          <Link href={`/test/subject-wise/${card.title}`}>
+            <Column key={i}>
+              <Card style={{ borderColor: '#01579b' }}>
+                <span className='imageContainer'>
+                  <Progress type='circle' percent={card.percent} width={80} />
+                </span>
+                <span className='textContainer'>
+                  <span className='title heading'>{card.title}</span>
+                  <p className='description sub-heading'>{card.content}</p>
+                </span>
+              </Card>
+            </Column>
+          </Link>
         ))}
       </ThreeColumnContainer>
     </Container>
