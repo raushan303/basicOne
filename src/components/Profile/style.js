@@ -5,8 +5,8 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   flex: 1;
   background: #f5f6f8;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  // overflow-x: hidden;
+  // overflow-y: scroll;
   .profile-container {
     display: flex;
     height: fit-content;

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const SubjectWrapper = styled.div`
-  overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
   flex: 1;
 
   .image-container {

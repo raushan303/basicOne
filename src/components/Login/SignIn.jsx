@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Password from "antd/lib/input/Password";
 const Container = tw(
   ContainerBase
-)`min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
+)`w-full min-h-screen bg-primary-900 text-white font-medium flex justify-center`;
 const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 lg:shadow-xl sm:rounded-lg flex justify-center flex-1`;
 const MainContainer = tw.div`w-full lg:w-1/2 xl:w-5/12 sm:p-12 flex flex-col items-center`;
 const LogoLink = tw.a``;
@@ -120,7 +120,7 @@ export default function SignIn({
           </MainContent>
         </MainContainer>
         <IllustrationContainer>
-          <IllustrationImage imageSrc={"/images/login-illustration.svg"} />
+          <IllustrationImage imageSrc={"/images/loginBanner.png"} />
         </IllustrationContainer>
       </Content>
     </Container>
