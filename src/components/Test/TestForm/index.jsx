@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { questions } from '../../shared/questions';
+import { questions } from '../../../shared/questions';
 
 import Radio from '@material-ui/core/Radio';
 import Wrapper from './style';

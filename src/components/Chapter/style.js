@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const ChapterWrapper = styled.div`
   flex: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
 
   .tab-container {
     padding: 30px 100px;

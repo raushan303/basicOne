@@ -11,26 +11,26 @@ import { thumbsUp } from 'react-icons-kit/fa/thumbsUp';
 import { checkCircle } from 'react-icons-kit/fa/checkCircle';
 import { ic_remove_red_eye } from 'react-icons-kit/md/ic_remove_red_eye';
 
-const ColumnContainer = tw.div`flex flex-wrap flex-col lg:flex-row md:items-center py-20`;
+const ColumnContainer = tw.div`flex flex-wrap flex-col lg:flex-row md:items-center py-12 md:py-20`;
 const TwoColumn = tw.div`relative flex flex-wrap flex-shrink-0 border border-grey border-solid max-w-screen-xl mx-auto`;
-const LeftColumn = tw.div`px-4 py-10 md:w-1/3 lg:w-1/4 font-display flex justify-center w-full`;
-const RightColumn = tw.div`px-8 py-10 md:w-2/3 lg:w-3/4 font-display bg-white`;
+const LeftColumn = tw.div`px-4 py-6 md:py-10 md:w-1/3 lg:w-1/4 font-display flex justify-center w-full`;
+const RightColumn = tw.div`px-4 md:px-8 py-6 md:py-10 md:w-2/3 lg:w-3/4 font-display bg-white`;
 const PrimaryButtonFollow = tw(
   PrimaryButtonBase
-)`bg-dark-blue font-display uppercase font-normal text-lg tracking-wider text-white py-2 px-8 border-none mt-4 hover:bg-dark-blue cursor-pointer`;
+)`bg-dark-blue font-display uppercase font-normal text-sm tracking-wider text-white py-2 px-6 border-none mt-2 md:mt-4 hover:bg-dark-blue cursor-pointer`;
 const PrimaryButtonReply = tw(
   PrimaryButtonBase
-)`bg-dark-blue font-display uppercase font-normal text-xl tracking-wider text-white py-2 px-12 border-none hover:bg-dark-blue cursor-pointer rounded-md mt-2`;
+)`bg-dark-blue font-display uppercase font-normal text-sm md:text-xl tracking-wider text-white py-2 px-12 border-none hover:bg-dark-blue cursor-pointer rounded-md mt-2`;
 const PrimaryButtonSame = tw(
   PrimaryButtonBase
-)`ml-8 bg-white font-display uppercase font-normal text-xl tracking-wider text-dark-blue hover:text-dark-blue py-2 px-12 border border-solid border-dark-blue hover:bg-white cursor-pointer rounded-md mt-2`;
+)`md:ml-8 bg-white font-display uppercase font-normal text-sm md:text-xl tracking-wider text-dark-blue hover:text-dark-blue py-2 px-4 md:px-12 border border-solid border-dark-blue hover:bg-white cursor-pointer rounded-md mt-4 md:mt-2`;
 
 const UserBox = tw.div`flex flex-col items-center w-full`;
 const Avatar = tw.div`h-16 w-16`;
-const IconBox = tw.div`flex py-4`;
+const IconBox = tw.div`flex py-2 md:py-4`;
 
 const Name = tw.h1`text-dark-blue text-lg lg:my-2`;
-const Designation = tw.h1`text-black text-xl font-normal`;
+const Designation = tw.h1`text-black text-sm md:text-xl font-normal my-0`;
 const Heading = tw.h1`font-black text-2xl md:text-3xl leading-snug`;
 const Paragraph = tw.p`text-sm lg:text-base font-medium text-gray-600`;
 const Subheading = tw(SubheadingBase)`text-dark-blue`;
