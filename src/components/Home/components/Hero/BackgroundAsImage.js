@@ -24,14 +24,17 @@ const StyledHeader = styled(Header)`
   }
 `;
 const Container = styled.div`
-  ${tw`relative -mx-8 -mt-8 bg-center bg-cover p-1`}
+  ${tw`relative -mt-4 bg-center bg-cover p-1`}
   background-image: url("/images/avt1.jpg");
+  // box-shadow: inset 0 0 0 1000px rgba(0,0,0,.0);
+
+
 `;
 
 const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-primary-500 opacity-25`;
 
 const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`;
-const TwoColumn = tw.div`pt-24 pb-32 px-4 flex justify-between items-center flex-col lg:flex-row`;
+const TwoColumn = tw.div`pt-24 pb-12 pr-6 flex justify-between items-center flex-col lg:flex-row`;
 const LeftColumn = tw.div`flex flex-col items-center lg:block`;
 const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8 ml-8`;
 
@@ -77,7 +80,7 @@ export default () => {
   ];
   const router = useRouter();
   return (
-    <Container style={{maxHeight: 600}}>
+    <Container >
       <OpacityOverlay />
       <HeroContainer style={{ maxWidth: 1150 }}>
         <StyledHeader links={navLinks} />
@@ -87,9 +90,9 @@ export default () => {
               We have now launched attractive scholarship options. Learn More
             </Notification>
             <Heading>
-              <span>Learn anywhere</span>
+              <span>Learn Anytime</span>
               <br />
-              <SlantedBackground>Anytime</SlantedBackground>
+              <SlantedBackground>Anywhere</SlantedBackground>
             </Heading>
             <PrimaryAction onClick={() => router.push("/login")}>
               Register For Free!
