@@ -41,6 +41,7 @@
     "@u-wave/react-vimeo": "^0.9.2",
     "antd": "4.6.6",
     "axios": "^0.21.0",
+    "firebase": "^8.2.9",
     "moment": "^2.29.1",
     "next": "10.0.3",
     "react": "17.0.1",
@@ -73,6 +74,5 @@
     "eslint-plugin-react": "^7.22.0",
     "pre-commit": "^1.2.2"
   },
-  "pre-commit":"lint"
-
+  "pre-commit": "lint"
 }
