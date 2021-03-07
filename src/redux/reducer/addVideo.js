@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as Types from '../actionTypes/courses';
+import * as Types from '../actionTypes/addVideo';
 
 function makeRequestReducer(actionType, initialState = {}) {
   const init = {
@@ -37,9 +37,6 @@ function makeRequestReducer(actionType, initialState = {}) {
 }
 
 export default combineReducers({
-  getSubjectStat: makeRequestReducer(Types.GET_SUBJECT_STAT),
-  getSubjects: makeRequestReducer(Types.GET_SUBJECTS),
-  getChapters: makeRequestReducer(Types.GET_CHAPTERS),
-  getTopics: makeRequestReducer(Types.GET_TOPICS),
-  getSubtopics: makeRequestReducer(Types.GET_SUBTOPICS),
+  addVideoData: makeRequestReducer(Types.ADD_VIDEO),
+  getVideoId: makeRequestReducer(Types.GET_VIDEO_ID),
 });

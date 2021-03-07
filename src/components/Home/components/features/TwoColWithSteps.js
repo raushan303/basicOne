@@ -33,7 +33,7 @@ const Heading = tw(
   SectionHeading
 )`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 
-const Steps = tw.ul`mt-12`;
+const Steps = tw.ul`mt-12 pl-0 md:pl-12`;
 const Step = tw.li`mt-8 flex flex-col md:flex-row items-center md:items-start`;
 const StepNumber = tw.div`font-semibold text-4xl leading-none text-gray-400`;
 const StepText = tw.div`mt-3 md:mt-0 md:ml-6`;

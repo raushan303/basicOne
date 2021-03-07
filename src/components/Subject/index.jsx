@@ -9,7 +9,7 @@ import { Row, Col } from 'antd';
 import SubjectWrapper from './style';
 
 import { SUBJECTS, PHYSICS } from '../../shared/subjects';
-import { getSubjects } from '../../redux/action/courses';
+import { getSubjects } from '../../redux/action/getCoursesData';
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;

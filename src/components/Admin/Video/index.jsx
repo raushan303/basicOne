@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
+import { connect } from 'react-redux';
+import { addVideo, getVideoId } from '../../../redux/action/addVideo';
 
 import VideoCard from '../VideoCard';
 
@@ -8,9 +10,10 @@ const { Option } = Select;
 
 const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
 
-function index() {
+function index({ addVideo, getVideoId, videoId, addVideoResponse }) {
   const [addMode, setAddMode] = useState(false);
   const [videoDetails, setVideoDetails] = useState({
+    id: -1,
     Grade: null,
     Subject: null,
     Chapter: null,
@@ -35,6 +38,21 @@ function index() {
     Chapter: [],
     Topic: [],
   });
+
+  useEffect(() => {
+    getVideoId();
+  }, []);
+
+  useEffect(() => {
+    if (!videoId?.error) {
+      const id = videoId?.data?.data?.count;
+      setVideoDetails((prevState) => ({ ...prevState, id }));
+    }
+  }, [videoId]);
+
+  useEffect(() => {
+    console.log(videoDetails);
+  }, [videoDetails]);
 
   const handleSelectChange = (field, type = '') => (val, child) => {
     if (type === 'search')
@@ -79,6 +97,21 @@ function index() {
       ...prevState,
       AddField: null,
     }));
+  };
+
+  const handleAddVideo = () => {
+    const formatData = {
+      id: videoDetails.id,
+      grade: videoDetails.Grade,
+      subjectName: videoDetails.Subject,
+      chapterName: videoDetails.Chapter,
+      topicName: videoDetails.Topic,
+      subtopicName: videoDetails.Title,
+      url: videoDetails.VideoLink,
+      videoMins: videoDetails.VideoTime,
+      note: videoDetails.Note,
+    };
+    addVideo(formatData);
   };
 
   return (
@@ -173,6 +206,7 @@ function index() {
             <div className='upload-container'>
               <Button
                 style={{ height: '100px', width: '100px', fontWeight: 500, borderRadius: '12px' }}
+                onClick={handleAddVideo}
               >
                 Upload
               </Button>
@@ -217,4 +251,11 @@ function index() {
   );
 }
 
-export default index;
+const mapStateToProps = (state) => {
+  return {
+    addVideoResponse: state.addVideo.addVideoData,
+    videoId: state.addVideo.getVideoId,
+  };
+};
+
+export default connect(mapStateToProps, { addVideo, getVideoId })(index);
