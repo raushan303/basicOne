@@ -58,7 +58,7 @@ const Card = styled.div`
 //   ${tw`pointer-events-none absolute right-0 bottom-0 w-64 opacity-25 transform translate-x-32 translate-y-48 `}
 // `;
 
-export default ({ cards = null, heading = "Amazing Features", subheading = "Features", description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }) => {
+export default ({ cards = null, heading = "Amazing Features", subheading = "Features", description = "Take the next step towards your acedemic goals with Basic One." }) => {
   /*
    * This componets has an array of object denoting the cards defined below. Each object in the cards array can have the key (Change it according to your need, you can also add more objects to have more cards in this feature component) or you can directly pass this using the cards prop:
    *  1) imageSrc - the image shown at the top of the card
@@ -71,13 +71,13 @@ export default ({ cards = null, heading = "Amazing Features", subheading = "Feat
     {
       imageSrc: ShieldIconImage,
       title: "Secure",
-      description: "We strictly only deal with vendors that provide top notch security."
+      description: "Your data is in safe hands, we have a dedicated team to moniter the site security."
     },
-    { imageSrc: SupportIconImage, title: "24/7 Support" },
-    { imageSrc: CustomizeIconImage, title: "Customizable" },
-    { imageSrc: ReliableIconImage, title: "Reliable" },
-    { imageSrc: FastIconImage, title: "Fast" },
-    { imageSrc: SimpleIconImage, title: "Easy" }
+    { imageSrc: SupportIconImage, title: "24/7 Support", description:'If you face any type of difficulties related to technical assistance or acedemics councelling, feel free to contact us.' },
+    { imageSrc: CustomizeIconImage, title: "Customizable", description:'Personalized plans are available for students having weak internet connectivity also.' },
+    { imageSrc: ReliableIconImage, title: "Reliable", description:"Every detail of a student's journey is planned and executed at the deepest level with subject matter experts, teachers and tools like videos, interactive animations, quizzes and assessments." },
+    { imageSrc: ShieldIconImage, title: "Excellents results", description:'We have tremendous results for years and are commited to provide you the best teachers with practical knowledge.' },
+    { imageSrc: SimpleIconImage, title: "Simple", description:'Simple and affordable payment options with heavy discounts and EMI options.' }
   ];
 
   if (!cards) cards = defaultCards;
