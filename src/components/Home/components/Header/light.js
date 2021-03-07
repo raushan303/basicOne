@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
@@ -45,12 +45,12 @@ export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-b
 export const NavToggle = tw.button`
   lg:hidden z-20 focus:outline-none hocus:text-primary-500 transition duration-300
 `;
-export const MobileNavLinks = motion.custom(styled.div`
-  ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900 bg-white`}
-  ${NavLinks} {
-    ${tw`flex flex-col items-center`}
-  }
-`);
+// export const MobileNavLinks = motion.custom(styled.div`
+//   ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900 bg-white`}
+//   ${NavLinks} {
+//     ${tw`flex flex-col items-center`}
+//   }
+// `);
 
 export const DesktopNavLinks = tw.nav`
   hidden lg:flex flex-1 justify-between items-center
@@ -113,8 +113,8 @@ export default ({
         {logoLink}
         {/* <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
           {links}
-        </MobileNavLinks> */}
-        {/* <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
+        </MobileNavLinks>
+        <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
           {showNavLinks ? <CloseIcon tw="w-6 h-6" /> : <MenuIcon tw="w-6 h-6" />}
         </NavToggle> */}
       </MobileNavLinksContainer>
@@ -130,22 +130,22 @@ export default ({
 
 const collapseBreakPointCssMap = {
   sm: {
-    mobileNavLinks: tw`sm:hidden`,
+    // mobileNavLinks: tw`sm:hidden`,
     desktopNavLinks: tw`sm:flex`,
     mobileNavLinksContainer: tw`sm:hidden`,
   },
   md: {
-    mobileNavLinks: tw`md:hidden`,
+    // mobileNavLinks: tw`md:hidden`,
     desktopNavLinks: tw`md:flex`,
     mobileNavLinksContainer: tw`md:hidden`,
   },
   lg: {
-    mobileNavLinks: tw`lg:hidden`,
+    // mobileNavLinks: tw`lg:hidden`,
     desktopNavLinks: tw`lg:flex`,
     mobileNavLinksContainer: tw`lg:hidden`,
   },
   xl: {
-    mobileNavLinks: tw`lg:hidden`,
+    // mobileNavLinks: tw`lg:hidden`,
     desktopNavLinks: tw`lg:flex`,
     mobileNavLinksContainer: tw`lg:hidden`,
   },

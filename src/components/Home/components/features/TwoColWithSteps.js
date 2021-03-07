@@ -61,16 +61,20 @@ export default ({
   const defaultSteps = [
     {
       heading: "Register",
-      description: "Create an account with us using Google or Facebook."
+      description: "Create an account with us using your phone number and basic acedemic details."
     },
     {
-      heading: "Download",
-      description: "Browse and Download the template that you like from the marketplace."
+      heading: "Start Learning",
+      description: "Experiece exclusive videos made by our experts and excell in your acedemics."
     },
     {
-      heading: "Run",
-      description: "Follow the instructions to setup and customize the template to your needs."
-    }
+      heading: "Personalized Reports",
+      description: "Give tests and with a detailed report where you can improve."
+    },
+    {
+      heading: "Ask Doubts",
+      description: "Our experts are always there for resolving you doubts."
+    },
   ];
 
   if (!steps) steps = defaultSteps;
