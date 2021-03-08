@@ -75,7 +75,7 @@ export default () => {
       <NavLink href="#">Pricing</NavLink>
     </NavLinks>,
     <NavLinks key={2}>
-      <PrimaryLink href="/subject">Log In</PrimaryLink>
+      <PrimaryLink href="/login">Log In</PrimaryLink>
     </NavLinks>,
   ];
   const router = useRouter();

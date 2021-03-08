@@ -38,4 +38,6 @@ function makeRequestReducer(actionType, initialState = {}) {
 
 export default combineReducers({
   getLoginData: makeRequestReducer(Types.LOGIN),
+  getsignUpData: makeRequestReducer(Types.SIGN_UP),
+  getRegisterData: makeRequestReducer(Types.REGISTER),
 });
