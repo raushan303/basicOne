@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
 import styled from 'styled-components';
+import RouteAuth from '../RouteAuth/PrivateRoute';
 const Wrapper = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
@@ -16,12 +17,12 @@ export default function Index(props) {
     if (typeof window !== 'undefined') setHeight(window?.innerHeight - 70);
   }, []);
   return (
-    <div>
+    <RouteAuth>
       <Header />
       <div style={{ display: 'flex', height: height }}>
         <Sidebar />
         <Wrapper>{children}</Wrapper>
       </div>
-    </div>
+    </RouteAuth>
   );
 }

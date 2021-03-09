@@ -4,7 +4,7 @@ import Register from './Register';
 import VerifyOtp from './VerifyOtp';
 import SignUp from './SignUp';
 
-import RouteAuth from '../RouteAuth/NonLoggedInPages';
+import RouteAuth from '../RouteAuth/PublicRoute';
 
 function index() {
   const [path, setPath] = useState('signUp');

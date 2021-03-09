@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '../Header';
 import styled from 'styled-components';
+import RouteAuth from '../RouteAuth/PrivateRoute';
 const Wrapper = styled.div`
   overflow-y: scroll;
   width: 100%;
@@ -11,9 +12,9 @@ const Wrapper = styled.div`
 export default function Index(props) {
   const { children } = props;
   return (
-    <div>
+    <RouteAuth>
       <Header />
       <Wrapper>{children}</Wrapper>
-    </div>
+    </RouteAuth>
   );
 }

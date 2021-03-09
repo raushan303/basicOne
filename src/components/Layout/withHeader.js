@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '../Header';
 import styled from 'styled-components';
+import RouteAuth from '../RouteAuth/PrivateRoute';
 const Wrapper = styled.div`
   width: 100%;
   height: calc(100vh - 70px);
@@ -10,9 +11,9 @@ const Wrapper = styled.div`
 export default function Index(props) {
   const { children } = props;
   return (
-    <div>
+    <RouteAuth>
       <Header />
       <Wrapper>{children}</Wrapper>
-    </div>
+    </RouteAuth>
   );
 }
