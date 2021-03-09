@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as Types from '../actionTypes/courses';
+import * as Types from '../actionTypes/user';
 
 function makeRequestReducer(actionType, initialState = {}) {
   const init = {
@@ -37,9 +37,8 @@ function makeRequestReducer(actionType, initialState = {}) {
 }
 
 export default combineReducers({
-  getSubjectStat: makeRequestReducer(Types.GET_SUBJECT_STAT),
-  getSubjects: makeRequestReducer(Types.GET_SUBJECTS),
-  getChapters: makeRequestReducer(Types.GET_CHAPTERS),
-  getTopics: makeRequestReducer(Types.GET_TOPICS),
-  getSubtopics: makeRequestReducer(Types.GET_SUBTOPICS),
+  getLoginData: makeRequestReducer(Types.LOGIN),
+  getSignUpData: makeRequestReducer(Types.SIGN_UP),
+  getRegisterData: makeRequestReducer(Types.REGISTER),
+  getUserData: makeRequestReducer(Types.SHOW_USER),
 });

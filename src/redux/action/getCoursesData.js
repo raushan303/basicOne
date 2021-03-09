@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as actionTypes from '../actionTypes/courses';
+import * as actionTypes from '../actionTypes/getCoursesData';
 import * as actionHandlers from '../helpers/actionHandlers';
 import headers from '../helpers/headers';
 import { LOCAL_BASE_URL } from '../../shared/baseurl';

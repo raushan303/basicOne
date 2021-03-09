@@ -24,7 +24,7 @@ const StyledHeader = styled(Header)`
   }
 `;
 const Container = styled.div`
-  ${tw`relative -mt-4 bg-center bg-cover p-1`}
+  ${tw`relative bg-center bg-cover p-1`}
   background-image: url("/images/avt1.jpg");
   // box-shadow: inset 0 0 0 1000px rgba(0,0,0,.0);
 
@@ -75,7 +75,7 @@ export default () => {
       <NavLink href="#">Pricing</NavLink>
     </NavLinks>,
     <NavLinks key={2}>
-      <PrimaryLink href="/subject">Log In</PrimaryLink>
+      <PrimaryLink href="/login">Log In</PrimaryLink>
     </NavLinks>,
   ];
   const router = useRouter();
@@ -94,7 +94,7 @@ export default () => {
               <br />
               <SlantedBackground>Anywhere</SlantedBackground>
             </Heading>
-            <PrimaryAction onClick={() => router.push("/login")}>
+            <PrimaryAction onClick={() => router.push("/signup")}>
               Register For Free!
             </PrimaryAction>
           </LeftColumn>

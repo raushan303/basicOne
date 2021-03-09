@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,10 +7,18 @@ import Link from 'next/link';
 
 import { HeaderWrapper } from './style';
 import Drawer from './Drawer';
+import { useRouter } from 'next/router';
 
-function Navbar(props) {
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+import { connect } from 'react-redux';
+import { showUser, updateUserDetails } from '../../redux/action/user';
+
+function index({ showUser, updateUserDetails, userData }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerVisible, setDrawerVisible] = useState(false);
+  const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -19,12 +27,40 @@ function Navbar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    const token = cookies.get('id_token');
+    if (token) {
+      showUser();
+    } else {
+      router.push('/');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!userData.isLoading && userData.error) {
+      router.push('/');
+    }
+    if (!userData.error) {
+      const response = userData?.data?.data;
+      if (response) {
+        if (response.exist) {
+          const userInfo = userData?.data?.data?.user?.userInfo;
+          updateUserDetails({ userId: userInfo.id, isLoggedIn: true, phoneNo: userInfo.phoneNo });
+        } else {
+          cookies.remove('id_token', {
+            path: '/',
+            domain: 'http://localhost:5000/',
+          });
+          router.push('/');
+        }
+      }
+    }
+  }, [userData]);
+
   return (
     <HeaderWrapper>
-      <Drawer
-        isDrawerVisible={isDrawerVisible}
-        setDrawerVisible={setDrawerVisible}
-      />
+      <Drawer isDrawerVisible={isDrawerVisible} setDrawerVisible={setDrawerVisible} />
 
       <div className='outer-container'>
         <div
@@ -77,4 +113,10 @@ function Navbar(props) {
   );
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.user.getUserData,
+  };
+};
+
+export default connect(mapStateToProps, { showUser, updateUserDetails })(index);

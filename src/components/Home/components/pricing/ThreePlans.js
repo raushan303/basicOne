@@ -63,7 +63,7 @@ const PlanHeader = styled.div`
   }
 `;
 const PlanFeatures = styled.div`
-  ${tw`flex flex-col -mx-8 px-8 py-8 border-t-2 border-b-2 flex-1`}
+  ${tw`flex flex-col px-8 py-8 border-t-2 border-b-2 flex-1`}
   .feature {
     ${tw`mt-5 first:mt-0 font-medium`}
     &:not(.mainFeature) {
