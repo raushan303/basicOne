@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container as ContainerBase } from '../../misc/Layouts';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
-
-import { login } from '../../shared/http';
 import { useRouter } from 'next/router';
 import Password from 'antd/lib/input/Password';
+import { message } from 'antd';
+
+import { connect } from 'react-redux';
+import { login, updateUserDetails } from '../../redux/action/user';
+import Loading from '../Loader';
+
+import RouteAuth from '../RouteAuth/NonLoggedInPages';
 
 const Container = tw(
   ContainerBase
@@ -34,65 +39,79 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-export default function SignIn({
-  headingText = 'Sign In To Basic One',
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
-  submitButtonText = 'Sign In',
-
-  forgotPasswordUrl = '#',
-  signupUrl = '#',
-}) {
+function index({ login, loginResponse, updateUserDetails }) {
   const router = useRouter();
-  const myinput = {
-    num: '',
-    pass: '',
-  };
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('password').value;
-    console.log(event.target, 'lml');
-
-    var res = await login(email, pass);
-    console.log(res, ' res ');
-    if (res.err) {
-      console.log(res.err);
-    }
-    if (res.token) {
-      router.push('/subject', '/subject');
-    }
+    const phoneNo = document.getElementById('phone').value;
+    const password = document.getElementById('password').value;
+    login({ phoneNo, password });
   };
+  useEffect(() => {
+    if (!loginResponse.error) {
+      const response = loginResponse?.data?.data;
+      if (response) {
+        if (response.exist) {
+          const userInfo = loginResponse?.data?.data?.user?.userInfo;
+          const token = userInfo.token;
+          updateUserDetails({ userId: userInfo.id, isLoggedIn: true });
+          cookies.set('id_token', token, {
+            path: '/',
+            maxAge: 31540000,
+          });
+          router.push('/subject');
+        } else {
+          message.error('wrong credentials');
+        }
+      }
+    }
+  }, [loginResponse]);
+
   return (
-    <Container>
-      <Content>
-        <MainContainer>
-          <MainContent>
-            <Heading>{headingText}</Heading>
-            <FormContainer>
-              <Form onSubmit={handlesubmit}>
-                <Input type='email' placeholder='Email' id='email' />
-                <Input type='password' placeholder='Password' id='password' />
-                <SubmitButton type='submit'>
-                  <span className='text'>{submitButtonText}</span>
-                </SubmitButton>
-              </Form>
-              <p tw='mt-6 text-xs text-gray-600 text-center'>
-                <a href={forgotPasswordUrl}>Forgot Password ?</a>
-              </p>
-              <p tw='mt-8 text-sm text-gray-600 text-center'>
-                Dont have an account?{' '}
-                <a href="/signup">
-                  <div>Sign Up</div>
-                </a>
-              </p>
-            </FormContainer>
-          </MainContent>
-        </MainContainer>
-        <IllustrationContainer>
-          <IllustrationImage imageSrc={'/images/loginBanner.png'} />
-        </IllustrationContainer>
-      </Content>
-    </Container>
+    <RouteAuth>
+      <Container>
+        {loginResponse?.isLoading && <Loading />}
+        <Content>
+          <MainContainer>
+            <MainContent>
+              <Heading>Sign In To Basic One</Heading>
+              <FormContainer>
+                <Form onSubmit={handlesubmit}>
+                  <Input type='text' placeholder='Phone Number' id='phone' />
+                  <Input type='password' placeholder='Password' id='password' />
+                  <SubmitButton type='submit'>
+                    <span className='text'>Sign In</span>
+                  </SubmitButton>
+                </Form>
+                <p tw='mt-6 text-xs text-gray-600 text-center'>
+                  <a href='#'>Forgot Password ?</a>
+                </p>
+                <p tw='mt-8 text-sm text-gray-600 text-center'>
+                  Dont have an account?{' '}
+                  <a href='/signup'>
+                    <div>Sign Up</div>
+                  </a>
+                </p>
+              </FormContainer>
+            </MainContent>
+          </MainContainer>
+          <IllustrationContainer>
+            <IllustrationImage imageSrc={'/images/loginBanner.png'} />
+          </IllustrationContainer>
+        </Content>
+      </Container>
+    </RouteAuth>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loginResponse: state.user.getLoginData,
+  };
+};
+
+export default connect(mapStateToProps, { login, updateUserDetails })(index);

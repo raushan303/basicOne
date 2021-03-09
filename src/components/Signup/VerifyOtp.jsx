@@ -3,11 +3,9 @@ import { Container as ContainerBase } from '../../misc/Layouts';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
-import { verifyotp } from '../../shared/http';
-
-import { login } from '../../shared/http';
-import { useRouter } from 'next/router';
 import Password from 'antd/lib/input/Password';
+import { message } from 'antd';
+
 const Container = tw(
   ContainerBase
 )`min-h-screen bg-primary-900 text-white font-medium flex justify-center`;
@@ -17,7 +15,6 @@ const MainContainer = tw.div`w-full lg:w-1/2 xl:w-5/12 sm:p-12 flex flex-col ite
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 const FormContainer = tw.div`w-full flex-1 mt-8`;
-
 
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-0 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
@@ -36,38 +33,29 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-export default function SignIn({
-  contactnumber,
-  setPath,
-  headingText = 'Sign Up To Basic One',
-  submitButtonText = 'Continue',
-}) {
-  const router = useRouter();
-  const myinput = {
-    num: '',
-  };
-
+export default function SignIn({ setPath }) {
   const handlesubmit = async (event) => {
     event.preventDefault();
     const otp = document.getElementById('otp').value;
-    var res = await verifyotp(otp, contactnumber);
-    if (res.message == 'OTP Verified') {
+    if (otp == '123456') {
       setPath('register');
     } else {
+      message.error('wrong otp');
       setPath('signUp');
     }
   };
+
   return (
     <Container>
       <Content>
         <MainContainer>
           <MainContent>
-            <Heading>{headingText}</Heading>
+            <Heading>Sign Up To Basic One</Heading>
             <FormContainer>
               <Form onSubmit={handlesubmit}>
                 <Input type='OTP' placeholder='OTP' id='otp' />
                 <SubmitButton type='submit'>
-                  <span className='text'>{submitButtonText}</span>
+                  <span className='text'>Enter Otp</span>
                 </SubmitButton>
               </Form>
             </FormContainer>

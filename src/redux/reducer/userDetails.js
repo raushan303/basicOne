@@ -2,8 +2,13 @@ import { combineReducers } from 'redux';
 import * as Types from '../actionTypes/user';
 
 function makeRequestReducer(actionType, initialState = {}) {
+  const userDetails = {
+    phoneNo: null,
+    userId: null,
+    isLoggedIn: false,
+  };
   const init = {
-    data: [],
+    data: userDetails,
     error: false,
     isLoading: false,
     ...initialState,
@@ -20,7 +25,7 @@ function makeRequestReducer(actionType, initialState = {}) {
         return {
           ...state,
           isLoading: false,
-          data: payload.data,
+          data: { ...userDetails, ...payload.data },
           error: false,
         };
       case `${actionType}.failed`:
@@ -37,8 +42,5 @@ function makeRequestReducer(actionType, initialState = {}) {
 }
 
 export default combineReducers({
-  getLoginData: makeRequestReducer(Types.LOGIN),
-  getSignUpData: makeRequestReducer(Types.SIGN_UP),
-  getRegisterData: makeRequestReducer(Types.REGISTER),
-  getUserData: makeRequestReducer(Types.SHOW_USER),
+  userDetails: makeRequestReducer(Types.UPDATE_USER_DETAILS),
 });

@@ -1,14 +1,18 @@
-import React from 'react';
-// import AnimationRevealPage from "../../lib/helpers/AnimationRevealPage.js";
+import React, { useEffect } from 'react';
 import { Container as ContainerBase } from '../../misc/Layouts';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
-import { sendotp } from '../../shared/http';
 
-import { login } from '../../shared/http';
+import { connect } from 'react-redux';
+import { signup, updateUserDetails } from '../../redux/action/user';
+import Loading from '../Loader';
+
 import { useRouter } from 'next/router';
 import Password from 'antd/lib/input/Password';
+
+import { message } from 'antd';
+
 const Container = tw(
   ContainerBase
 )`min-h-screen bg-primary-900 text-white font-medium flex justify-center`;
@@ -35,49 +39,50 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-export default function SignIn({
-  setContactNumber,
-  setPath,
-  headingText = 'Sign Up To Basic One',
-
-  submitButtonText = 'Sign Up',
-  forgotPasswordUrl = '#',
-  signupUrl = '#',
-}) {
+function index({ setPath, signup, signUpResponse, updateUserDetails }) {
   const router = useRouter();
-  const myinput = {
-    num: '',
-  };
 
   const handlesubmit = async (event) => {
     event.preventDefault();
     const phone = document.getElementById('phone').value;
-    var res = await sendotp(phone);
-    console.log(res.message, 'otp');
-    if (res.message == 'OTP Sent') {
-      setContactNumber(phone);
-      setPath('verifyOtp');
-    }
+    signup({ phoneNo: phone });
   };
+
+  useEffect(() => {
+    if (signUpResponse) {
+      if (!signUpResponse?.error && signUpResponse?.data?.data) {
+        const data = signUpResponse?.data?.data;
+        if (data?.exist) {
+          message.error('already exist');
+        } else {
+          const phone = document.getElementById('phone').value;
+          updateUserDetails({ phoneNo: phone });
+          setPath('verifyOtp');
+        }
+      }
+    }
+  }, [signUpResponse]);
+
   return (
     <Container>
+      {signUpResponse?.isLoading && <Loading />}
       <Content>
         <MainContainer>
           <MainContent>
-            <Heading>{headingText}</Heading>
+            <Heading>Sign Up To Basic One</Heading>
             <FormContainer>
               <Form onSubmit={handlesubmit}>
                 <Input type='phone' placeholder='Phone no.' id='phone' />
                 <SubmitButton type='submit'>
-                  <span className='text'>{submitButtonText}</span>
+                  <span className='text'>Sign Up</span>
                 </SubmitButton>
               </Form>
               <p tw='mt-6 text-xs text-gray-600 text-center'>
-                <a href={forgotPasswordUrl}>Forgot Password ?</a>
+                <a href='#'>Forgot Password ?</a>
               </p>
               <p tw='mt-8 text-sm text-gray-600 text-center'>
                 Already have an account?{' '}
-                <a href="/login">
+                <a href='/login'>
                   <div>Sign In</div>
                 </a>
               </p>
@@ -91,3 +96,11 @@ export default function SignIn({
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    signUpResponse: state.user.getSignUpData,
+  };
+};
+
+export default connect(mapStateToProps, { signup, updateUserDetails })(index);

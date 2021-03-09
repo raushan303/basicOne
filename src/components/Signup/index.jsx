@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Register from "./Register";
-import VerifyOtp from "./VerifyOtp";
-import SignUp from "./SignUp";
+import Register from './Register';
+import VerifyOtp from './VerifyOtp';
+import SignUp from './SignUp';
 
-function Login() {
-  const [contactNumber, setContactNumber] = useState(null);
-  const [path, setPath] = useState("signUp");
+import RouteAuth from '../RouteAuth/NonLoggedInPages';
+
+function index() {
+  const [path, setPath] = useState('signUp');
 
   const component = (
     <>
-      {path === "signUp" && (
-        <SignUp setPath={setPath} setContactNumber={setContactNumber} />
-      )}
-      {path === "verifyOtp" && (
-        <VerifyOtp contactNumber={contactNumber} setPath={setPath} />
-      )}
-      {path === "register" && <Register contactNumber={contactNumber} />}
+      {path === 'signUp' && <SignUp setPath={setPath} />}
+      {path === 'verifyOtp' && <VerifyOtp setPath={setPath} />}
+      {path === 'register' && <Register />}
     </>
   );
 
-  return <>{ component }</>;
+  return <RouteAuth>{component}</RouteAuth>;
 }
-export default Login;
+export default index;

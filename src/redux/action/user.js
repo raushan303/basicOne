@@ -48,3 +48,23 @@ export const register = (data) =>
         dispatch(actionHandlers.handleError(actionTypes.REGISTER_FAILED, error));
       });
   };
+
+export const showUser = () =>
+  function (dispatch) {
+    dispatch(actionHandlers.tryHandle(actionTypes.SHOW_USER));
+    return axios
+      .get(`${LOCAL_BASE_URL}/showUser`, headers())
+      .then((response) => {
+        if (response) {
+          dispatch(actionHandlers.handleResponse(actionTypes.SHOW_USER_SUCCESS, response));
+        }
+      })
+      .catch((error) => {
+        dispatch(actionHandlers.handleError(actionTypes.SHOW_USER_FAILED, error));
+      });
+  };
+
+export const updateUserDetails = (data) =>
+  function (dispatch) {
+    dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_USER_DETAILS_SUCCESS, data));
+  };

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container as ContainerBase } from '../../misc/Layouts';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
-import { register } from '../../shared/http';
 
-import { login } from '../../shared/http';
+import { connect } from 'react-redux';
+import { register, updateUserDetails } from '../../redux/action/user';
+import Loading from '../Loader';
+
 import { useRouter } from 'next/router';
 import Password from 'antd/lib/input/Password';
 const Container = tw(
@@ -16,8 +18,6 @@ const MainContainer = tw.div`w-full lg:w-1/2 xl:w-5/12 sm:p-12 flex flex-col ite
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
 const FormContainer = tw.div`w-full flex-1 mt-8`;
-
-const SocialButtonsContainer = tw.div`flex flex-col items-center`;
 
 const Form = tw.form`mx-auto max-w-xs`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-0 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
@@ -36,54 +36,62 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
-export default function SignIn({
-  contactnumber,
-  headingText = 'Sign Up To Basic One',
-  submitButtonText = 'Continue',
-}) {
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+function index({ register, registerResponse, userDetails, updateUserDetails }) {
   const router = useRouter();
-  const myinput = {
-    num: '',
-  };
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    // const otp = document.getElementById("otp").value;
-    var res = await register(
-      document.getElementsByTagName('input')[0].value,
-      document.getElementsByTagName('input')[1].value,
-      document.getElementsByTagName('input')[2].value,
-      document.getElementsByTagName('input')[3].value,
-      document.getElementsByTagName('input')[4].value,
-      document.getElementsByTagName('input')[5].value,
-      document.getElementsByTagName('input')[6].value,
-      document.getElementsByTagName('input')[7].value
-    );
-    console.log(res, '2');
-    if (res.message == 'Successfully registered') {
-      // localStorage.setItem('token', res.token);
-      router.push('/subject', '/subject');
-    }
+    const tmpUserDetails = {
+      phoneNo: userDetails.phoneNo,
+      name: document.getElementsByTagName('input')[0].value,
+      gender: document.getElementsByTagName('input')[1].value,
+      password: document.getElementsByTagName('input')[2].value,
+      email: document.getElementsByTagName('input')[3].value,
+      state: document.getElementsByTagName('input')[4].value,
+      city: document.getElementsByTagName('input')[5].value,
+      grade: document.getElementsByTagName('input')[6].value,
+      board: document.getElementsByTagName('input')[7].value,
+    };
+    register(tmpUserDetails);
   };
+
+  useEffect(() => {
+    if (!registerResponse?.error) {
+      if (registerResponse?.data?.data?.success) {
+        const userInfo = registerResponse?.data?.data?.user?.userInfo;
+        const token = userInfo.token;
+        updateUserDetails({ userId: userInfo.id, isLoggedIn: true });
+        cookies.set('id_token', token, {
+          path: '/',
+          maxAge: 31540000,
+        });
+        router.push('/subject');
+      }
+    }
+  }, [registerResponse]);
+
   return (
     <Container>
+      {registerResponse?.isLoading && <Loading />}
       <Content>
         <MainContainer>
           <MainContent>
-            <Heading>{headingText}</Heading>
+            <Heading>Sign Up To Basic One</Heading>
             <FormContainer>
               <Form onSubmit={handlesubmit}>
-                <Input type='fname' placeholder='fname' id='fname' />
-                <Input type='lname' placeholder='lname' id='lname' />
-                <Input type='pass' placeholder='pass' id='pass' />
+                <Input type='name' placeholder='Name' id='name' />
+                <Input type='gender' placeholder='Gender' id='gender' />
+                <Input type='pass' placeholder='password' id='password' />
                 <Input type='email' placeholder='email' id='email' />
                 <Input type='state' placeholder='state' id='state' />
                 <Input type='city' placeholder='city' id='city' />
                 <Input type='grade' placeholder='grade' id='grade' />
                 <Input type='board' placeholder='board' id='board' />
-
                 <SubmitButton type='submit'>
-                  <span className='text'>{submitButtonText}</span>
+                  <span className='text'>Register</span>
                 </SubmitButton>
               </Form>
             </FormContainer>
@@ -96,3 +104,12 @@ export default function SignIn({
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    registerResponse: state.user.getRegisterData,
+    userDetails: state.userDetails.userDetails.data,
+  };
+};
+
+export default connect(mapStateToProps, { register, updateUserDetails })(index);

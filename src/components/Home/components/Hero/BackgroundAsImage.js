@@ -94,7 +94,7 @@ export default () => {
               <br />
               <SlantedBackground>Anywhere</SlantedBackground>
             </Heading>
-            <PrimaryAction onClick={() => router.push("/login")}>
+            <PrimaryAction onClick={() => router.push("/signup")}>
               Register For Free!
             </PrimaryAction>
           </LeftColumn>
