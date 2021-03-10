@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { login, updateUserDetails } from '../../redux/action/user';
 import Loading from '../Loader';
 
-import RouteAuth from '../RouteAuth/NonLoggedInPages';
+import RouteAuth from '../RouteAuth/PublicRoute';
 
 const Container = tw(
   ContainerBase

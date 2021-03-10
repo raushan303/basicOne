@@ -3,6 +3,7 @@ import { Wrapper } from './style';
 import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
 import { connect } from 'react-redux';
 import { addVideo, getVideoId } from '../../../redux/action/addVideo';
+import { getSubjects, getChapters, getTopics } from '../../../redux/action/getCoursesData';
 
 import VideoCard from '../VideoCard';
 
@@ -10,10 +11,20 @@ const { Option } = Select;
 
 const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
 
-function index({ addVideo, getVideoId, videoId, addVideoResponse }) {
+function index({
+  addVideo,
+  getVideoId,
+  videoId,
+  addVideoResponse,
+  getSubjects,
+  getChapters,
+  getTopics,
+  getSubjectsResponse,
+  getChaptersResponse,
+  getTopicsResponse,
+}) {
   const [addMode, setAddMode] = useState(false);
   const [videoDetails, setVideoDetails] = useState({
-    id: -1,
     Grade: null,
     Subject: null,
     Chapter: null,
@@ -39,20 +50,9 @@ function index({ addVideo, getVideoId, videoId, addVideoResponse }) {
     Topic: [],
   });
 
-  useEffect(() => {
-    getVideoId();
-  }, []);
-
-  useEffect(() => {
-    if (!videoId?.error) {
-      const id = videoId?.data?.data?.count;
-      setVideoDetails((prevState) => ({ ...prevState, id }));
-    }
-  }, [videoId]);
-
-  useEffect(() => {
-    console.log(videoDetails);
-  }, [videoDetails]);
+  // useEffect(() => {
+  //   console.log(videoDetails);
+  // }, [videoDetails]);
 
   const handleSelectChange = (field, type = '') => (val, child) => {
     if (type === 'search')
@@ -101,7 +101,6 @@ function index({ addVideo, getVideoId, videoId, addVideoResponse }) {
 
   const handleAddVideo = () => {
     const formatData = {
-      id: videoDetails.id,
       grade: videoDetails.Grade,
       subjectName: videoDetails.Subject,
       chapterName: videoDetails.Chapter,
@@ -255,7 +254,16 @@ const mapStateToProps = (state) => {
   return {
     addVideoResponse: state.addVideo.addVideoData,
     videoId: state.addVideo.getVideoId,
+    getSubjectsResponse: state.courses.getSubjects,
+    getChaptersResponse: state.courses.getChapters,
+    getTopicsResponse: state.courses.getTopics,
   };
 };
 
-export default connect(mapStateToProps, { addVideo, getVideoId })(index);
+export default connect(mapStateToProps, {
+  addVideo,
+  getVideoId,
+  getSubjects,
+  getChapters,
+  getTopics,
+})(index);

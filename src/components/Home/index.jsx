@@ -10,7 +10,7 @@ import tw from 'twin.macro';
 import ContactUsForm from './components/forms/TwoColContactUsWithIllustration.js';
 
 import Footer from './components/footers/MiniCenteredFooter.js';
-import RouteAuth from '../RouteAuth/NonLoggedInPages';
+import RouteAuth from '../RouteAuth/PublicRoute';
 
 export default function HomeComponent(props) {
   const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;

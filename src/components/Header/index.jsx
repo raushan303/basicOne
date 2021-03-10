@@ -15,7 +15,7 @@ const cookies = new Cookies();
 import { connect } from 'react-redux';
 import { showUser, updateUserDetails } from '../../redux/action/user';
 
-function index({ showUser, updateUserDetails, userData }) {
+function index({ updateUserDetails }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isDrawerVisible, setDrawerVisible] = useState(false);
   const router = useRouter();
@@ -28,35 +28,13 @@ function index({ showUser, updateUserDetails, userData }) {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    const token = cookies.get('id_token');
-    if (token) {
-      showUser();
-    } else {
-      router.push('/');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!userData.isLoading && userData.error) {
-      router.push('/');
-    }
-    if (!userData.error) {
-      const response = userData?.data?.data;
-      if (response) {
-        if (response.exist) {
-          const userInfo = userData?.data?.data?.user?.userInfo;
-          updateUserDetails({ userId: userInfo.id, isLoggedIn: true, phoneNo: userInfo.phoneNo });
-        } else {
-          cookies.remove('id_token', {
-            path: '/',
-            domain: 'http://localhost:5000/',
-          });
-          router.push('/');
-        }
-      }
-    }
-  }, [userData]);
+  const LOGOUT = () => {
+    updateUserDetails({ userId: null, isLoggedIn: false, phoneNo: null });
+    cookies.remove('id_token', {
+      path: '/',
+    });
+    router.push('/');
+  };
 
   return (
     <HeaderWrapper>
@@ -102,6 +80,7 @@ function index({ showUser, updateUserDetails, userData }) {
           </MenuItem>
           <MenuItem
             onClick={() => {
+              LOGOUT();
               handleClose();
             }}
           >
