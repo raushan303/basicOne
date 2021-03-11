@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Wrapper } from './style';
 import EditModal from '../EditModal';
 import { storage } from "../../../lib/firebase";
+import axios from 'axios';
+import {VIMEO_AUTH_TOKEN} from '../../../shared/SAMPLE_ENV';
+
 
 
 function index() {
@@ -32,9 +35,43 @@ function index() {
     );
   };
 
+  const getImageUrl = async () => {
+    try {
+      const response = await axios.post(
+        `https://api.vimeo.com/me/videos`,
+        undefined,
+        {
+          headers: {
+            authorization:VIMEO_AUTH_TOKEN,
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+const [formContent, setFormContent] = useState('')
+
+// useEffect(()=>{
+//   videoUpload();
+// },[])
+  const videoUpload=async (v)=>{
+    const imgUrl=await getImageUrl();
+    console.log(v, imgUrl?.data?.link);
+    setFormContent(imgUrl?.data?.upload?.form)
+  }
+
   return (
     <Wrapper>
       <input type='file' onChange={(image)=>{handleUpload(image.target.files[0])}}/>
+      <div
+          className="mt-20"
+          dangerouslySetInnerHTML={{
+            __html: formContent,
+          }}></div>
+      {/* <input type='file' onChange={(e)=>{videoUpload(e)}}/> */}
+      <button onClick={()=>{videoUpload();}}>Upload File</button>
       <EditModal visible={visible} setVisible={setVisible} />
       <div onClick={() => setVisible(true)} className='avatar-container'>
         <img alt='profile' src='/images/undraw6.svg' />
