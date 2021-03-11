@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const headers = () => {
-  const Authorization = cookies.get('id_token');
+  const Authorization = cookies.get('token_id');
   return Authorization
     ? {
         headers: {

@@ -63,8 +63,8 @@ function index({ register, registerResponse, userDetails, updateUserDetails }) {
       if (registerResponse?.data?.data?.success) {
         const userInfo = registerResponse?.data?.data?.user?.userInfo;
         const token = userInfo.token;
-        updateUserDetails({ userId: userInfo.id, isLoggedIn: true });
-        cookies.set('id_token', token, {
+        updateUserDetails({ userId: userInfo.userId, isLoggedIn: true });
+        cookies.set('token_id', token, {
           path: '/',
           maxAge: 31540000,
         });

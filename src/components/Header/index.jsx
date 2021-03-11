@@ -30,7 +30,7 @@ function index({ updateUserDetails }) {
 
   const LOGOUT = () => {
     updateUserDetails({ userId: null, isLoggedIn: false, phoneNo: null });
-    cookies.remove('id_token', {
+    cookies.remove('token_id', {
       path: '/',
     });
     router.push('/');
