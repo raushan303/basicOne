@@ -13,7 +13,7 @@ function index(props) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const token = cookies.get('id_token');
+    const token = cookies.get('token_id');
     if (token) {
       router.push('/subject');
     } else {

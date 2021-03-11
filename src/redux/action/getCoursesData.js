@@ -4,11 +4,11 @@ import * as actionHandlers from '../helpers/actionHandlers';
 import headers from '../helpers/headers';
 import { LOCAL_BASE_URL } from '../../shared/baseurl';
 
-export const getSubjectStat = (subject, grade) =>
+export const getSubjectStat = (subjectId) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_SUBJECT_STAT));
     return axios
-      .get(`${LOCAL_BASE_URL}/getSubjectStat/${grade}/${subject}`, headers())
+      .get(`${LOCAL_BASE_URL}/getSubjectStat/${subjectId}`, headers())
       .then((response) => {
         if (response) {
           dispatch(actionHandlers.handleResponse(actionTypes.GET_SUBJECT_STAT_SUCCESS, response));
@@ -23,7 +23,7 @@ export const getSubjects = (grade) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_SUBJECTS));
     return axios
-      .get(`${LOCAL_BASE_URL}/${grade}/getSubjects`, headers())
+      .get(`${LOCAL_BASE_URL}/getSubjects/${grade}`, headers())
       .then((response) => {
         if (response) {
           dispatch(actionHandlers.handleResponse(actionTypes.GET_SUBJECTS_SUCCESS, response));
@@ -35,11 +35,11 @@ export const getSubjects = (grade) =>
       });
   };
 
-export const getChapters = (subject, grade) =>
+export const getChapters = (subjectId) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_CHAPTERS));
     return axios
-      .get(`${LOCAL_BASE_URL}/getChapters/${grade}/${subject}`, headers())
+      .get(`${LOCAL_BASE_URL}/getChapters/${subjectId}`, headers())
       .then((response) => {
         if (response) {
           dispatch(actionHandlers.handleResponse(actionTypes.GET_CHAPTERS_SUCCESS, response));
@@ -50,11 +50,11 @@ export const getChapters = (subject, grade) =>
       });
   };
 
-export const getTopics = (subject, chapter, grade) =>
+export const getTopics = (chapterId) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_TOPICS));
     return axios
-      .get(`${LOCAL_BASE_URL}/getTopics/${grade}/${subject}/${chapter}`, headers())
+      .get(`${LOCAL_BASE_URL}/getTopics/${chapterId}`, headers())
       .then((response) => {
         if (response) {
           dispatch(actionHandlers.handleResponse(actionTypes.GET_TOPICS_SUCCESS, response));
@@ -65,11 +65,11 @@ export const getTopics = (subject, chapter, grade) =>
       });
   };
 
-export const getSubtopics = (subject, chapter, topic, grade) =>
+export const getSubtopics = (topicId) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_SUBTOPICS));
     return axios
-      .get(`${LOCAL_BASE_URL}/getSubtopics/${grade}/${subject}/${chapter}/${topic}`, headers())
+      .get(`${LOCAL_BASE_URL}/getSubtopics/${topicId}`, headers())
       .then((response) => {
         if (response) {
           dispatch(actionHandlers.handleResponse(actionTypes.GET_SUBTOPICS_SUCCESS, response));

@@ -13,7 +13,7 @@ function index({ showUser, userData, updateUserDetails, ...props }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const token = cookies.get('id_token');
+    const token = cookies.get('token_id');
     if (token) {
       showUser();
     } else {
@@ -31,9 +31,13 @@ function index({ showUser, userData, updateUserDetails, ...props }) {
         if (response.exist) {
           setLoading(false);
           const userInfo = userData?.data?.data?.user?.userInfo;
-          updateUserDetails({ userId: userInfo.id, isLoggedIn: true, phoneNo: userInfo.phoneNo });
+          updateUserDetails({
+            userId: userInfo.userId,
+            isLoggedIn: true,
+            phoneNo: userInfo.phoneNo,
+          });
         } else {
-          cookies.remove('id_token', {
+          cookies.remove('token_id', {
             path: '/',
           });
           router.push('/');
