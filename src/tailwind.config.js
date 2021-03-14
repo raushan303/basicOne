@@ -22,6 +22,9 @@ module.exports = {
       'white-s':'#F5F6F8',
       'white-b':'#ebebeb',
       'white-m':'#b9b9b9',
+      'color-1':'rgba(0, 0, 0, 0.45)',
+      'color-2':'rgba(0, 0, 0, 0.85)',
+
 
       primary: {
         100: '#a273ff',
@@ -244,7 +247,8 @@ module.exports = {
       outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
       raised: '0 20px 50px rgba(0,0,0, 0.075)',
       none: 'none',
-      'bs-1':'0 0 20px 0 rgb(0 0 0 / 15%)'
+      'bs-1':'0 0 20px 0 rgb(0 0 0 / 15%)',
+      'bs-2':'rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px'
     },
     container: {},
     cursor: {

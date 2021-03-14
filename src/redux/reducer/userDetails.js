@@ -21,6 +21,7 @@ function makeRequestReducer(actionType, initialState = {}) {
         return {
           ...state,
           isLoading: true,
+          response: false,
         };
       case `${actionType}.success`:
         return {

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as Types from '../actionTypes/addVideo';
+import * as Types from '../actionTypes/getSubtopicsByAuthor';
 
 function makeRequestReducer(actionType, initialState = {}) {
   const init = {
@@ -41,6 +41,8 @@ function makeRequestReducer(actionType, initialState = {}) {
 }
 
 export default combineReducers({
-  addVideoData: makeRequestReducer(Types.ADD_VIDEO),
-  getVideoId: makeRequestReducer(Types.GET_VIDEO_ID),
+  getSubtopicsByGrade: makeRequestReducer(Types.GET_SUBTOPICS_BY_GRADE),
+  getSubtopicsBySubject: makeRequestReducer(Types.GET_SUBTOPICS_BY_SUBJECT),
+  getSubtopicsByChapter: makeRequestReducer(Types.GET_SUBTOPICS_BY_CHAPTER),
+  getSubtopicsByTopic: makeRequestReducer(Types.GET_SUBTOPICS_BY_TOPIC),
 });

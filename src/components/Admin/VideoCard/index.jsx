@@ -1,15 +1,20 @@
 import React from 'react';
 import { Wrapper } from './style';
 import { Form } from 'antd';
-const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
+const fieldData = [
+  { listName: 'Grade', idName: 'gradeId', fieldName: 'grade' },
+  { listName: 'Subject', idName: 'subjectId', fieldName: 'subjectName' },
+  { listName: 'Chapter', idName: 'chapterId', fieldName: 'chapterName' },
+  { listName: 'Topic', idName: 'topicId', fieldName: 'topicName' },
+];
 
-function index(props) {
+function index({ data, img }) {
   return (
     <Wrapper>
       <div className='card video-card '>
         <div className='card__side card__side--front'>
           <div className='img-box'>
-            <img src={props.img} />
+            <img src={img} />
           </div>
           <div
             style={{
@@ -20,8 +25,9 @@ function index(props) {
               fontWeight: 500,
               padding: '10px',
             }}
+            className='tc-1'
           >
-            Electrical Potential Energy
+            {data?.subtopicName}
           </div>
           <div className='stats-container mt-10'>
             <div className='stats'>
@@ -42,9 +48,9 @@ function index(props) {
         </div>
         <div className='card__side card__side--back'>
           <Form>
-            {data.map((str) => (
-              <Form.Item label={str}>
-                <div className='sub-text'>{str}</div>
+            {fieldData?.map((obj) => (
+              <Form.Item label={obj.listName}>
+                <div className='sub-text tc-2'>{data[obj.fieldName]}</div>
               </Form.Item>
             ))}
           </Form>
