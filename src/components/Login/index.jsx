@@ -8,7 +8,7 @@ import Password from 'antd/lib/input/Password';
 import { message } from 'antd';
 
 import { connect } from 'react-redux';
-import { login, updateUserDetails } from '../../redux/action/user';
+import { login } from '../../redux/action/user';
 import Loading from '../Loader';
 
 import RouteAuth from '../RouteAuth/PublicRoute';
@@ -42,7 +42,7 @@ const IllustrationImage = styled.div`
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-function index({ login, loginResponse, updateUserDetails }) {
+function index({ login, loginResponse }) {
   const router = useRouter();
 
   const handlesubmit = async (event) => {
@@ -58,7 +58,6 @@ function index({ login, loginResponse, updateUserDetails }) {
         if (response.exist) {
           const userInfo = loginResponse?.data?.data?.user?.userInfo;
           const token = userInfo.token;
-          updateUserDetails({ userId: userInfo.userId, isLoggedIn: true });
           cookies.set('token_id', token, {
             path: '/',
             maxAge: 31540000,
@@ -114,4 +113,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { login, updateUserDetails })(index);
+export default connect(mapStateToProps, { login })(index);

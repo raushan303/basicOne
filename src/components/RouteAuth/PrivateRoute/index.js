@@ -35,6 +35,7 @@ function index({ showUser, userData, updateUserDetails, ...props }) {
             userId: userInfo.userId,
             isLoggedIn: true,
             phoneNo: userInfo.phoneNo,
+            grade: userInfo.grade,
           });
         } else {
           cookies.remove('token_id', {

@@ -90,6 +90,13 @@ function index({
   }, [getSubjectsResponse]);
 
   useEffect(() => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      Chapter: null,
+      chapterId: null,
+      Topic: null,
+      topicId: null,
+    }));
     if (videoDetails.subjectId !== null) getChapters(videoDetails.subjectId);
     else {
       setSelectList((prevState) => ({ ...prevState, Chapter: [], Topic: [] }));
@@ -101,13 +108,6 @@ function index({
       const response = getChaptersResponse?.data?.data;
       if (response?.success && !getChaptersResponse?.error) {
         setSelectList((prevState) => ({ ...prevState, Chapter: response.data, Topic: [] }));
-        setVideoDetails((prevState) => ({
-          ...prevState,
-          Chapter: null,
-          chapterId: null,
-          Topic: null,
-          topicId: null,
-        }));
       } else {
         message.error('some error occured refresh the page!');
       }
@@ -115,6 +115,11 @@ function index({
   }, [getChaptersResponse]);
 
   useEffect(() => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      Topic: null,
+      topicId: null,
+    }));
     if (videoDetails.chapterId !== null) getTopics(videoDetails.chapterId);
     else {
       setSelectList((prevState) => ({ ...prevState, Topic: [] }));
@@ -126,11 +131,6 @@ function index({
       const response = getTopicsResponse?.data?.data;
       if (response?.success && !getTopicsResponse?.error) {
         setSelectList((prevState) => ({ ...prevState, Topic: response.data }));
-        setVideoDetails((prevState) => ({
-          ...prevState,
-          Topic: null,
-          topicId: null,
-        }));
       } else {
         message.error('some error occured refresh the page!');
       }

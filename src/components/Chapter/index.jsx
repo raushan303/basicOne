@@ -3,51 +3,94 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../Loader';
 
 import ChapterWrapper from './style';
-
+import { connect } from 'react-redux';
 import { fetchSubTopics, fetchAllTopics } from '../../shared/http';
+import {
+  getSubjectStats,
+  getChaptersStats,
+  getTopicsStats,
+} from '../../redux/action/getCoursesStat';
 
 import Banner from '../Banner';
 
 import TopicCard from '../Card/TopicCard';
 import SubTopicCard from '../Card/SubTopicCard';
+import { useRouter } from 'next/router';
 
-import { Tabs, Row, Col } from 'antd';
+import { Tabs, Row, Col, message } from 'antd';
 
 const { TabPane } = Tabs;
 
 let subject;
 
-function Chapter() {
+function Chapter({
+  getSubjectStats,
+  getChaptersStats,
+  getTopicsStats,
+  subjectStats,
+  chaptersStats,
+  topicsStats,
+}) {
   const [topicList, setTopicList] = useState([]);
   const [chapterList, setChapterList] = useState([]);
   const [chapterLoading, setChapterLoading] = useState(true);
   const [topicLoading, setTopicLoading] = useState(true);
   const [currentTab, setCurrentTab] = useState('');
+  const [subjectDetails, setSubjectDetails] = useState({});
+
+  const router = useRouter();
+  const path = router.query.subName;
+  const subjectId = parseInt(path.split('-')[0]);
 
   useEffect(() => {
-    const getChapters = async () => {
-      subject = window.location.href.split('/').pop();
-      let allChapters = await fetchAllTopics(subject);
-      setChapterList(allChapters);
-      setChapterLoading(false);
-      setCurrentTab('0');
-    };
-    getChapters();
+    if (subjectId === 0 || subjectId) {
+      getSubjectStats(subjectId);
+      getChaptersStats(subjectId);
+    }
   }, []);
 
-  const selectTopic = async (index, name) => {
-    setTopicLoading(true);
-    let temp = await fetchSubTopics(subject, name);
-    setTopicList(temp);
-    setTopicLoading(false);
-  };
+  useEffect(() => {
+    if (subjectStats.response) {
+      const response = subjectStats?.data?.data;
+      if (response?.success && !subjectStats?.error) {
+        setSubjectDetails(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [subjectStats]);
+
+  useEffect(() => {
+    if (chaptersStats.response) {
+      setChapterLoading(false);
+      const response = chaptersStats?.data?.data;
+      if (response?.success && !chaptersStats?.error) {
+        setChapterList(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [chaptersStats]);
 
   useEffect(() => {
     if (currentTab !== '' && currentTab) {
-      let index = parseInt(currentTab);
-      selectTopic(currentTab, chapterList[index]);
+      const index = parseInt(currentTab);
+      getTopicsStats(chapterList[index].chapterId);
+      setTopicLoading(true);
     }
   }, [currentTab]);
+
+  useEffect(() => {
+    if (topicsStats.response) {
+      setTopicLoading(false);
+      const response = topicsStats?.data?.data;
+      if (response?.success && !topicsStats?.error) {
+        setTopicList(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [topicsStats]);
 
   return (
     <>
@@ -55,32 +98,18 @@ function Chapter() {
         <Loader />
       ) : (
         <ChapterWrapper>
-          <Banner
-            subject={subject}
-            chapterCount={12}
-            videoCount={45}
-            learnt={30}
-            practice={23}
-          />
+          <Banner subjectDetails={subjectDetails} />
 
           <div className='tab-container'>
-            <Tabs
-              defaultActiveKey='1'
-              activeKey={currentTab}
-              onChange={setCurrentTab}
-              centered
-            >
-              {chapterList.map((user, i) => {
+            <Tabs defaultActiveKey='1' activeKey={currentTab} onChange={setCurrentTab} centered>
+              {chapterList.map((chapter, i) => {
                 return (
-                  <TabPane
-                    tab={<TopicCard details={user} />}
-                    key={i.toString()}
-                  >
+                  <TabPane tab={<TopicCard chapterDetails={chapter} />} key={i.toString()}>
                     {topicLoading ? (
                       <Loader />
                     ) : (
                       <Row style={{ marginTop: '50px' }}>
-                        {topicList.map((user, i) => {
+                        {topicList.map((topic, i) => {
                           return (
                             <Col
                               xs={24}
@@ -90,7 +119,7 @@ function Chapter() {
                               xl={6}
                               className='sub-topic-card-container'
                             >
-                              <SubTopicCard chapter={subject} details={user} />
+                              <SubTopicCard topicDetails={topic} />
                             </Col>
                           );
                         })}
@@ -107,4 +136,17 @@ function Chapter() {
   );
 }
 
-export default Chapter;
+function mapStateToProps(state) {
+  return {
+    subjectStats: state.coursesStats.getSubjectStats,
+    chaptersStats: state.coursesStats.getChaptersStats,
+    topicsStats: state.coursesStats.getTopicsStats,
+    userDetails: state.userDetails.userDetails.data,
+  };
+}
+
+export default connect(mapStateToProps, {
+  getSubjectStats,
+  getChaptersStats,
+  getTopicsStats,
+})(Chapter);

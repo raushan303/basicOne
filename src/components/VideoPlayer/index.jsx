@@ -8,13 +8,19 @@ import { VideoPlayerWrapper } from './style';
 
 import Loader from '../Loader';
 
-import { Row, Col } from 'antd';
+import { Row, Col, message } from 'antd';
 
 import CollapsibleList from './collapsible';
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
 
+import { useRouter } from 'next/router';
+
+import { connect } from 'react-redux';
+
+import { getTopics } from '../../redux/action/getCoursesData';
+import { getSubtopicsStats } from '../../redux/action/getCoursesStat';
 
 const videos = [
   {
@@ -59,61 +65,54 @@ const videos = [
   },
 ];
 
-const tvideos = [
-  {
-    chapterId: 1,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 2,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 3,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 4,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-];
+function index({ getTopics, topicsResponse, getSubtopicsStats, subtopicsResponse }) {
+  const router = useRouter();
+  const path = router.query;
+  const chapterId = parseInt(path.subName.split('-')[0]);
+  const topicId = parseInt(path.topicName.split('-')[0]);
 
-const ttvideos = [
-  {
-    topicId: 1,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 2,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 3,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 4,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-];
-
-function index() {
   const [videoIndex, setVideoIndex] = useState(0);
   const [progress, setProgress] = useState({});
   const [startTime, setStartTime] = useState(0);
   const [timeFetched, setTimeFetched] = useState(0);
 
-  const [activeChapterId, setActiveChapterId] = useState(null);
-  const [activeChapterTopics, setActiveChapterTopics] = useState(ttvideos);
-  const [activeTopicId, setActiveTopicId] = useState(null);
+  const [activeTopicId, setActiveTopicId] = useState(topicId);
+  const [activeTopicVideos, setActiveTopicVideos] = useState([]);
+  const [activeVideoId, setActiveVideoId] = useState(null);
+
+  const [topicList, setTopicList] = useState([]);
+
+  useEffect(() => {
+    getTopics(chapterId);
+  }, []);
+
+  useEffect(() => {
+    if (topicsResponse.response) {
+      const response = topicsResponse?.data?.data;
+      if (response?.success && !topicsResponse?.error) {
+        setTopicList(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [topicsResponse]);
+
+  useEffect(() => {
+    if (activeTopicId === 0 || activeTopicId) {
+      getSubtopicsStats(activeTopicId);
+    }
+  }, [activeTopicId]);
+
+  useEffect(() => {
+    if (subtopicsResponse.response) {
+      const response = subtopicsResponse?.data?.data;
+      if (response?.success && !subtopicsResponse?.error) {
+        setActiveTopicVideos(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [subtopicsResponse]);
 
   const selectVideo = async (index) => {
     setVideoIndex(index);
@@ -193,26 +192,24 @@ function index() {
               }
             >
               <div className='content-container'>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged
               </div>
             </Collapsible>
           </Col>
           <Col xs={24} sm={22} md={22} lg={8} xl={7}>
             <div className='other-videos-container'>
-              {tvideos.map((choice, index) => (
+              {topicList?.map((topic, index) => (
                 <CollapsibleList
-                  chapter={choice}
-                  activeChapterId={activeChapterId}
-                  setActiveChapterId={setActiveChapterId}
-                  activeChapterTopics={activeChapterTopics}
-                  setActiveChapterTopics={setActiveChapterTopics}
+                  topic={topic}
                   activeTopicId={activeTopicId}
                   setActiveTopicId={setActiveTopicId}
+                  activeTopicVideos={activeTopicVideos}
+                  activeVideoId={activeVideoId}
+                  setActiveVideoId={setActiveVideoId}
                 />
               ))}
             </div>
@@ -223,4 +220,14 @@ function index() {
   }
 }
 
-export default index;
+function mapStateToProps(state) {
+  return {
+    topicsResponse: state.courses.getTopics,
+    subtopicsResponse: state.coursesStats.getSubtopicsStats,
+  };
+}
+
+export default connect(mapStateToProps, {
+  getTopics,
+  getSubtopicsStats,
+})(index);
