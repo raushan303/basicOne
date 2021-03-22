@@ -4,16 +4,19 @@ import { CollapsibleWrap } from './style';
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
-import SubTopicCard from '../Card/SubTopicCard';
+import SubTopicCard from '../Card/SubtopicCard';
 
 const sampleSkeletons = [1, 2, 3, 4];
 export default function CollapsiblePlaylist({
   topic,
   activeTopicId,
   setActiveTopicId,
-  activeTopicVideos,
+  subtopicList,
   activeVideoId,
   setActiveVideoId,
+  setActiveVideoData,
+  setSubtopicList,
+  setStartTime,
 }) {
   return (
     <CollapsibleWrap>
@@ -56,16 +59,20 @@ export default function CollapsiblePlaylist({
         onTriggerOpening={() => {
           // setActiveChapterTopics([]);
           setActiveTopicId(topic?.topicId);
+          // setSubtopicList([]);
         }}
       >
-        {activeTopicVideos?.map((subtopic) => {
+        {subtopicList?.map((subtopic) => {
           return (
             <div
+              style={{ padding: '5px' }}
               onClick={() => {
                 setActiveVideoId(subtopic?.subtopicId);
+                setActiveVideoData(subtopic);
+                setStartTime(subtopic?.currentTime);
               }}
             >
-              <SubTopicCard chapter={'Biology'} subtopic={subtopic} />
+              <SubTopicCard active={subtopic?.subtopicId === activeVideoId} data={subtopic} />
             </div>
           );
         })}

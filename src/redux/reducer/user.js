@@ -45,4 +45,5 @@ export default combineReducers({
   getSignUpData: makeRequestReducer(Types.SIGN_UP),
   getRegisterData: makeRequestReducer(Types.REGISTER),
   getUserData: makeRequestReducer(Types.SHOW_USER),
+  updateWatch: makeRequestReducer(Types.UPDATE_WATCH),
 });

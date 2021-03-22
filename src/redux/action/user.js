@@ -64,6 +64,21 @@ export const showUser = () =>
       });
   };
 
+export const updateWatch = (data) =>
+  function (dispatch) {
+    dispatch(actionHandlers.tryHandle(actionTypes.UPDATE_WATCH));
+    return axios
+      .post(`${LOCAL_BASE_URL}/addLearn`, data, headers())
+      .then((response) => {
+        if (response) {
+          dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_WATCH_SUCCESS, response));
+        }
+      })
+      .catch((error) => {
+        dispatch(actionHandlers.handleError(actionTypes.UPDATE_WATCH_FAILED, error));
+      });
+  };
+
 export const updateUserDetails = (data) =>
   function (dispatch) {
     dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_USER_DETAILS_SUCCESS, data));

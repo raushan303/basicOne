@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 
 import { getTopics } from '../../redux/action/getCoursesData';
 import { getSubtopicsStats } from '../../redux/action/getCoursesStat';
+import { updateWatch } from '../../redux/action/user';
 
 const videos = [
   {
@@ -65,21 +66,27 @@ const videos = [
   },
 ];
 
-function index({ getTopics, topicsResponse, getSubtopicsStats, subtopicsResponse }) {
+function index({
+  getTopics,
+  topicsResponse,
+  getSubtopicsStats,
+  subtopicsResponse,
+  updateWatch,
+  updateWatchResponse,
+}) {
   const router = useRouter();
   const path = router.query;
   const chapterId = parseInt(path.subName.split('-')[0]);
   const topicId = parseInt(path.topicName.split('-')[0]);
 
-  const [videoIndex, setVideoIndex] = useState(0);
   const [progress, setProgress] = useState({});
   const [startTime, setStartTime] = useState(0);
-  const [timeFetched, setTimeFetched] = useState(0);
 
   const [activeTopicId, setActiveTopicId] = useState(topicId);
-  const [activeTopicVideos, setActiveTopicVideos] = useState([]);
+  const [subtopicList, setSubtopicList] = useState([]);
   const [activeVideoId, setActiveVideoId] = useState(null);
-
+  const [activeVideoData, setActiveVideoData] = useState({});
+  const [videoIndex, setVideoIndex] = useState(0);
   const [topicList, setTopicList] = useState([]);
 
   useEffect(() => {
@@ -107,67 +114,80 @@ function index({ getTopics, topicsResponse, getSubtopicsStats, subtopicsResponse
     if (subtopicsResponse.response) {
       const response = subtopicsResponse?.data?.data;
       if (response?.success && !subtopicsResponse?.error) {
-        setActiveTopicVideos(response?.data);
+        setSubtopicList(response?.data);
+        setActiveVideoId(response?.data?.[0]?.subtopicId);
+        setActiveVideoData(response?.data?.[0]);
+        setStartTime(response?.data?.[0]?.currentTime);
       } else {
         message.error('some error occured refresh the page!');
       }
     }
   }, [subtopicsResponse]);
 
-  const selectVideo = async (index) => {
-    setVideoIndex(index);
-    setTimeFetched(0);
-    var res = await getVideoTime(videos[index].id);
-    if (res.message == 'Sucdcess !') {
-      setStartTime(parseInt(res.data.time));
-    } else setStartTime(0);
-    setTimeFetched(1);
-  };
-
   const handlePlayerPause = async () => {
-    var res = await updateVideoTime(videos[videoIndex].id, progress.seconds);
-  };
+    if (
+      !isNaN(activeVideoData?.currentTime) &&
+      !isNaN(activeVideoData?.learntTime) &&
+      !isNaN(progress.seconds)
+    ) {
+      const formatSubtopic = { ...activeVideoData };
+      formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
+      formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
+      setActiveVideoData((prevState) => ({
+        ...prevState,
+        currentTime: formatSubtopic.currentTime,
+        learntTime: formatSubtopic.learntTime,
+      }));
 
-  useEffect(() => {
-    const getTime = async () => {
-      var res = await getVideoTime(videos[videoIndex].id);
-      if (res.datab) {
-        console.log(res, parseInt(res.data.time), 'time!!');
-        setStartTime(parseInt(res.data.time));
-      } else setStartTime(0);
-      setTimeFetched(1);
-    };
-    getTime();
-  }, []);
+      updateWatch(formatSubtopic);
+    }
+  };
 
   const onEnd = () => {
-    updateVideoTime(videos[videoIndex].id, progress.duration - 1);
+    if (
+      !isNaN(activeVideoData?.currentTime) &&
+      !isNaN(activeVideoData?.learntTime) &&
+      !isNaN(progress.seconds)
+    ) {
+      const formatSubtopic = { ...activeVideoData };
+      formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
+      formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
+      setActiveVideoData((prevState) => ({
+        ...prevState,
+        currentTime: formatSubtopic.currentTime,
+        learntTime: formatSubtopic.learntTime,
+      }));
+      updateWatch(formatSubtopic);
+    }
   };
 
   const onProgressHandler = (e) => {
     setProgress(e);
-    console.log(e);
+    // console.log(e);
   };
+  // useEffect(() => {
+  //   console.log(startTime, 'sss');
+  // }, [startTime]);
 
-  const video = videos[videoIndex];
-
-  if (timeFetched == 0) return <Loader />;
+  if (!topicsResponse?.response) return <Loader />;
   else {
     return (
       <VideoPlayerWrapper>
         <Row className='outer-container'>
           <Col xs={24} sm={22} md={22} lg={16} xl={16}>
             <div class='vimeo-container'>
-              <Vimeo
-                className='vimeo-player'
-                video={video.id}
-                autoplay
-                speed={true}
-                start={Math.max(0, startTime - 15)}
-                onEnd={onEnd}
-                onPause={handlePlayerPause}
-                onProgress={onProgressHandler}
-              />
+              {activeVideoData?.url && (
+                <Vimeo
+                  className='vimeo-player'
+                  video={activeVideoData?.url}
+                  autoplay
+                  speed={true}
+                  start={startTime || 0}
+                  onEnd={onEnd}
+                  onPause={handlePlayerPause}
+                  onProgress={onProgressHandler}
+                />
+              )}
             </div>
             <Collapsible
               trigger={
@@ -191,13 +211,7 @@ function index({ getTopics, topicsResponse, getSubtopicsStats, subtopicsResponse
                 </div>
               }
             >
-              <div className='content-container'>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged
-              </div>
+              <div className='content-container'>{activeVideoData?.note || ''}</div>
             </Collapsible>
           </Col>
           <Col xs={24} sm={22} md={22} lg={8} xl={7}>
@@ -207,9 +221,12 @@ function index({ getTopics, topicsResponse, getSubtopicsStats, subtopicsResponse
                   topic={topic}
                   activeTopicId={activeTopicId}
                   setActiveTopicId={setActiveTopicId}
-                  activeTopicVideos={activeTopicVideos}
+                  subtopicList={subtopicList}
                   activeVideoId={activeVideoId}
                   setActiveVideoId={setActiveVideoId}
+                  setActiveVideoData={setActiveVideoData}
+                  setSubtopicList={setSubtopicList}
+                  setStartTime={setStartTime}
                 />
               ))}
             </div>
@@ -224,10 +241,12 @@ function mapStateToProps(state) {
   return {
     topicsResponse: state.courses.getTopics,
     subtopicsResponse: state.coursesStats.getSubtopicsStats,
+    updateWatchResponse: state.user.updateWatch,
   };
 }
 
 export default connect(mapStateToProps, {
   getTopics,
   getSubtopicsStats,
+  updateWatch,
 })(index);

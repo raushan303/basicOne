@@ -150,8 +150,8 @@ const CollapsibleWrap = styled.div`
     cursor: pointer;
 
     .Collapsible__contentInner {
-      display: flex;
-      overflow-x: scroll;
+      // display: flex;
+      overflow-y: scroll;
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */
       &::-webkit-scrollbar {

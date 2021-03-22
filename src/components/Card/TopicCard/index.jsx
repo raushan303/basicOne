@@ -1,30 +1,36 @@
 import React from 'react';
-import TopicCardWrapper from './style';
-// https://toppscholar-upload.s3.ap-southeast-1.amazonaws.com/content-package/7491303a-9de3-48e4-a8a1-41c873460896.jpg
+import Link from 'next/link';
+import SubTopicCardWrapper from './style';
 
-function TopicCard({ chapterDetails }) {
+function SubTopicCard({ topicDetails }) {
   return (
-    <TopicCardWrapper>
-      <div class='topic-card box-shadow'>
-        <div class='img-box'>
-          <img src='../images/sub.jpg' />
-        </div>
-        <div className='topic-card-content'>
-          <div class='h1 title tc-1'>{chapterDetails?.chapterName}</div>
-
-          <div className='concepts-videos'>
-            <li>{chapterDetails?.topicCount || 0} Concepts</li>
-            <li>{chapterDetails?.videoCount || 0} Videos</li>
+    <Link
+      className='link'
+      href={`/subject/${topicDetails?.chapterId}-${topicDetails?.chapterName}/${topicDetails?.topicId}-${topicDetails?.topicName}`}
+    >
+      <SubTopicCardWrapper>
+        <div className='sub-topic-card box-shadow'>
+          <div className='img-box'>
+            <img src={'https://web.toppscholars.com/assets/chapter-place-1.png'} />
           </div>
 
-          <div className='learnt-practiced'>
-            <li>0% Learnt</li>
-            <li>0% Practiced</li>
+          <div className='sub-topic-card-content'>
+            <div className='title tc-1'>{topicDetails?.topicName}</div>
+
+            <div className='concepts-videos'>
+              <li>{topicDetails?.conceptCount} Concepts</li>
+              <li>{topicDetails?.videoCount} Videos</li>
+            </div>
+
+            <div className='learnt-practiced'>
+              <li>2% Learnt</li>
+              <li>4% Practiced</li>
+            </div>
           </div>
         </div>
-      </div>
-    </TopicCardWrapper>
+      </SubTopicCardWrapper>
+    </Link>
   );
 }
 
-export default TopicCard;
+export default SubTopicCard;

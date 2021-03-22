@@ -13,8 +13,8 @@ import {
 
 import Banner from '../Banner';
 
+import ChapterCard from '../Card/ChapterCard';
 import TopicCard from '../Card/TopicCard';
-import SubTopicCard from '../Card/SubTopicCard';
 import { useRouter } from 'next/router';
 
 import { Tabs, Row, Col, message } from 'antd';
@@ -104,7 +104,7 @@ function Chapter({
             <Tabs defaultActiveKey='1' activeKey={currentTab} onChange={setCurrentTab} centered>
               {chapterList.map((chapter, i) => {
                 return (
-                  <TabPane tab={<TopicCard chapterDetails={chapter} />} key={i.toString()}>
+                  <TabPane tab={<ChapterCard chapterDetails={chapter} />} key={i.toString()}>
                     {topicLoading ? (
                       <Loader />
                     ) : (
@@ -119,7 +119,7 @@ function Chapter({
                               xl={6}
                               className='sub-topic-card-container'
                             >
-                              <SubTopicCard topicDetails={topic} />
+                              <TopicCard topicDetails={topic} />
                             </Col>
                           );
                         })}

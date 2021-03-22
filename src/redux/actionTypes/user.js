@@ -14,6 +14,10 @@ export const SHOW_USER = 'showUser';
 export const SHOW_USER_SUCCESS = `${SHOW_USER}.success`;
 export const SHOW_USER_FAILED = `${SHOW_USER}.failed`;
 
+export const UPDATE_WATCH = 'updateWatch';
+export const UPDATE_WATCH_SUCCESS = `${UPDATE_WATCH}.success`;
+export const UPDATE_WATCH_FAILED = `${UPDATE_WATCH}.failed`;
+
 export const UPDATE_USER_DETAILS = 'updateUserDetails';
 export const UPDATE_USER_DETAILS_SUCCESS = `${UPDATE_USER_DETAILS}.success`;
 export const UPDATE_USER_DETAILS_FAILED = `${UPDATE_USER_DETAILS}.failed`;
