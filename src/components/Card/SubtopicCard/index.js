@@ -13,14 +13,14 @@ const RightColumn = tw.div`ml-3`;
 
 const Container = styled.div`
   ${tw`px-3 py-4 border border-solid border-white-s md:w-full flex rounded-lg`}
-  width:300px;
+  width:100%;
   @media (max-width: 320px) {
     width: 100%;
   }
 `;
 
 function Index({ data, active }) {
-  console.log(active)
+  console.log(active);
   return (
     <Container style={{ background: active ? 'rgba(18, 18, 29, 0.05)' : '#fff' }}>
       <ImgBox>

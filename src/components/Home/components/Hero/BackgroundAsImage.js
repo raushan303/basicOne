@@ -1,7 +1,7 @@
-import React from "react";
-import tw from "twin.macro";
-import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
+import React from 'react';
+import tw from 'twin.macro';
+import styled from 'styled-components';
+import { css } from 'styled-components/macro'; //eslint-disable-line
 
 import Header, {
   NavLink,
@@ -10,9 +10,9 @@ import Header, {
   LogoLink,
   NavToggle,
   DesktopNavLinks,
-} from "../Header/light.js";
-import ResponsiveVideoEmbed from "../../../../lib/helpers/ResponsiveVideoEmbed.js";
-import { useRouter } from "next/router";
+} from '../Header/light.js';
+import ResponsiveVideoEmbed from '../../../../lib/helpers/ResponsiveVideoEmbed.js';
+import { useRouter } from 'next/router';
 
 const StyledHeader = styled(Header)`
   ${tw`pt-10 px-5 max-w-none`}
@@ -27,8 +27,6 @@ const Container = styled.div`
   ${tw`relative bg-center bg-cover p-1`}
   background-image: url("/images/avt1.jpg");
   // box-shadow: inset 0 0 0 1000px rgba(0,0,0,.0);
-
-
 `;
 
 const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-primary-500 opacity-25`;
@@ -48,7 +46,7 @@ const Heading = styled.h1`
 const SlantedBackground = styled.span`
   ${tw`relative text-primary-500 px-4 -mx-4 py-2`}
   &::before {
-    content: "";
+    content: '';
     ${tw`absolute inset-0 bg-gray-100 transform -skew-x-12 -z-10`}
   }
 `;
@@ -66,21 +64,24 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   }
 `;
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 export default () => {
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="#">About</NavLink>
-      <NavLink href="#">Blog</NavLink>
-      <NavLink href="#">Locations</NavLink>
-      <NavLink href="#">Pricing</NavLink>
+      <NavLink href='#'>About</NavLink>
+      <NavLink href='#'>Blog</NavLink>
+      <NavLink href='#'>Locations</NavLink>
+      <NavLink href='#'>Pricing</NavLink>
     </NavLinks>,
     <NavLinks key={2}>
-      <PrimaryLink href="/login">Log In</PrimaryLink>
+      <PrimaryLink href='/login'>Log In</PrimaryLink>
     </NavLinks>,
   ];
   const router = useRouter();
   return (
-    <Container >
+    <Container>
       <OpacityOverlay />
       <HeroContainer style={{ maxWidth: 1150 }}>
         <StyledHeader links={navLinks} />
@@ -94,14 +95,26 @@ export default () => {
               <br />
               <SlantedBackground>Anywhere</SlantedBackground>
             </Heading>
-            <PrimaryAction onClick={() => router.push("/signup")}>
-              Register For Free!
+            <PrimaryAction onClick={() => router.push('/signup')}>Register For Free!</PrimaryAction>
+            <PrimaryAction
+              onClick={() => {
+                const token =
+                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDVmNDhiYTI3ZTczOGNkMThjNDM3MzQiLCJpYXQiOjE2MTY4NTcyNzR9.PxrZAkyB9lMM4dRb7sjdlmB_lMWp8bcfB_AOOrFI0-8';
+                cookies.set('token_id', token, {
+                  path: '/',
+                  maxAge: 31540000,
+                });
+                router.push('/subject');
+              }}
+              tw='mt-6 sm:ml-8 bg-primary-500 text-white hover:bg-white hover:text-primary-500'
+            >
+              Enter As a Guest
             </PrimaryAction>
           </LeftColumn>
           <RightColumn>
             <StyledResponsiveVideoEmbed
-              url="//player.vimeo.com/video/374265101?title=0&portrait=0&byline=0&autoplay=0&responsive=1"
-              background="transparent"
+              url='//player.vimeo.com/video/374265101?title=0&portrait=0&byline=0&autoplay=0&responsive=1'
+              background='transparent'
             />
           </RightColumn>
         </TwoColumn>

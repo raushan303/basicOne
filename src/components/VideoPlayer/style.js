@@ -57,6 +57,9 @@ const VideoPlayerWrapper = styled.div`
     padding: 0px 20px;
     height: 70vh;
     overflow-y: scroll;
+    @media (max-width: 991px) {
+      height: fit-content;
+    }
   }
 
   @media only screen and (max-width: 991px) {
@@ -74,7 +77,7 @@ const VideoPlayerWrapper = styled.div`
       height: 350px;
     }
     .other-videos-container {
-      padding: 0 5px;
+      padding: 0 5px 30px 5px;
     }
   }
 

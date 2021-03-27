@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { css } from 'styled-components/macro';
@@ -10,13 +10,14 @@ import { ic_mode_comment } from 'react-icons-kit/md/ic_mode_comment';
 import { thumbsUp } from 'react-icons-kit/fa/thumbsUp';
 import { checkCircle } from 'react-icons-kit/fa/checkCircle';
 import { ic_remove_red_eye } from 'react-icons-kit/md/ic_remove_red_eye';
+import { Button } from 'antd';
 
 import { connect } from 'react-redux';
 
 const ColumnContainer = tw.div`w-full flex flex-wrap flex-col lg:flex-row md:items-center py-6 md:py-8`;
 const TwoColumn = tw.div`w-full relative flex flex-wrap flex-shrink-0 border border-grey border-solid max-w-screen-xl mx-auto`;
 const LeftColumn = tw.div`px-4 py-6 md:py-10 md:w-1/3 lg:w-1/4 font-display flex justify-center w-full`;
-const RightColumn = tw.div`px-4 md:px-8 py-6 md:py-10 md:w-2/3 lg:w-3/4 font-display bg-white flex flex-col items-start`;
+const RightColumn = tw.div`w-full px-4 md:px-8 py-6 md:py-10 md:w-2/3 lg:w-3/4 font-display bg-white flex flex-col items-start`;
 const PrimaryButtonFollow = tw(
   PrimaryButtonBase
 )`bg-dark-blue font-display uppercase font-normal text-sm tracking-wider text-white py-2 px-6 border-none mt-2 md:mt-4 hover:bg-dark-blue cursor-pointer`;
@@ -24,8 +25,8 @@ const PrimaryButtonReply = tw(
   PrimaryButtonBase
 )`mr-4 md:mr-6 bg-dark-blue! font-display uppercase font-normal text-sm md:text-base tracking-wider text-white py-1 md:py-2 px-4 md:px-8 border-none cursor-pointer rounded-md`;
 const PrimaryButtonSame = tw(
-  PrimaryButtonBase
-)`mr-4 md:mr-6 bg-white! font-display uppercase font-normal text-sm md:text-base tracking-wider text-dark-blue! hover:text-dark-blue py-1 md:py-2 px-4 md:px-6 border border-solid border-dark-blue cursor-pointer rounded-md`;
+  Button
+)`h-auto mr-4 md:mr-6 bg-white! font-display uppercase font-normal text-sm md:text-base tracking-wider text-dark-blue! hover:text-dark-blue py-1 md:py-2 px-4 md:px-6 border border-solid border-dark-blue cursor-pointer rounded-md`;
 
 const UserBox = tw.div`flex flex-col items-center w-full`;
 const Avatar = tw.div`h-16 w-16`;
@@ -49,8 +50,11 @@ const index = ({
   setReplyModalVisible,
   removeReply,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleDelete = () => {
     if (type) {
+      setLoading(true);
       removeReply(data);
     } else {
     }
@@ -97,7 +101,9 @@ const index = ({
             {data?.userId === userId && (
               <>
                 <PrimaryButtonSame>Edit</PrimaryButtonSame>
-                <PrimaryButtonSame onClick={handleDelete}>Delete</PrimaryButtonSame>
+                <PrimaryButtonSame loading={loading} onClick={handleDelete}>
+                  Delete
+                </PrimaryButtonSame>
               </>
             )}
           </div>
