@@ -65,3 +65,8 @@ export const getSubtopicsStats = (topicId) =>
         dispatch(actionHandlers.handleError(actionTypes.GET_SUBTOPICS_STATS_FAILED, error));
       });
   };
+
+export const updateActiveSubtopic = (data) =>
+  function (dispatch) {
+    dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_ACTIVE_SUBTOPIC_SUCCESS, data));
+  };

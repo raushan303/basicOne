@@ -17,6 +17,7 @@ export default function CollapsiblePlaylist({
   setActiveVideoData,
   setSubtopicList,
   setStartTime,
+  updateActiveSubtopic,
 }) {
   return (
     <CollapsibleWrap>
@@ -70,6 +71,7 @@ export default function CollapsiblePlaylist({
                 setActiveVideoId(subtopic?.subtopicId);
                 setActiveVideoData(subtopic);
                 setStartTime(subtopic?.currentTime);
+                updateActiveSubtopic(subtopic);
               }}
             >
               <SubTopicCard active={subtopic?.subtopicId === activeVideoId} data={subtopic} />

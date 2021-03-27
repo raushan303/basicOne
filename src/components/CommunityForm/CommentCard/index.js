@@ -5,37 +5,45 @@ import { css } from 'styled-components/macro';
 import { Subheading } from '../../../misc/Headings.js';
 import Icon from 'react-icons-kit';
 import { ic_insert_comment } from 'react-icons-kit/md/ic_insert_comment';
+import { connect } from 'react-redux';
 
-const Column = tw.div`relative flex lg:w-6/12 px-2 md:px-8 py-4 md:py-8 flex-shrink-0`;
+import { updateActiveComment } from '../../../redux/action/getComments';
 
-const RightColumn = tw.div`px-4 font-display`;
-const UserBox = tw.div`flex py-4`;
+const Column = tw.div`relative flex lg:w-6/12 px-2 md:px-8 py-4 md:py-6 flex-shrink-0`;
+
+const RightColumn = tw.div`px-4`;
+const UserBox = tw.div`flex pt-4`;
 const Avatar = tw.div`h-12 w-16 px-2`;
-const Card = tw.div`cursor-pointer bg-white flex px-2 md:px-4 py-4 hover:shadow-bs-1 border border-grey border-solid`;
+const Card = tw.div`w-full cursor-pointer bg-white flex px-2 md:px-4 py-4 md:py-6 hover:shadow-bs-1 border border-grey border-solid`;
 
-const Heading = tw.h1`font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
-const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-600 max-w-lg mx-auto lg:mx-0`;
+const Title1 = tw.h1`my-0 font-normal text-color-2 text-lg font-Inter leading-tight`;
+const Title2 = tw.h1`my-0 font-normal text-black text-base font-display`;
+const Paragraph = tw.p`my-0 text-base font-poppins text-gray-600`;
 
-export default ({ setVisible }) => {
+const index = ({ setVisible, comment, updateActiveComment }) => {
   return (
-    <Column onClick={() => setVisible(false)}>
+    <Column
+      onClick={() => {
+        setVisible(false);
+        updateActiveComment(comment);
+      }}
+    >
       <Card>
         <Icon tw='py-1' icon={ic_insert_comment} style={{ color: '#0096d6' }} size={35} alt='' />
         <RightColumn>
-          <div className='tc-1'>
-            Using laptop of wall power without actually charging the battery.
+          <div tw='h-10'>
+            <Title1 className='tc-2'>
+              {comment?.title} and {comment?.description}
+            </Title1>
           </div>
-          <span className='tc-1'>
-            My question is pretty straight forward:1. Is there a way (without removing the battery)
-            to
-          </span>
+
           <UserBox>
             <Avatar>
               <img tw='rounded-full' src='/images/userimg.png' height='100%' width='100%' />
             </Avatar>
             <div tw='flex-1 px-1'>
-              <span>Posted by Julian_Mörk</span>
-              <span className="tc-1">in Notebook Software and How To Questions 01-25-2021</span>
+              <Title2>Posted by {comment?.name}</Title2>
+              <Paragraph>Date:- {comment?.date}</Paragraph>
             </div>
           </UserBox>
         </RightColumn>
@@ -43,3 +51,5 @@ export default ({ setVisible }) => {
     </Column>
   );
 };
+
+export default connect(null, { updateActiveComment })(index);

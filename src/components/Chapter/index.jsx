@@ -4,7 +4,6 @@ import Loader from '../Loader';
 
 import ChapterWrapper from './style';
 import { connect } from 'react-redux';
-import { fetchSubTopics, fetchAllTopics } from '../../shared/http';
 import {
   getSubjectStats,
   getChaptersStats,

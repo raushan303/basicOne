@@ -20,51 +20,8 @@ import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 
 import { getTopics } from '../../redux/action/getCoursesData';
-import { getSubtopicsStats } from '../../redux/action/getCoursesStat';
+import { getSubtopicsStats, updateActiveSubtopic } from '../../redux/action/getCoursesStat';
 import { updateWatch } from '../../redux/action/user';
-
-const videos = [
-  {
-    id: 115783408,
-    name: 'Jambinai - Connection',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 169408731,
-    name: 'Hoody - Like You',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence ',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 115783408,
-    name: 'Jambinai - Connection',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 169408731,
-    name: 'Hoody - Like You',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-];
 
 function index({
   getTopics,
@@ -73,6 +30,7 @@ function index({
   subtopicsResponse,
   updateWatch,
   updateWatchResponse,
+  updateActiveSubtopic,
 }) {
   const router = useRouter();
   const path = router.query;
@@ -117,6 +75,7 @@ function index({
         setSubtopicList(response?.data);
         setActiveVideoId(response?.data?.[0]?.subtopicId);
         setActiveVideoData(response?.data?.[0]);
+        updateActiveSubtopic(response?.data?.[0]);
         setStartTime(response?.data?.[0]?.currentTime);
       } else {
         message.error('some error occured refresh the page!');
@@ -227,6 +186,7 @@ function index({
                   setActiveVideoData={setActiveVideoData}
                   setSubtopicList={setSubtopicList}
                   setStartTime={setStartTime}
+                  updateActiveSubtopic={updateActiveSubtopic}
                 />
               ))}
             </div>
@@ -249,4 +209,5 @@ export default connect(mapStateToProps, {
   getTopics,
   getSubtopicsStats,
   updateWatch,
+  updateActiveSubtopic,
 })(index);

@@ -11,19 +11,21 @@ import { thumbsUp } from 'react-icons-kit/fa/thumbsUp';
 import { checkCircle } from 'react-icons-kit/fa/checkCircle';
 import { ic_remove_red_eye } from 'react-icons-kit/md/ic_remove_red_eye';
 
-const ColumnContainer = tw.div`flex flex-wrap flex-col lg:flex-row md:items-center py-12 md:py-20`;
-const TwoColumn = tw.div`relative flex flex-wrap flex-shrink-0 border border-grey border-solid max-w-screen-xl mx-auto`;
+import { connect } from 'react-redux';
+
+const ColumnContainer = tw.div`w-full flex flex-wrap flex-col lg:flex-row md:items-center py-6 md:py-8`;
+const TwoColumn = tw.div`w-full relative flex flex-wrap flex-shrink-0 border border-grey border-solid max-w-screen-xl mx-auto`;
 const LeftColumn = tw.div`px-4 py-6 md:py-10 md:w-1/3 lg:w-1/4 font-display flex justify-center w-full`;
-const RightColumn = tw.div`px-4 md:px-8 py-6 md:py-10 md:w-2/3 lg:w-3/4 font-display bg-white`;
+const RightColumn = tw.div`px-4 md:px-8 py-6 md:py-10 md:w-2/3 lg:w-3/4 font-display bg-white flex flex-col items-start`;
 const PrimaryButtonFollow = tw(
   PrimaryButtonBase
 )`bg-dark-blue font-display uppercase font-normal text-sm tracking-wider text-white py-2 px-6 border-none mt-2 md:mt-4 hover:bg-dark-blue cursor-pointer`;
 const PrimaryButtonReply = tw(
   PrimaryButtonBase
-)`bg-dark-blue font-display uppercase font-normal text-sm md:text-xl tracking-wider text-white py-2 px-12 border-none hover:bg-dark-blue cursor-pointer rounded-md mt-2`;
+)`mr-4 md:mr-6 bg-dark-blue! font-display uppercase font-normal text-sm md:text-base tracking-wider text-white py-1 md:py-2 px-4 md:px-8 border-none cursor-pointer rounded-md`;
 const PrimaryButtonSame = tw(
   PrimaryButtonBase
-)`md:ml-8 bg-white font-display uppercase font-normal text-sm md:text-xl tracking-wider text-dark-blue hover:text-dark-blue py-2 px-4 md:px-12 border border-solid border-dark-blue hover:bg-white cursor-pointer rounded-md mt-4 md:mt-2`;
+)`mr-4 md:mr-6 bg-white! font-display uppercase font-normal text-sm md:text-base tracking-wider text-dark-blue! hover:text-dark-blue py-1 md:py-2 px-4 md:px-6 border border-solid border-dark-blue cursor-pointer rounded-md`;
 
 const UserBox = tw.div`flex flex-col items-center w-full`;
 const Avatar = tw.div`h-16 w-16`;
@@ -36,7 +38,24 @@ const Paragraph = tw.p`text-sm lg:text-base font-medium text-gray-600`;
 const Subheading = tw(SubheadingBase)`text-dark-blue`;
 const Count = tw.h1`text-black text-sm pl-1 last:pr-0 pr-8 mb-0 flex items-center`;
 
-export default ({ background }) => {
+const index = ({
+  background,
+  button,
+  data,
+  index,
+  count,
+  type,
+  userId,
+  setReplyModalVisible,
+  removeReply,
+}) => {
+  const handleDelete = () => {
+    if (type) {
+      removeReply(data);
+    } else {
+    }
+  };
+
   return (
     <ColumnContainer style={{ background }}>
       <TwoColumn>
@@ -45,54 +64,54 @@ export default ({ background }) => {
             <Avatar>
               <img tw='rounded-full' src='/images/userimg.png' height='100%' width='100%' />
             </Avatar>
-            <Name>Raushan</Name>
+            <Name>{data?.name}</Name>
             <Designation>Student</Designation>
             <IconBox>
               <Icon style={{ color: '#01579b' }} size={22} icon={ic_mode_comment} />
-              <Count>6</Count>
+              <Count>{count - 1}</Count>
               <Icon style={{ color: '#01579b' }} size={22} icon={checkCircle} />
-              <Count>5</Count>
+              <Count>{count}</Count>
               <Icon style={{ color: '#01579b' }} size={22} icon={thumbsUp} />
-              <Count>3</Count>
+              <Count>{data?.likeCount || 0}</Count>
             </IconBox>
-            <Designation>Message 1 of 5</Designation>
-            <IconBox>
+            <Designation>
+              Message {index} of {count}
+            </Designation>
+            {/* <IconBox>
               <Icon style={{ color: '#01579b' }} size={28} icon={ic_remove_red_eye} />
               <Count>14</Count>
             </IconBox>
-            <PrimaryButtonFollow>Follow</PrimaryButtonFollow>
+            <PrimaryButtonFollow>Follow</PrimaryButtonFollow> */}
           </UserBox>
         </LeftColumn>
         <RightColumn>
-          <Heading>
-            What psychological effect makes notes on a piano that are an octave apart sound the
-            same?
-          </Heading>
-          <Subheading>Posted on ‎01-28-2021 03:41 PM</Subheading>
-          <Paragraph>
-            The effect is not psychological. It is physical. Notes on a piano that are separated by
-            an octave are very similar physically. To understand why this is so, you have to
-            understand first the basics of sound. Sound is a waving vibration of air that travels as
-            it oscillates. The pattern of the vibrations in the air (the sound's waveshape) is
-            determined by the vibrating pattern of the object that created it. For a piano, the
-            sound is created by hitting metal strings to get them vibrating. The piano strings then
-            knock into the air and get it vibrating in the same pattern. The sound is launched from
-            the string, through the air, and into our ears. If you take a single string of metal and
-            clamp the two ends down, there are only certain ways you can get it vibrating. Let's
-            take a look at the basic components of a string's vibration. The simplest and strongest
-            vibration a string clamped at both ends can experience (the "fundamental" or "first
-            harmonic") is half of a sine wave (one hump), as demonstrated in the top of the
-            animation. Because the ends are clamped, they cannot move, so the wavelength of the
-            simplest vibration is determined by the distance between the clamps. The next simplest
-            possible vibration is a full sine wave (two humps), shown in the middle of the
-            animation. This vibration has a wavelength equal to half the wavelength of the
-            fundamental vibration. The next simplest possible vibration is one and a half sine waves
-            (three humps), shown in the bottom of the animation.
-          </Paragraph>
-          <PrimaryButtonReply>Reply</PrimaryButtonReply>
-          <PrimaryButtonSame>I have the same question</PrimaryButtonSame>
+          <Heading>{data?.title}</Heading>
+          <Subheading>Posted on ‎{data?.date}</Subheading>
+          <Paragraph>{data?.description}</Paragraph>
+          <div tw='flex flex-wrap mt-auto'>
+            {button && (
+              <PrimaryButtonReply onClick={() => setReplyModalVisible(true)}>
+                Reply
+              </PrimaryButtonReply>
+            )}
+            {data?.userId === userId && (
+              <>
+                <PrimaryButtonSame>Edit</PrimaryButtonSame>
+                <PrimaryButtonSame onClick={handleDelete}>Delete</PrimaryButtonSame>
+              </>
+            )}
+          </div>
         </RightColumn>
       </TwoColumn>
     </ColumnContainer>
   );
 };
+
+function mapStateToProps(state) {
+  const { userId } = state.userDetails.userDetails.data;
+  return {
+    userId,
+  };
+}
+
+export default connect(mapStateToProps, null)(index);

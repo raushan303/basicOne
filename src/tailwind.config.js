@@ -281,7 +281,8 @@ module.exports = {
     fontFamily: {
       display: ['Roboto'],
       body: ['Roboto'],
-      poppins:['Poppins'],
+      poppins: ['Poppins'],
+      Inter: ['Inter', 'system-ui']
     },
     fontSize: {
       xs: '0.75rem',

@@ -6,6 +6,7 @@ import user from '../reducer/user';
 import userDetails from '../reducer/userDetails';
 import subtopicsByAuthor from '../reducer/getSubtopicsByAuthor';
 import coursesStats from '../reducer/getCousesStat';
+import comments from '../reducer/getComments';
 
 const rootReducer = combineReducers({
   courses,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   userDetails,
   subtopicsByAuthor,
   coursesStats,
+  comments,
 });
 
 export default rootReducer;
