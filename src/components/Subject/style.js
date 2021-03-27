@@ -21,7 +21,7 @@ const SubjectWrapper = styled.div`
   }
 
   .subject-card-container {
-    justify-content: space-around;
+    // justify-content: space-around;
     padding: 50px 0px 80px 0px;
     .subject-card {
       height: 100px;

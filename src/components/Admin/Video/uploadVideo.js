@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
 import { connect } from 'react-redux';
-import { addVideo, getVideoId } from '../../../redux/action/addVideo';
+import { addVideo } from '../../../redux/action/addVideo';
 import { getSubjects, getChapters, getTopics } from '../../../redux/action/getCoursesData';
 
 const { Option } = Select;
@@ -13,10 +13,21 @@ const data = [
   { listName: 'Topic', idName: 'topicId', fieldName: 'topicName' },
 ];
 
+const GradeArray = [
+  { grade: '1st', gradeId: null },
+  { grade: '2nd', gradeId: null },
+  { grade: '3rd', gradeId: null },
+  { grade: '4th', gradeId: null },
+  { grade: '5th', gradeId: null },
+  { grade: '6th', gradeId: null },
+  { grade: '7th', gradeId: null },
+  { grade: '8th', gradeId: null },
+  { grade: '9th', gradeId: null },
+  { grade: '10th', gradeId: null },
+];
+
 function index({
   addVideo,
-  getVideoId,
-  videoId,
   addVideoResponse,
   getSubjects,
   getChapters,
@@ -42,34 +53,24 @@ function index({
   });
   const [addState, setAddState] = useState({ Grade: 0, Subject: 0, Chapter: 0, Topic: 0 });
   const [selectList, setSelectList] = useState({
-    Grade: [
-      { grade: '1st', gradeId: null },
-      { grade: '2nd', gradeId: null },
-      { grade: '3rd', gradeId: null },
-      { grade: '4th', gradeId: null },
-      { grade: '5th', gradeId: null },
-      { grade: '6th', gradeId: null },
-      { grade: '7th', gradeId: null },
-      { grade: '8th', gradeId: null },
-      { grade: '9th', gradeId: null },
-      { grade: '10th', gradeId: null },
-    ],
+    Grade: GradeArray,
     Subject: [],
     Chapter: [],
     Topic: [],
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (videoDetails.Grade) getSubjects(videoDetails.Grade);
   }, [videoDetails.Grade]);
 
   useEffect(() => {
-    if (!getSubjectsResponse.error) {
+    if (getSubjectsResponse.response) {
       const response = getSubjectsResponse?.data?.data;
-      if (response) {
+      if (response?.success && !getSubjectsResponse?.error) {
         setSelectList((prevState) => ({
           ...prevState,
-          Subject: response,
+          Subject: response.data,
           Chapter: [],
           Topic: [],
         }));
@@ -82,50 +83,61 @@ function index({
           Topic: null,
           topicId: null,
         }));
+      } else {
+        message.error('some error occured refresh the page!');
       }
     }
   }, [getSubjectsResponse]);
 
   useEffect(() => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      Chapter: null,
+      chapterId: null,
+      Topic: null,
+      topicId: null,
+    }));
     if (videoDetails.subjectId !== null) getChapters(videoDetails.subjectId);
+    else {
+      setSelectList((prevState) => ({ ...prevState, Chapter: [], Topic: [] }));
+    }
   }, [videoDetails.subjectId]);
 
   useEffect(() => {
-    if (!getChaptersResponse.error) {
+    if (getChaptersResponse.response) {
       const response = getChaptersResponse?.data?.data;
-      if (response) {
-        setSelectList((prevState) => ({ ...prevState, Chapter: response, Topic: [] }));
-        setVideoDetails((prevState) => ({
-          ...prevState,
-          Chapter: null,
-          chapterId: null,
-          Topic: null,
-          topicId: null,
-        }));
+      if (response?.success && !getChaptersResponse?.error) {
+        setSelectList((prevState) => ({ ...prevState, Chapter: response.data, Topic: [] }));
+      } else {
+        message.error('some error occured refresh the page!');
       }
     }
   }, [getChaptersResponse]);
 
   useEffect(() => {
+    setVideoDetails((prevState) => ({
+      ...prevState,
+      Topic: null,
+      topicId: null,
+    }));
     if (videoDetails.chapterId !== null) getTopics(videoDetails.chapterId);
+    else {
+      setSelectList((prevState) => ({ ...prevState, Topic: [] }));
+    }
   }, [videoDetails.chapterId]);
 
   useEffect(() => {
-    if (!getTopicsResponse.error) {
+    if (getTopicsResponse.response) {
       const response = getTopicsResponse?.data?.data;
-      if (response) {
-        setSelectList((prevState) => ({ ...prevState, Topic: response }));
-        setVideoDetails((prevState) => ({
-          ...prevState,
-          Topic: null,
-          topicId: null,
-        }));
+      if (response?.success && !getTopicsResponse?.error) {
+        setSelectList((prevState) => ({ ...prevState, Topic: response.data }));
+      } else {
+        message.error('some error occured refresh the page!');
       }
     }
   }, [getTopicsResponse]);
 
   const handleSelectChange = (listName, idName, fieldName) => (val, child) => {
-    console.log(child);
     setVideoDetails((prevState) => ({
       ...prevState,
       [listName]: val,
@@ -163,9 +175,22 @@ function index({
       ...prevState,
       AddField: null,
     }));
+    setAddState((prevState) => ({ ...prevState, [listName]: 0 }));
   };
 
   const handleAddVideo = () => {
+    if (
+      !videoDetails.Grade ||
+      !videoDetails.Subject ||
+      !videoDetails.Chapter ||
+      !videoDetails.Topic ||
+      !videoDetails.Title ||
+      !videoDetails.VideoLink ||
+      !videoDetails.VideoTime
+    ) {
+      message.error('fill the all field!');
+      return;
+    }
     const formatData = {
       grade: videoDetails.Grade,
       subjectName: videoDetails.Subject,
@@ -179,8 +204,30 @@ function index({
       videoMins: videoDetails.VideoTime,
       note: videoDetails.Note,
     };
+    setLoading(true);
     addVideo(formatData);
   };
+
+  useEffect(() => {
+    if (addVideoResponse.response) {
+      const response = addVideoResponse?.data?.data;
+      if (response?.success && !addVideoResponse?.error) {
+        setLoading(false);
+        setVideoDetails((prevState) => ({
+          ...prevState,
+          Title: null,
+          VideoLink: null,
+          VideoTime: null,
+          Note: null,
+          Image: null,
+        }));
+        message.success('Successfully added');
+      } else {
+        setLoading(false);
+        message.error('some error occured try again!');
+      }
+    }
+  }, [addVideoResponse]);
 
   return (
     <div>
@@ -255,16 +302,19 @@ function index({
             ))}
 
             <Form.Item label='Title'>
-              <Input onChange={handleInputChange('Title')} />
+              <Input value={videoDetails.Title} onChange={handleInputChange('Title')} />
             </Form.Item>
             <Form.Item label='Video Link'>
-              <Input onChange={handleInputChange('VideoLink')} />
+              <Input value={videoDetails.VideoLink} onChange={handleInputChange('VideoLink')} />
             </Form.Item>
             <Form.Item label='Video Time'>
-              <InputNumber onChange={handleInputChange('VideoTime')} />
+              <InputNumber
+                value={videoDetails.VideoTime}
+                onChange={handleInputChange('VideoTime')}
+              />
             </Form.Item>
             <Form.Item label='Note'>
-              <Input.TextArea onChange={handleInputChange('Note')} />
+              <Input.TextArea value={videoDetails.Note} onChange={handleInputChange('Note')} />
             </Form.Item>
             <Form.Item label='Image'>
               <Upload>
@@ -277,6 +327,7 @@ function index({
           <Button
             style={{ height: '100px', width: '100px', fontWeight: 500, borderRadius: '12px' }}
             onClick={handleAddVideo}
+            loading={loading}
           >
             Upload
           </Button>
@@ -289,7 +340,6 @@ function index({
 const mapStateToProps = (state) => {
   return {
     addVideoResponse: state.addVideo.addVideoData,
-    videoId: state.addVideo.getVideoId,
     getSubjectsResponse: state.courses.getSubjects,
     getChaptersResponse: state.courses.getChapters,
     getTopicsResponse: state.courses.getTopics,
@@ -298,7 +348,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   addVideo,
-  getVideoId,
   getSubjects,
   getChapters,
   getTopics,

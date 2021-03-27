@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import * as Types from '../actionTypes/getCoursesData';
+import * as Types from '../actionTypes/getSubtopicsByAuthor';
 
 function makeRequestReducer(actionType, initialState = {}) {
   const init = {
@@ -41,8 +41,8 @@ function makeRequestReducer(actionType, initialState = {}) {
 }
 
 export default combineReducers({
-  getSubjects: makeRequestReducer(Types.GET_SUBJECTS),
-  getChapters: makeRequestReducer(Types.GET_CHAPTERS),
-  getTopics: makeRequestReducer(Types.GET_TOPICS),
-  getSubtopics: makeRequestReducer(Types.GET_SUBTOPICS),
+  getSubtopicsByGrade: makeRequestReducer(Types.GET_SUBTOPICS_BY_GRADE),
+  getSubtopicsBySubject: makeRequestReducer(Types.GET_SUBTOPICS_BY_SUBJECT),
+  getSubtopicsByChapter: makeRequestReducer(Types.GET_SUBTOPICS_BY_CHAPTER),
+  getSubtopicsByTopic: makeRequestReducer(Types.GET_SUBTOPICS_BY_TOPIC),
 });

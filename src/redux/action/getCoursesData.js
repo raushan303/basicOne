@@ -4,21 +4,6 @@ import * as actionHandlers from '../helpers/actionHandlers';
 import headers from '../helpers/headers';
 import { LOCAL_BASE_URL } from '../../shared/baseurl';
 
-export const getSubjectStat = (subjectId) =>
-  function (dispatch) {
-    dispatch(actionHandlers.tryHandle(actionTypes.GET_SUBJECT_STAT));
-    return axios
-      .get(`${LOCAL_BASE_URL}/getSubjectStat/${subjectId}`, headers())
-      .then((response) => {
-        if (response) {
-          dispatch(actionHandlers.handleResponse(actionTypes.GET_SUBJECT_STAT_SUCCESS, response));
-        }
-      })
-      .catch((error) => {
-        dispatch(actionHandlers.handleError(actionTypes.GET_SUBJECT_STAT_FAILED, error));
-      });
-  };
-
 export const getSubjects = (grade) =>
   function (dispatch) {
     dispatch(actionHandlers.tryHandle(actionTypes.GET_SUBJECTS));

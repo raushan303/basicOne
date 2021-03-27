@@ -6,6 +6,7 @@ function makeRequestReducer(actionType, initialState = {}) {
     data: [],
     error: false,
     isLoading: false,
+    response: false,
     ...initialState,
   };
 
@@ -15,6 +16,7 @@ function makeRequestReducer(actionType, initialState = {}) {
         return {
           ...state,
           isLoading: true,
+          response: false,
         };
       case `${actionType}.success`:
         return {
@@ -22,6 +24,7 @@ function makeRequestReducer(actionType, initialState = {}) {
           isLoading: false,
           data: payload.data,
           error: false,
+          response: true,
         };
       case `${actionType}.failed`:
         return {
@@ -29,6 +32,7 @@ function makeRequestReducer(actionType, initialState = {}) {
           isLoading: false,
           data: payload,
           error: true,
+          response: true,
         };
       default:
         return state;
@@ -41,4 +45,5 @@ export default combineReducers({
   getSignUpData: makeRequestReducer(Types.SIGN_UP),
   getRegisterData: makeRequestReducer(Types.REGISTER),
   getUserData: makeRequestReducer(Types.SHOW_USER),
+  updateWatch: makeRequestReducer(Types.UPDATE_WATCH),
 });

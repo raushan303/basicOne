@@ -11,6 +11,7 @@ function makeRequestReducer(actionType, initialState = {}) {
     data: userDetails,
     error: false,
     isLoading: false,
+    response: false,
     ...initialState,
   };
 
@@ -20,6 +21,7 @@ function makeRequestReducer(actionType, initialState = {}) {
         return {
           ...state,
           isLoading: true,
+          response: false,
         };
       case `${actionType}.success`:
         return {
@@ -27,6 +29,7 @@ function makeRequestReducer(actionType, initialState = {}) {
           isLoading: false,
           data: { ...userDetails, ...payload.data },
           error: false,
+          response: true,
         };
       case `${actionType}.failed`:
         return {
@@ -34,6 +37,7 @@ function makeRequestReducer(actionType, initialState = {}) {
           isLoading: false,
           data: payload,
           error: true,
+          response: true,
         };
       default:
         return state;

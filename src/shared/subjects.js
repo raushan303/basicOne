@@ -103,4 +103,47 @@ export const PHYSICS = [
   },
 ];
 
+const videos = [
+  {
+    id: 115783408,
+    name: 'Jambinai - Connection',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 438166716,
+    name: 'Jambinai - They Keep Silence',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 169408731,
+    name: 'Hoody - Like You',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 438166716,
+    name: 'Jambinai - They Keep Silence ',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 115783408,
+    name: 'Jambinai - Connection',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 438166716,
+    name: 'Jambinai - They Keep Silence',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 169408731,
+    name: 'Hoody - Like You',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+  {
+    id: 438166716,
+    name: 'Jambinai - They Keep Silence',
+    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
+  },
+];
+
 export const allsubject = [];

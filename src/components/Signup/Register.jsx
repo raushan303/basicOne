@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
 
 import { connect } from 'react-redux';
-import { register, updateUserDetails } from '../../redux/action/user';
+import { register } from '../../redux/action/user';
 import Loading from '../Loader';
 
 import { useRouter } from 'next/router';
@@ -39,7 +39,7 @@ const IllustrationImage = styled.div`
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-function index({ register, registerResponse, userDetails, updateUserDetails }) {
+function index({ register, registerResponse, userDetails }) {
   const router = useRouter();
 
   const handlesubmit = async (event) => {
@@ -63,7 +63,6 @@ function index({ register, registerResponse, userDetails, updateUserDetails }) {
       if (registerResponse?.data?.data?.success) {
         const userInfo = registerResponse?.data?.data?.user?.userInfo;
         const token = userInfo.token;
-        updateUserDetails({ userId: userInfo.userId, isLoggedIn: true });
         cookies.set('token_id', token, {
           path: '/',
           maxAge: 31540000,
@@ -112,4 +111,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { register, updateUserDetails })(index);
+export default connect(mapStateToProps, { register })(index);

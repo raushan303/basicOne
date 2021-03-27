@@ -2,39 +2,183 @@ import React, { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 import { Row, Col, Select, Form, Input, Tag, InputNumber, Upload, Button, message } from 'antd';
 import { connect } from 'react-redux';
-import { addVideo, getVideoId } from '../../../redux/action/addVideo';
-import { getSubjects, getChapters, getTopics } from '../../../redux/action/getCoursesData';
+import {
+  getSubtopicsByGrade,
+  getSubtopicsBySubject,
+  getSubtopicsByChapter,
+  getSubtopicsByTopic,
+} from '../../../redux/action/getSubtopicsByAuthor';
 
-import VideoCard from '../VideoCard';
+import VideoCard from '../VideoCard/newVideoCard';
 
 import UploadVideo from './uploadVideo';
 
 const { Option } = Select;
 
-const data = ['Grade', 'Subject', 'Chapter', 'Topic'];
+const GradeArray = [
+  { grade: '1st', gradeId: null },
+  { grade: '2nd', gradeId: null },
+  { grade: '3rd', gradeId: null },
+  { grade: '4th', gradeId: null },
+  { grade: '5th', gradeId: null },
+  { grade: '6th', gradeId: null },
+  { grade: '7th', gradeId: null },
+  { grade: '8th', gradeId: null },
+  { grade: '9th', gradeId: null },
+  { grade: '10th', gradeId: null },
+];
 
-function index({}) {
+const data = [
+  { listName: 'Grade', idName: 'gradeId', fieldName: 'grade' },
+  { listName: 'Subject', idName: 'subjectId', fieldName: 'subjectName' },
+  { listName: 'Chapter', idName: 'chapterId', fieldName: 'chapterName' },
+  { listName: 'Topic', idName: 'topicId', fieldName: 'topicName' },
+];
+
+function index({
+  getSubtopicsByGrade,
+  getSubtopicsBySubject,
+  getSubtopicsByChapter,
+  getSubtopicsByTopic,
+  dataByGrade,
+  dataBySubject,
+  dataByChapter,
+  dataByTopic,
+  userDetails,
+}) {
   const [addMode, setAddMode] = useState(false);
   const [searchDetails, setSearchDetails] = useState({
-    Grade: null,
+    Grade: '10th',
+    gradeId: null,
     Subject: null,
+    subjectId: null,
     Chapter: null,
+    chapterId: null,
     Topic: null,
+    topicId: null,
   });
 
+  const [subtopicList, setSubtopicList] = useState([]);
+
   const [selectList, setSelectList] = useState({
-    Grade: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'],
+    Grade: GradeArray,
     Subject: [],
     Chapter: [],
     Topic: [],
   });
 
-  const handleSelectChange = (field) => (val, child) => {
+  const handleSelectChange = (listName, idName) => (val, child) => {
     setSearchDetails((prevState) => ({
       ...prevState,
-      [field]: val,
+      [listName]: val,
+      [idName]: child.id,
     }));
   };
+
+  useEffect(() => {
+    if (searchDetails.Grade) {
+      getSubtopicsByGrade(userDetails.userId, searchDetails.Grade);
+    }
+  }, [searchDetails.Grade]);
+
+  useEffect(() => {
+    if (dataByGrade.response) {
+      const response = dataByGrade?.data?.data;
+      console.log(response);
+      if (response?.success && !dataByGrade?.error) {
+        setSubtopicList(response?.data?.subtopicList);
+        setSelectList((prevState) => ({
+          ...prevState,
+          Subject: response?.data?.subjectList,
+          Chapter: [],
+          Topic: [],
+        }));
+        setSearchDetails((prevState) => ({
+          ...prevState,
+          Subject: null,
+          subjectId: null,
+          Chapter: null,
+          chapterId: null,
+          Topic: null,
+          topicId: null,
+        }));
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [dataByGrade]);
+
+  useEffect(() => {
+    if (searchDetails.subjectId !== null) {
+      getSubtopicsBySubject(userDetails.userId, searchDetails.subjectId);
+    }
+  }, [searchDetails.subjectId]);
+
+  useEffect(() => {
+    if (dataBySubject.response) {
+      const response = dataBySubject?.data?.data;
+      if (response?.success && !dataBySubject?.error) {
+        setSubtopicList(response?.data?.subtopicList);
+        setSelectList((prevState) => ({
+          ...prevState,
+          Chapter: response?.data?.chapterList,
+          Topic: [],
+        }));
+        setSearchDetails((prevState) => ({
+          ...prevState,
+          Chapter: null,
+          chapterId: null,
+          Topic: null,
+          topicId: null,
+        }));
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [dataBySubject]);
+
+  useEffect(() => {
+    if (searchDetails.chapterId !== null) {
+      getSubtopicsByChapter(userDetails.userId, searchDetails.chapterId);
+    }
+  }, [searchDetails.chapterId]);
+
+  useEffect(() => {
+    if (dataByChapter.response) {
+      const response = dataByChapter?.data?.data;
+      if (response?.success && !dataByChapter?.error) {
+        setSubtopicList(response?.data?.subtopicList);
+        setSelectList((prevState) => ({
+          ...prevState,
+          Topic: response?.data?.topicList,
+        }));
+        setSearchDetails((prevState) => ({
+          ...prevState,
+          Topic: null,
+          topicId: null,
+        }));
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [dataByChapter]);
+
+  useEffect(() => {
+    if (searchDetails.topicId !== null) {
+      getSubtopicsByTopic(userDetails.userId, searchDetails.topicId);
+    }
+  }, [searchDetails.topicId]);
+
+  useEffect(() => {
+    if (dataByTopic.response) {
+      const response = dataByTopic?.data?.data;
+      if (response?.success && !dataByTopic?.error) {
+        setSubtopicList(response?.data?.subtopicList);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [dataByTopic]);
 
   return (
     <Wrapper>
@@ -49,21 +193,23 @@ function index({}) {
       ) : (
         <>
           <Row>
-            {data.map((str, index) => {
+            {data.map((obj, index) => {
               let isDisbaled = false;
-              data.forEach((str2, index2) => {
-                if (index2 < index && !searchDetails[str2]) isDisbaled = true;
+              data.forEach((obj2, index2) => {
+                if (index2 < index && !searchDetails[obj2.listName]) isDisbaled = true;
               });
               return (
                 <div className='select-container'>
                   <Select
                     disabled={isDisbaled}
-                    placeholder={`Select ${str}`}
-                    onChange={handleSelectChange(str)}
-                    value={searchDetails[str]}
+                    placeholder={`Select ${obj.listName}`}
+                    onChange={handleSelectChange(obj.listName, obj.idName)}
+                    value={searchDetails[obj.listName]}
                   >
-                    {selectList[str].map((val) => (
-                      <Option value={val}>{val}</Option>
+                    {selectList[obj.listName].map((val) => (
+                      <Option value={val[obj.fieldName]} id={val[obj.idName]}>
+                        {val[obj.fieldName]}
+                      </Option>
                     ))}
                   </Select>
                 </div>
@@ -71,12 +217,11 @@ function index({}) {
             })}
           </Row>
           <Row className='mt-10'>
-            <VideoCard img='/images/undraw8.svg' />
-            <VideoCard img='/images/undraw1.svg' />
-            <VideoCard img='/images/img1.png' />
-            <VideoCard img='/images/undraw_dashboard.svg' />
-            <VideoCard img='/images/undraw2.svg' />
-            <VideoCard img='/images/undraw9.svg' />
+            {subtopicList?.map((data) => (
+              <div style={{ padding: '15px' }}>
+                <VideoCard img='/images/undraw8.svg' data={data} />
+              </div>
+            ))}
           </Row>
         </>
       )}
@@ -86,18 +231,17 @@ function index({}) {
 
 const mapStateToProps = (state) => {
   return {
-    addVideoResponse: state.addVideo.addVideoData,
-    videoId: state.addVideo.getVideoId,
-    getSubjectsResponse: state.courses.getSubjects,
-    getChaptersResponse: state.courses.getChapters,
-    getTopicsResponse: state.courses.getTopics,
+    dataByGrade: state.subtopicsByAuthor.getSubtopicsByGrade,
+    dataBySubject: state.subtopicsByAuthor.getSubtopicsBySubject,
+    dataByChapter: state.subtopicsByAuthor.getSubtopicsByChapter,
+    dataByTopic: state.subtopicsByAuthor.getSubtopicsByTopic,
+    userDetails: state.userDetails.userDetails.data,
   };
 };
 
 export default connect(mapStateToProps, {
-  addVideo,
-  getVideoId,
-  getSubjects,
-  getChapters,
-  getTopics,
+  getSubtopicsByGrade,
+  getSubtopicsBySubject,
+  getSubtopicsByChapter,
+  getSubtopicsByTopic,
 })(index);

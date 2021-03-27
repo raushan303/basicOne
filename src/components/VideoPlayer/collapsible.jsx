@@ -4,23 +4,26 @@ import { CollapsibleWrap } from './style';
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
-import SubTopicCard from '../Card/SubTopicCard';
+import SubTopicCard from '../Card/SubtopicCard';
 
 const sampleSkeletons = [1, 2, 3, 4];
 export default function CollapsiblePlaylist({
-  chapter,
-  activeChapterId,
-  setActiveChapterId,
-  activeChapterTopics,
-  setActiveChapterTopics,
+  topic,
   activeTopicId,
   setActiveTopicId,
+  subtopicList,
+  activeVideoId,
+  setActiveVideoId,
+  setActiveVideoData,
+  setSubtopicList,
+  setStartTime,
+  updateActiveSubtopic,
 }) {
   return (
     <CollapsibleWrap>
       <Collapsible
-        key={chapter.chapterId}
-        open={chapter.chapterId === activeChapterId ? true : false}
+        key={topic.topicId}
+        open={topic.topicId === activeTopicId ? true : false}
         trigger={
           <>
             <div className='chapter-title' style={{ height: 62 }}>
@@ -28,14 +31,10 @@ export default function CollapsiblePlaylist({
                 className='bold-14 tc-2'
                 style={{ color: 'rgba(18, 18, 29, 0.6)', width: '80%' }}
               >
-                {chapter.chapterName}
+                {topic?.topicName}
               </span>
-              <span className='topic-count'>{chapter.topicCount}</span>
-              <Icon
-                icon={ic_expand_more}
-                size={30}
-                style={{ color: 'rgba(18, 18, 29, 0.6)' }}
-              />
+              <span className='topic-count'>{topic?.conceptCount}</span>
+              <Icon icon={ic_expand_more} size={30} style={{ color: 'rgba(18, 18, 29, 0.6)' }} />
             </div>
           </>
         }
@@ -46,36 +45,36 @@ export default function CollapsiblePlaylist({
                 className='bold-14 tc-2'
                 style={{ color: 'rgba(18, 18, 29, 0.6)', width: '80%' }}
               >
-                {chapter.chapterName}
+                {topic?.topicName}
               </span>
-              <span className='topic-count'>{chapter.topicCount}</span>
-              <Icon
-                icon={ic_expand_less}
-                size={30}
-                style={{ color: 'rgba(18, 18, 29, 0.6)' }}
-              />
+              <span className='topic-count'>{topic?.conceptCount}</span>
+              <Icon icon={ic_expand_less} size={30} style={{ color: 'rgba(18, 18, 29, 0.6)' }} />
             </div>
           </>
         }
         onOpening={() => {}}
         onTriggerClosing={() => {
           // setActiveChapterTopics([]);
-          setActiveChapterId(0);
+          setActiveTopicId(null);
         }}
         onTriggerOpening={() => {
           // setActiveChapterTopics([]);
-          setActiveChapterId(chapter.chapterId);
+          setActiveTopicId(topic?.topicId);
+          // setSubtopicList([]);
         }}
       >
-        {activeChapterTopics.map((topic) => {
+        {subtopicList?.map((subtopic) => {
           return (
             <div
+              style={{ padding: '5px' }}
               onClick={() => {
-                setActiveTopicId(topic.topicId);
+                setActiveVideoId(subtopic?.subtopicId);
+                setActiveVideoData(subtopic);
+                setStartTime(subtopic?.currentTime);
+                updateActiveSubtopic(subtopic);
               }}
             >
-            
-              <SubTopicCard chapter={'Biology'} details={"current"} />
+              <SubTopicCard active={subtopic?.subtopicId === activeVideoId} data={subtopic} />
             </div>
           );
         })}

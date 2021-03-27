@@ -8,167 +8,145 @@ import { VideoPlayerWrapper } from './style';
 
 import Loader from '../Loader';
 
-import { Row, Col } from 'antd';
+import { Row, Col, message } from 'antd';
 
 import CollapsibleList from './collapsible';
 import { ic_expand_more } from 'react-icons-kit/md/ic_expand_more';
 import { ic_expand_less } from 'react-icons-kit/md/ic_expand_less';
 import Icon from 'react-icons-kit';
 
+import { useRouter } from 'next/router';
 
-const videos = [
-  {
-    id: 115783408,
-    name: 'Jambinai - Connection',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 169408731,
-    name: 'Hoody - Like You',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence ',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 115783408,
-    name: 'Jambinai - Connection',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 169408731,
-    name: 'Hoody - Like You',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-  {
-    id: 438166716,
-    name: 'Jambinai - They Keep Silence',
-    image: 'https://i.vimeocdn.com/video/924124243_640.jpg',
-  },
-];
+import { connect } from 'react-redux';
 
-const tvideos = [
-  {
-    chapterId: 1,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 2,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 3,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    chapterId: 4,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-];
+import { getTopics } from '../../redux/action/getCoursesData';
+import { getSubtopicsStats, updateActiveSubtopic } from '../../redux/action/getCoursesStat';
+import { updateWatch } from '../../redux/action/user';
 
-const ttvideos = [
-  {
-    topicId: 1,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 2,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 3,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-  {
-    topicId: 4,
-    chapterName: 'current',
-    topicCount: 10,
-  },
-];
+function index({
+  getTopics,
+  topicsResponse,
+  getSubtopicsStats,
+  subtopicsResponse,
+  updateWatch,
+  updateWatchResponse,
+  updateActiveSubtopic,
+}) {
+  const router = useRouter();
+  const path = router.query;
+  const chapterId = parseInt(path.subName.split('-')[0]);
+  const topicId = parseInt(path.topicName.split('-')[0]);
 
-function index() {
-  const [videoIndex, setVideoIndex] = useState(0);
   const [progress, setProgress] = useState({});
   const [startTime, setStartTime] = useState(0);
-  const [timeFetched, setTimeFetched] = useState(0);
 
-  const [activeChapterId, setActiveChapterId] = useState(null);
-  const [activeChapterTopics, setActiveChapterTopics] = useState(ttvideos);
-  const [activeTopicId, setActiveTopicId] = useState(null);
-
-  const selectVideo = async (index) => {
-    setVideoIndex(index);
-    setTimeFetched(0);
-    var res = await getVideoTime(videos[index].id);
-    if (res.message == 'Sucdcess !') {
-      setStartTime(parseInt(res.data.time));
-    } else setStartTime(0);
-    setTimeFetched(1);
-  };
-
-  const handlePlayerPause = async () => {
-    var res = await updateVideoTime(videos[videoIndex].id, progress.seconds);
-  };
+  const [activeTopicId, setActiveTopicId] = useState(topicId);
+  const [subtopicList, setSubtopicList] = useState([]);
+  const [activeVideoId, setActiveVideoId] = useState(null);
+  const [activeVideoData, setActiveVideoData] = useState({});
+  const [videoIndex, setVideoIndex] = useState(0);
+  const [topicList, setTopicList] = useState([]);
 
   useEffect(() => {
-    const getTime = async () => {
-      var res = await getVideoTime(videos[videoIndex].id);
-      if (res.datab) {
-        console.log(res, parseInt(res.data.time), 'time!!');
-        setStartTime(parseInt(res.data.time));
-      } else setStartTime(0);
-      setTimeFetched(1);
-    };
-    getTime();
+    getTopics(chapterId);
   }, []);
 
+  useEffect(() => {
+    if (topicsResponse.response) {
+      const response = topicsResponse?.data?.data;
+      if (response?.success && !topicsResponse?.error) {
+        setTopicList(response?.data);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [topicsResponse]);
+
+  useEffect(() => {
+    if (activeTopicId === 0 || activeTopicId) {
+      getSubtopicsStats(activeTopicId);
+    }
+  }, [activeTopicId]);
+
+  useEffect(() => {
+    if (subtopicsResponse.response) {
+      const response = subtopicsResponse?.data?.data;
+      if (response?.success && !subtopicsResponse?.error) {
+        setSubtopicList(response?.data);
+        setActiveVideoId(response?.data?.[0]?.subtopicId);
+        setActiveVideoData(response?.data?.[0]);
+        updateActiveSubtopic(response?.data?.[0]);
+        setStartTime(response?.data?.[0]?.currentTime);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [subtopicsResponse]);
+
+  const handlePlayerPause = async () => {
+    if (
+      !isNaN(activeVideoData?.currentTime) &&
+      !isNaN(activeVideoData?.learntTime) &&
+      !isNaN(progress.seconds)
+    ) {
+      const formatSubtopic = { ...activeVideoData };
+      formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
+      formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
+      setActiveVideoData((prevState) => ({
+        ...prevState,
+        currentTime: formatSubtopic.currentTime,
+        learntTime: formatSubtopic.learntTime,
+      }));
+
+      updateWatch(formatSubtopic);
+    }
+  };
+
   const onEnd = () => {
-    updateVideoTime(videos[videoIndex].id, progress.duration - 1);
+    if (
+      !isNaN(activeVideoData?.currentTime) &&
+      !isNaN(activeVideoData?.learntTime) &&
+      !isNaN(progress.seconds)
+    ) {
+      const formatSubtopic = { ...activeVideoData };
+      formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
+      formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
+      setActiveVideoData((prevState) => ({
+        ...prevState,
+        currentTime: formatSubtopic.currentTime,
+        learntTime: formatSubtopic.learntTime,
+      }));
+      updateWatch(formatSubtopic);
+    }
   };
 
   const onProgressHandler = (e) => {
     setProgress(e);
-    console.log(e);
+    // console.log(e);
   };
+  // useEffect(() => {
+  //   console.log(startTime, 'sss');
+  // }, [startTime]);
 
-  const video = videos[videoIndex];
-
-  if (timeFetched == 0) return <Loader />;
+  if (!topicsResponse?.response) return <Loader />;
   else {
     return (
       <VideoPlayerWrapper>
         <Row className='outer-container'>
           <Col xs={24} sm={22} md={22} lg={16} xl={16}>
             <div class='vimeo-container'>
-              <Vimeo
-                className='vimeo-player'
-                video={video.id}
-                autoplay
-                speed={true}
-                start={Math.max(0, startTime - 15)}
-                onEnd={onEnd}
-                onPause={handlePlayerPause}
-                onProgress={onProgressHandler}
-              />
+              {activeVideoData?.url && (
+                <Vimeo
+                  className='vimeo-player'
+                  video={activeVideoData?.url}
+                  autoplay
+                  speed={true}
+                  start={startTime || 0}
+                  onEnd={onEnd}
+                  onPause={handlePlayerPause}
+                  onProgress={onProgressHandler}
+                />
+              )}
             </div>
             <Collapsible
               trigger={
@@ -192,27 +170,23 @@ function index() {
                 </div>
               }
             >
-              <div className='content-container'>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged
-              </div>
+              <div className='content-container'>{activeVideoData?.note || ''}</div>
             </Collapsible>
           </Col>
           <Col xs={24} sm={22} md={22} lg={8} xl={7}>
             <div className='other-videos-container'>
-              {tvideos.map((choice, index) => (
+              {topicList?.map((topic, index) => (
                 <CollapsibleList
-                  chapter={choice}
-                  activeChapterId={activeChapterId}
-                  setActiveChapterId={setActiveChapterId}
-                  activeChapterTopics={activeChapterTopics}
-                  setActiveChapterTopics={setActiveChapterTopics}
+                  topic={topic}
                   activeTopicId={activeTopicId}
                   setActiveTopicId={setActiveTopicId}
+                  subtopicList={subtopicList}
+                  activeVideoId={activeVideoId}
+                  setActiveVideoId={setActiveVideoId}
+                  setActiveVideoData={setActiveVideoData}
+                  setSubtopicList={setSubtopicList}
+                  setStartTime={setStartTime}
+                  updateActiveSubtopic={updateActiveSubtopic}
                 />
               ))}
             </div>
@@ -223,4 +197,17 @@ function index() {
   }
 }
 
-export default index;
+function mapStateToProps(state) {
+  return {
+    topicsResponse: state.courses.getTopics,
+    subtopicsResponse: state.coursesStats.getSubtopicsStats,
+    updateWatchResponse: state.user.updateWatch,
+  };
+}
+
+export default connect(mapStateToProps, {
+  getTopics,
+  getSubtopicsStats,
+  updateWatch,
+  updateActiveSubtopic,
+})(index);

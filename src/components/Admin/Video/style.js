@@ -54,7 +54,7 @@ export const Wrapper = styled.div`
     }
   }
   .add-field-container {
-    margin: 30px 0 0 30px;
+    margin: 30px 0 0 200px;
     .add-field {
       padding: 10px;
       display: flex;
