@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "eslint ./pages --ext js,jsx",
     "lintfix": "eslint ./pages --ext js,jsx --fix"
   },
