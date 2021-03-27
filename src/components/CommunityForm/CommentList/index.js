@@ -12,7 +12,7 @@ const Container = tw.div`relative`;
 
 const ColumnContainer = tw.div`flex flex-wrap flex-col lg:flex-row md:items-center max-w-screen-xl mx-auto py-6 md:pt-8 md:pb-16`;
 
-const Heading = tw.h1`font-black text-xl md:text-4xl leading-snug w-full text-center py-12`;
+const Heading = tw.h1`font-black text-xl md:text-4xl leading-snug w-full text-center pt-8 pb-4 md:py-12`;
 const SubHeading = tw.h1`text-dark-blue text-xl w-full text-right px-4 md:px-20 cursor-pointer`;
 
 const Wrapper = styled.div``;

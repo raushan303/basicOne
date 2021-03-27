@@ -6,6 +6,7 @@ import AskCard from '../AskCard';
 import Icon from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { connect } from 'react-redux';
+import { message } from 'antd';
 
 import { uploadReply, getReply, deleteReply } from '../../../redux/action/getComments';
 
@@ -14,7 +15,7 @@ const Banner = tw.div`bg-white py-4 px-10 max-w-screen-xl w-full`;
 const IconContainer = tw.div`bg-grey w-fit cursor-pointer py-2 px-2 rounded-full`;
 
 const Heading = tw.h1`mt-20 font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
-const Paragraph = tw.p`w-full my-4 lg:my-6 text-lg lg:text-2xl font-medium text-color-2 max-w-screen-xl mx-auto`;
+const Paragraph = tw.p`w-full my-2 lg:my-6 text-lg lg:text-2xl font-medium text-color-2 max-w-screen-xl ml-8 md:mx-auto`;
 const Wrapper = styled.div``;
 
 import ReplyModal from '../PostReply';
@@ -67,6 +68,7 @@ const index = ({
         setReplyList((prevState) =>
           prevState.filter((reply) => reply.replyId !== response?.data?.replyId)
         );
+        setCount((prevState) => prevState - 1);
         message.success('Deleted Successfully!');
       } else {
         message.error('some error occured refresh the page!');

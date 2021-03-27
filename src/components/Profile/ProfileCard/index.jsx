@@ -57,7 +57,7 @@ function index() {
 
   return (
     <Wrapper>
-      <input
+      {/* <input
         type='file'
         onChange={(image) => {
           handleUpload(image.target.files[0]);
@@ -69,14 +69,14 @@ function index() {
           __html: formContent,
         }}
       ></div>
-      {/* <input type='file' onChange={(e)=>{videoUpload(e)}}/> */}
+      <input type='file' onChange={(e)=>{videoUpload(e)}}/>
       <button
         onClick={() => {
           videoUpload();
         }}
       >
         Upload File
-      </button>
+      </button> */}
       <EditModal visible={visible} setVisible={setVisible} />
       <div onClick={() => setVisible(true)} className='avatar-container'>
         <img alt='profile' src='/images/undraw6.svg' />
