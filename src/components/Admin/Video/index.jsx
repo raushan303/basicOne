@@ -77,7 +77,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.Grade) {
-      getSubtopicsByGrade(userDetails.userId, searchDetails.Grade);
+      getSubtopicsByGrade(0, searchDetails.Grade);
     }
   }, [searchDetails.Grade]);
 
@@ -110,7 +110,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.subjectId !== null) {
-      getSubtopicsBySubject(userDetails.userId, searchDetails.subjectId);
+      getSubtopicsBySubject(0, searchDetails.subjectId);
     }
   }, [searchDetails.subjectId]);
 
@@ -139,7 +139,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.chapterId !== null) {
-      getSubtopicsByChapter(userDetails.userId, searchDetails.chapterId);
+      getSubtopicsByChapter(0, searchDetails.chapterId);
     }
   }, [searchDetails.chapterId]);
 
@@ -165,7 +165,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.topicId !== null) {
-      getSubtopicsByTopic(userDetails.userId, searchDetails.topicId);
+      getSubtopicsByTopic(0, searchDetails.topicId);
     }
   }, [searchDetails.topicId]);
 
