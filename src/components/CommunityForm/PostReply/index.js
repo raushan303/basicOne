@@ -6,35 +6,81 @@ import { Modal, Input, Form, Button, message } from 'antd';
 
 const Container = tw.div`p-12`;
 import { connect } from 'react-redux';
-import { uploadReply } from '../../../redux/action/getComments';
+import { uploadReply, resetCommentState, editReply } from '../../../redux/action/getComments';
 
 function index({
+  type,
+  data,
+
   visible,
   setVisible,
+
   uploadReply,
   uploadReplyRes,
+  editReply,
+  editReplyRes,
   activeSubtopic,
   activeComment,
-  addReply,
-  setCount,
+  resetCommentState,
 }) {
   const [replyData, setReplyData] = useState({ title: '', description: '', imageList: [] });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (type === 'edit') {
+      setReplyData({
+        title: data?.title,
+        description: data?.description,
+        imageList: data?.imageList,
+      });
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (uploadReplyRes.response) {
+      const response = uploadReplyRes?.data?.data;
+      if (response?.success && !uploadReplyRes?.error) {
+        message.success('Reply uploaded successfully!');
+        setLoading(false);
+        setReplyData({ title: '', description: '', imageList: [] });
+        resetCommentState('uploadReply');
+      } else {
+        message.error('some error occured try again!');
+      }
+    }
+  }, [uploadReplyRes]);
+
+  useEffect(() => {
+    if (editReplyRes.response) {
+      const response = editReplyRes?.data?.data;
+      if (response?.success && !editReplyRes?.error) {
+        message.success('edited successfully!');
+        setLoading(false);
+        resetCommentState('editReply');
+      } else {
+        message.error('some error occured try again!');
+      }
+    }
+  }, [editReplyRes]);
+
   const handleSubmit = () => {
     if (replyData.title !== '' && replyData.description !== '') {
       if (
         (activeSubtopic?.subtopicId === 0 || activeSubtopic?.subtopicId) &&
         (activeComment?.commentId === 0 || activeComment?.commentId)
       ) {
-        // let todayDate = new Date().toISOString().slice(0, 10);
-        let todayDate = new Date().toLocaleString();
-
-        uploadReply({
-          ...replyData,
-          subtopicId: activeSubtopic?.subtopicId,
-          commentId: activeComment?.commentId,
-          date: todayDate,
-        });
+        if (type === 'add') {
+          let todayDate = new Date().toLocaleString();
+          todayDate = todayDate.replaceAll('/', '-');
+          uploadReply({
+            ...replyData,
+            subtopicId: activeSubtopic?.subtopicId,
+            commentId: activeComment?.commentId,
+            date: todayDate,
+          });
+        } else {
+          editReply({ ...replyData, replyId: data?.replyId });
+        }
         setLoading(true);
       } else {
         message.error('something went wrong refresh the page!');
@@ -43,20 +89,6 @@ function index({
       message.error('fill the boxes');
     }
   };
-  useEffect(() => {
-    if (uploadReplyRes.response) {
-      const response = uploadReplyRes?.data?.data;
-      if (response?.success && !uploadReplyRes?.error) {
-        message.success('Reply uploaded successfully!');
-        addReply(response?.data);
-        setCount((prevState) => prevState + 1);
-        setLoading(false);
-        setReplyData({ title: '', description: '', imageList: [] });
-      } else {
-        message.error('some error occured try again!');
-      }
-    }
-  }, [uploadReplyRes]);
 
   const handleInputChange = (field) => (e) => {
     setReplyData((prevState) => ({
@@ -85,7 +117,7 @@ function index({
             />
           </Form.Item>
           <Button loading={loading} onClick={handleSubmit}>
-            Post
+            {type === 'add' ? 'Post' : 'Edit'}
           </Button>
         </Form>
       </Container>
@@ -96,6 +128,7 @@ function index({
 function mapStateToProps(state) {
   return {
     uploadReplyRes: state.comments.uploadReply,
+    editReplyRes: state.comments.editReply,
     activeSubtopic: state.coursesStats.activeSubtopic.data,
     activeComment: state.comments.activeComment.data,
   };
@@ -103,4 +136,6 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   uploadReply,
+  resetCommentState,
+  editReply,
 })(index);

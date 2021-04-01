@@ -7,14 +7,21 @@ import Icon from 'react-icons-kit';
 import { arrowLeft2 } from 'react-icons-kit/icomoon/arrowLeft2';
 import { connect } from 'react-redux';
 import { message } from 'antd';
+import Loader from '../../Loader';
 
-import { uploadReply, getReply, deleteReply } from '../../../redux/action/getComments';
+import {
+  uploadReply,
+  getReply,
+  deleteReply,
+  resetCommentState,
+  editReply,
+} from '../../../redux/action/getComments';
 
-const Container = tw.div`relative py-20 flex flex-col items-center`;
+const Container = tw.div`relative py-12 md:py-20 flex flex-col items-center`;
 const Banner = tw.div`bg-white py-4 px-10 max-w-screen-xl w-full`;
 const IconContainer = tw.div`bg-grey w-fit cursor-pointer py-2 px-2 rounded-full`;
 
-const Heading = tw.h1`mt-20 font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
+const Heading = tw.h1`mt-12 md:mt-20 font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
 const Paragraph = tw.p`w-full my-2 lg:my-6 text-lg lg:text-2xl font-medium text-color-2 max-w-screen-xl ml-8 md:mx-auto`;
 const Wrapper = styled.div``;
 
@@ -24,16 +31,20 @@ import CommentModal from '../postComment';
 const index = ({
   background,
   setVisible,
+
+  resetCommentState,
+
+  activeComment,
+
   getReply,
   getReplyRes,
-  activeComment,
-  deleteReply,
+  uploadReplyRes,
+  deleteCommentsRes,
   deleteReplyRes,
+  editReplyRes,
 }) => {
   const [replyList, setReplyList] = useState([]);
   const [count, setCount] = useState(1);
-  const [commentModalVisible, setCommentModalVisible] = useState(false);
-  const [replyModalVisible, setReplyModalVisible] = useState(false);
 
   useEffect(() => {
     if (activeComment?.commentId === 0 || activeComment?.commentId) {
@@ -53,13 +64,29 @@ const index = ({
     }
   }, [getReplyRes]);
 
-  const addReply = (data) => {
-    setReplyList((prevState) => [...prevState, data]);
-  };
+  useEffect(() => {
+    if (uploadReplyRes.response) {
+      const response = uploadReplyRes?.data?.data;
+      if (response?.success && !uploadReplyRes?.error) {
+        setReplyList((prevState) => [...prevState, response?.data]);
+        setCount((prevState) => prevState + 1);
+      } else {
+        message.error('some error occured try again!');
+      }
+    }
+  }, [uploadReplyRes]);
 
-  const removeReply = (data) => {
-    deleteReply({ replyId: data?.replyId });
-  };
+  useEffect(() => {
+    if (deleteCommentsRes.response) {
+      const response = deleteCommentsRes?.data?.data;
+      if (response?.success && !deleteCommentsRes?.error) {
+        resetCommentState('deleteComments');
+        setVisible(true);
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [deleteCommentsRes]);
 
   useEffect(() => {
     if (deleteReplyRes.response) {
@@ -70,22 +97,37 @@ const index = ({
         );
         setCount((prevState) => prevState - 1);
         message.success('Deleted Successfully!');
+        resetCommentState('deleteReply');
       } else {
         message.error('some error occured refresh the page!');
       }
     }
   }, [deleteReplyRes]);
 
+  useEffect(() => {
+    if (editReplyRes.response) {
+      const response = editReplyRes?.data?.data;
+      if (response?.success && !editReplyRes?.error) {
+        setReplyList((prevState) =>
+          prevState.map((reply) => {
+            if (reply.replyId === response?.data?.replyId)
+              return {
+                ...reply,
+                title: response?.data?.title,
+                description: response?.data?.description,
+                imageList: response?.data?.imageList,
+              };
+            else return reply;
+          })
+        );
+      } else {
+        message.error('some error occured refresh the page!');
+      }
+    }
+  }, [editReplyRes]);
+
   return (
     <Wrapper style={{ background }}>
-      <CommentModal visible={commentModalVisible} setVisible={setCommentModalVisible} />
-      <ReplyModal
-        visible={replyModalVisible}
-        setVisible={setReplyModalVisible}
-        addReply={addReply}
-        setCount={setCount}
-      />
-
       <Container>
         <Banner>
           <IconContainer>
@@ -95,28 +137,19 @@ const index = ({
 
         <Heading className='heading'>Clear Your Doubt Here!</Heading>
 
-        <AskCard
-          data={activeComment}
-          button={true}
-          setReplyModalVisible={setReplyModalVisible}
-          index={1}
-          count={count}
-          type={0}
-        />
-
-        <Paragraph>
-          {count - 1 || 0} {count > 2 ? 'Answers' : 'Answer'}
-        </Paragraph>
-
-        {replyList?.map((reply, index) => (
-          <AskCard
-            data={reply}
-            index={index + 2}
-            count={count}
-            type={1}
-            removeReply={removeReply}
-          />
-        ))}
+        <AskCard data={activeComment} index={1} count={count} type={0} />
+        {getReplyRes?.isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <Paragraph>
+              {count - 1 || 0} {count > 2 ? 'Answers' : 'Answer'}
+            </Paragraph>
+            {replyList?.map((reply, index) => (
+              <AskCard data={reply} index={index + 2} count={count} type={1} />
+            ))}
+          </>
+        )}
       </Container>
     </Wrapper>
   );
@@ -128,11 +161,12 @@ function mapStateToProps(state) {
     uploadReplyRes: state.comments.uploadReply,
     activeComment: state.comments.activeComment.data,
     deleteReplyRes: state.comments.deleteReply,
+    deleteCommentsRes: state.comments.deleteComments,
+    editReplyRes: state.comments.editReply,
   };
 }
 
 export default connect(mapStateToProps, {
   getReply,
-  uploadReply,
-  deleteReply,
+  resetCommentState,
 })(index);

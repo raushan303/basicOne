@@ -42,9 +42,8 @@ function index({
 
   const [activeTopicId, setActiveTopicId] = useState(topicId);
   const [subtopicList, setSubtopicList] = useState([]);
-  const [activeVideoId, setActiveVideoId] = useState(null);
   const [activeVideoData, setActiveVideoData] = useState({});
-  const [videoIndex, setVideoIndex] = useState(0);
+
   const [topicList, setTopicList] = useState([]);
 
   useEffect(() => {
@@ -73,7 +72,6 @@ function index({
       const response = subtopicsResponse?.data?.data;
       if (response?.success && !subtopicsResponse?.error) {
         setSubtopicList(response?.data);
-        setActiveVideoId(response?.data?.[0]?.subtopicId);
         setActiveVideoData(response?.data?.[0]);
         updateActiveSubtopic(response?.data?.[0]);
         setStartTime(response?.data?.[0]?.currentTime);
@@ -92,12 +90,6 @@ function index({
       const formatSubtopic = { ...activeVideoData };
       formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
       formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
-      setActiveVideoData((prevState) => ({
-        ...prevState,
-        currentTime: formatSubtopic.currentTime,
-        learntTime: formatSubtopic.learntTime,
-      }));
-
       updateWatch(formatSubtopic);
     }
   };
@@ -111,22 +103,30 @@ function index({
       const formatSubtopic = { ...activeVideoData };
       formatSubtopic.currentTime = Math.max(progress.seconds - 1, 0);
       formatSubtopic.learntTime = Math.max(formatSubtopic.learntTime, formatSubtopic.currentTime);
-      setActiveVideoData((prevState) => ({
-        ...prevState,
-        currentTime: formatSubtopic.currentTime,
-        learntTime: formatSubtopic.learntTime,
-      }));
       updateWatch(formatSubtopic);
     }
   };
 
   const onProgressHandler = (e) => {
     setProgress(e);
-    // console.log(e);
+    setSubtopicList((prevState) =>
+      prevState.map((subtopic) => {
+        if (subtopic?.subtopicId === activeVideoData?.subtopicId)
+          return {
+            ...subtopic,
+            currentTime: e.seconds - 1,
+          };
+        else return subtopic;
+      })
+    );
   };
-  // useEffect(() => {
-  //   console.log(startTime, 'sss');
-  // }, [startTime]);
+
+  const changeVideo = (subtopic) => {
+    handlePlayerPause();
+    setActiveVideoData(subtopic);
+    setStartTime(subtopic?.currentTime);
+    updateActiveSubtopic(subtopic);
+  };
 
   if (!topicsResponse?.response) return <Loader />;
   else {
@@ -181,12 +181,8 @@ function index({
                   activeTopicId={activeTopicId}
                   setActiveTopicId={setActiveTopicId}
                   subtopicList={subtopicList}
-                  activeVideoId={activeVideoId}
-                  setActiveVideoId={setActiveVideoId}
-                  setActiveVideoData={setActiveVideoData}
-                  setSubtopicList={setSubtopicList}
-                  setStartTime={setStartTime}
-                  updateActiveSubtopic={updateActiveSubtopic}
+                  changeVideo={changeVideo}
+                  activeVideoData={activeVideoData}
                 />
               ))}
             </div>

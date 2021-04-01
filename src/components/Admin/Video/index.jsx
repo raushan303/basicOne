@@ -58,6 +58,8 @@ function index({
     topicId: null,
   });
 
+  const authorId = 0;
+
   const [subtopicList, setSubtopicList] = useState([]);
 
   const [selectList, setSelectList] = useState({
@@ -77,7 +79,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.Grade) {
-      getSubtopicsByGrade(0, searchDetails.Grade);
+      getSubtopicsByGrade(authorId, searchDetails.Grade);
     }
   }, [searchDetails.Grade]);
 
@@ -110,7 +112,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.subjectId !== null) {
-      getSubtopicsBySubject(0, searchDetails.subjectId);
+      getSubtopicsBySubject(authorId, searchDetails.subjectId);
     }
   }, [searchDetails.subjectId]);
 
@@ -139,7 +141,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.chapterId !== null) {
-      getSubtopicsByChapter(0, searchDetails.chapterId);
+      getSubtopicsByChapter(authorId, searchDetails.chapterId);
     }
   }, [searchDetails.chapterId]);
 
@@ -165,7 +167,7 @@ function index({
 
   useEffect(() => {
     if (searchDetails.topicId !== null) {
-      getSubtopicsByTopic(0, searchDetails.topicId);
+      getSubtopicsByTopic(authorId, searchDetails.topicId);
     }
   }, [searchDetails.topicId]);
 

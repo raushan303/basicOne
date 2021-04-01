@@ -162,3 +162,31 @@ export const updateActiveComment = (data) =>
   function (dispatch) {
     dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_ACTIVE_COMMENT_SUCCESS, data));
   };
+
+export const resetCommentState = (type) =>
+  function (dispatch) {
+    if (type === 'uploadReply') {
+      dispatch(actionHandlers.handleResponse(actionTypes.UPLOAD_REPLY_RESET, {}));
+    }
+    if (type === 'uploadComments') {
+      dispatch(actionHandlers.handleResponse(actionTypes.UPLOAD_COMMENTS_RESET, {}));
+    }
+    if (type === 'deleteReply') {
+      dispatch(actionHandlers.handleResponse(actionTypes.DELETE_REPLY_RESET, {}));
+    }
+    if (type === 'deleteComments') {
+      dispatch(actionHandlers.handleResponse(actionTypes.DELETE_COMMENTS_RESET, {}));
+    }
+    if (type === 'editReply') {
+      dispatch(actionHandlers.handleResponse(actionTypes.EDIT_REPLY_RESET, {}));
+    }
+    if (type === 'editComments') {
+      dispatch(actionHandlers.handleResponse(actionTypes.EDIT_COMMENTS_RESET, {}));
+    }
+    if (type === 'commentLikeStatus') {
+      dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_COMMENT_LIKE_STATUS_RESET, {}));
+    }
+    if (type === 'replyLikeStatus') {
+      dispatch(actionHandlers.handleResponse(actionTypes.UPDATE_REPLY_LIKE_STATUS_RESEST, {}));
+    }
+  };
