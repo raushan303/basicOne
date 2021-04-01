@@ -53,7 +53,7 @@ const SlantedBackground = styled.span`
 
 const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-4 border-blue-500 font-medium text-sm`;
 
-const PrimaryAction = tw.button`px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 border-0  text-primary-500 font-bold rounded transition duration-300 hocus:bg-primary-500 hocus:text-gray-100 focus:shadow-outline cursor-pointer`;
+const PrimaryAction = tw.button`px-8 py-3 mt-6 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 border-0  text-primary-500 font-bold rounded transition duration-300 hocus:bg-primary-500 hocus:text-gray-100 focus:shadow-outline cursor-pointer`;
 
 const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   padding-bottom: 56.25% !important;
@@ -95,7 +95,9 @@ export default () => {
               <br />
               <SlantedBackground>Anywhere</SlantedBackground>
             </Heading>
-            <PrimaryAction onClick={() => router.push('/signup')}>Register For Free!</PrimaryAction>
+            <PrimaryAction tw='mt-12 md:hidden' onClick={() => router.push('/login')}>
+              Log In
+            </PrimaryAction>
             <PrimaryAction
               onClick={() => {
                 const token =
@@ -106,10 +108,11 @@ export default () => {
                 });
                 router.push('/subject');
               }}
-              tw='mt-6 sm:ml-8 bg-primary-500 text-white hover:bg-white hover:text-primary-500'
+              tw='mt-6 sm:mr-8 bg-primary-500 text-white hover:bg-white hover:text-primary-500'
             >
               Enter As a Guest
             </PrimaryAction>
+            <PrimaryAction onClick={() => router.push('/signup')}>Register For Free!</PrimaryAction>
           </LeftColumn>
           <RightColumn>
             <StyledResponsiveVideoEmbed

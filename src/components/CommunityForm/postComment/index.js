@@ -6,25 +6,47 @@ import { Modal, Input, Form, Button, message } from 'antd';
 
 const Container = tw.div`p-12`;
 import { connect } from 'react-redux';
-import { uploadComments } from '../../../redux/action/getComments';
+import {
+  uploadComments,
+  resetCommentState,
+  updateActiveComment,
+  editComments,
+} from '../../../redux/action/getComments';
 
 function index({
+  type,
   visible,
   setVisible,
+
   uploadComments,
   uploadCommentsRes,
+  editComments,
+  editCommentsRes,
+
   activeSubtopic,
   addComment,
+  resetCommentState,
+
+  activeComment,
+  updateActiveComment,
 }) {
   const [commentData, setCommentData] = useState({ title: '', description: '', imageList: [] });
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = () => {
     if (commentData.title !== '' && commentData.description !== '') {
-      // console.log(activeSubtopic);
       if (activeSubtopic?.subtopicId === 0 || activeSubtopic?.subtopicId) {
-        // let todayDate = new Date().toISOString().slice(0, 10);
-        let todayDate = new Date().toLocaleString();
-        uploadComments({ ...commentData, subtopicId: activeSubtopic?.subtopicId, date: todayDate });
+        if (type === 'add') {
+          let todayDate = new Date().toLocaleString();
+          todayDate = todayDate.replaceAll('/', '-');
+          uploadComments({
+            ...commentData,
+            subtopicId: activeSubtopic?.subtopicId,
+            date: todayDate,
+          });
+        } else {
+          editComments({ ...commentData, commentId: activeComment?.commentId });
+        }
         setLoading(true);
       } else {
         message.error('select video');
@@ -33,6 +55,31 @@ function index({
       message.error('fill the boxes');
     }
   };
+
+  useEffect(() => {
+    if (editCommentsRes.response) {
+      const response = editCommentsRes?.data?.data;
+      if (response?.success && !editCommentsRes?.error) {
+        message.success('comment edited successfully!');
+        updateActiveComment({ ...activeComment, ...response?.data });
+        setLoading(false);
+        resetCommentState('editComments');
+      } else {
+        message.error('some error occured try again!');
+      }
+    }
+  }, [editCommentsRes]);
+
+  useEffect(() => {
+    if (type === 'edit') {
+      setCommentData({
+        title: activeComment?.title,
+        description: activeComment?.description,
+        imageList: activeComment?.imageList,
+      });
+    }
+  }, [type]);
+
   useEffect(() => {
     if (uploadCommentsRes.response) {
       const response = uploadCommentsRes?.data?.data;
@@ -41,11 +88,13 @@ function index({
         addComment(response?.data);
         setCommentData({ title: '', description: '', imageList: [] });
         setLoading(false);
+        resetCommentState('uploadComments');
       } else {
         message.error('some error occured try again!');
       }
     }
   }, [uploadCommentsRes]);
+
   const handleInputChange = (field) => (e) => {
     setCommentData((prevState) => ({
       ...prevState,
@@ -72,7 +121,7 @@ function index({
             />
           </Form.Item>
           <Button loading={loading} onClick={handleSubmit}>
-            Post
+            {type === 'add' ? 'Post' : 'Edit'}
           </Button>
         </Form>
       </Container>
@@ -84,9 +133,14 @@ function mapStateToProps(state) {
   return {
     uploadCommentsRes: state.comments.uploadComments,
     activeSubtopic: state.coursesStats.activeSubtopic.data,
+    editCommentsRes: state.comments.editComments,
+    activeComment: state.comments.activeComment.data,
   };
 }
 
 export default connect(mapStateToProps, {
   uploadComments,
+  resetCommentState,
+  updateActiveComment,
+  editComments,
 })(index);

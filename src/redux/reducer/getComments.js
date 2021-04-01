@@ -34,6 +34,14 @@ function makeRequestReducer(actionType, initialState = {}) {
           error: true,
           response: true,
         };
+      case `${actionType}.reset`:
+        return {
+          ...state,
+          isLoading: false,
+          data: payload,
+          error: false,
+          response: false,
+        };
       default:
         return state;
     }
@@ -45,7 +53,7 @@ export default combineReducers({
   uploadComments: makeRequestReducer(Types.UPLOAD_COMMENTS),
   editComments: makeRequestReducer(Types.EDIT_COMMENTS),
   deleteComments: makeRequestReducer(Types.DELETE_COMMENTS),
-  updateCommentLikeStatus: makeRequestReducer(Types.UPDATE_COMMENT_LIKE_STATUS_SUCCESS),
+  updateCommentLikeStatus: makeRequestReducer(Types.UPDATE_COMMENT_LIKE_STATUS),
   getReply: makeRequestReducer(Types.GET_REPLY),
   uploadReply: makeRequestReducer(Types.UPLOAD_REPLY),
   editReply: makeRequestReducer(Types.EDIT_REPLY),

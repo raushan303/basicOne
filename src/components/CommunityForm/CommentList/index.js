@@ -5,6 +5,7 @@ import { css } from 'styled-components/macro';
 import CommentCard from '../CommentCard';
 import { connect } from 'react-redux';
 import { message } from 'antd';
+import Loader from '../../Loader';
 
 import PostComment from '../postComment';
 
@@ -24,6 +25,7 @@ const index = ({ background, setVisible, getComments, getCommentsRes, activeSubt
 
   const [commentList, setCommentList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [pageLoading, setpageLoading] = useState(true);
 
   useEffect(() => {
     if (activeSubtopic?.subtopicId === 0 || activeSubtopic?.subtopicId) {
@@ -33,6 +35,7 @@ const index = ({ background, setVisible, getComments, getCommentsRes, activeSubt
 
   useEffect(() => {
     if (getCommentsRes.response) {
+      setpageLoading(false);
       const response = getCommentsRes?.data?.data;
       if (response?.success && !getCommentsRes?.error) {
         setCommentList(response?.data);
@@ -46,21 +49,28 @@ const index = ({ background, setVisible, getComments, getCommentsRes, activeSubt
     setCommentList((prevState) => [...prevState, comment]);
   };
 
-  return (
-    <Wrapper style={{ background }}>
-      <PostComment visible={modalVisible} setVisible={setModalVisible} addComment={addComment} />
-      <Container>
-        <Heading className='heading'>Ask a Question</Heading>
-        <SubHeading onClick={() => setModalVisible(true)}>Post a Question</SubHeading>
+  if (pageLoading) return <Loader />;
+  else
+    return (
+      <Wrapper style={{ background }}>
+        <PostComment
+          visible={modalVisible}
+          setVisible={setModalVisible}
+          addComment={addComment}
+          type='add'
+        />
+        <Container>
+          <Heading className='heading'>Ask a Question</Heading>
+          <SubHeading onClick={() => setModalVisible(true)}>Post a Question</SubHeading>
 
-        <ColumnContainer>
-          {commentList?.map((comment) => (
-            <CommentCard comment={comment} setVisible={setVisible} />
-          ))}
-        </ColumnContainer>
-      </Container>
-    </Wrapper>
-  );
+          <ColumnContainer>
+            {commentList?.map((comment) => (
+              <CommentCard comment={comment} setVisible={setVisible} />
+            ))}
+          </ColumnContainer>
+        </Container>
+      </Wrapper>
+    );
 };
 
 function mapStateToProps(state) {

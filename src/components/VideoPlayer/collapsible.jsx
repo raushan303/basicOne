@@ -12,12 +12,8 @@ export default function CollapsiblePlaylist({
   activeTopicId,
   setActiveTopicId,
   subtopicList,
-  activeVideoId,
-  setActiveVideoId,
-  setActiveVideoData,
-  setSubtopicList,
-  setStartTime,
-  updateActiveSubtopic,
+  changeVideo,
+  activeVideoData,
 }) {
   return (
     <CollapsibleWrap>
@@ -68,13 +64,13 @@ export default function CollapsiblePlaylist({
             <div
               style={{ padding: '5px' }}
               onClick={() => {
-                setActiveVideoId(subtopic?.subtopicId);
-                setActiveVideoData(subtopic);
-                setStartTime(subtopic?.currentTime);
-                updateActiveSubtopic(subtopic);
+                changeVideo(subtopic);
               }}
             >
-              <SubTopicCard active={subtopic?.subtopicId === activeVideoId} data={subtopic} />
+              <SubTopicCard
+                active={subtopic?.subtopicId === activeVideoData?.subtopicId}
+                data={subtopic}
+              />
             </div>
           );
         })}

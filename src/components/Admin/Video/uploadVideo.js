@@ -162,7 +162,6 @@ function index({
   };
 
   const handleAddSelectValue = (listName, idName, fieldName) => {
-    // console.log('field');
     if (!videoDetails.AddField) {
       message.error('Enter the value');
       return;
@@ -215,11 +214,25 @@ function index({
         setLoading(false);
         setVideoDetails((prevState) => ({
           ...prevState,
+          Grade: null,
+          Subject: null,
+          subjectId: null,
+          Chapter: null,
+          chapterId: null,
+          Topic: null,
+          topicId: null,
           Title: null,
           VideoLink: null,
           VideoTime: null,
           Note: null,
           Image: null,
+          AddField: null,
+        }));
+        setSelectList((prevState) => ({
+          ...prevState,
+          Subject: [],
+          Chapter: [],
+          Topic: [],
         }));
         message.success('Successfully added');
       } else {
