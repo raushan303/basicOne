@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   .select-container {
     display: flex;
-    padding: 8px;
+    padding: 8px 15px;
     .ant-select {
       border: 0;
       .ant-select-selector {

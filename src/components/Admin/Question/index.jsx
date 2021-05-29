@@ -25,7 +25,7 @@ function index() {
     Chapter: null,
     Topic: null,
   });
-  const [addState, setAddState] = useState({ Grade: 0, Subject: 0, Chapter: 0, Topic: 0 });
+
   const [selectList, setSelectList] = useState({
     Grade: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'],
     Subject: [],
@@ -46,15 +46,6 @@ function index() {
       }));
   };
 
-  const handleAddChange = (field) => {
-    let formatAddState = { ...addState };
-    data.forEach((str) => {
-      formatAddState[str] = 0;
-    });
-    formatAddState[field] = 1;
-    setAddState(formatAddState);
-  };
-
   const handleInputChange = (field, index = 0) => (e) => {
     if (field === 'Options') {
       let { Options } = questionDetails;
@@ -70,21 +61,6 @@ function index() {
       }));
   };
 
-  const handleAddSelectValue = (field) => {
-    // console.log('field');
-    if (!questionDetails.AddField) {
-      message.error('Enter the value');
-      return;
-    }
-    setSelectList((prevState) => ({
-      ...prevState,
-      [field]: [...prevState[field], questionDetails.AddField],
-    }));
-    setQuestionDetails((prevState) => ({
-      ...prevState,
-      AddField: null,
-    }));
-  };
   return (
     <Wrapper>
       <Row
@@ -96,57 +72,22 @@ function index() {
       {addMode ? (
         <div>
           <Row>
-            {data.map((str, index) => {
-              let isDisbaled = false;
-              data.forEach((str2, index2) => {
-                if (index2 < index && !questionDetails[str2]) isDisbaled = true;
-              });
-              return (
-                <div className='select-container'>
-                  <Select
-                    disabled={isDisbaled}
-                    placeholder={`Select ${str}`}
-                    onChange={handleSelectChange(str)}
-                    value={questionDetails[str]}
-                  >
-                    {selectList[str].length ? (
-                      selectList[str].map((val) => <Option value={val}>{val}</Option>)
-                    ) : (
-                      <Option value={null}>Add an option</Option>
-                    )}
-                  </Select>
-                  <div
-                    className='add'
-                    onClick={() => {
-                      if (!isDisbaled) handleAddChange(str);
-                    }}
-                  >
-                    +
-                  </div>
-                </div>
-              );
-            })}
+            {data.map((str, index) => (
+              <div className='select-container'>
+                <Select
+                  placeholder={`Select ${str}`}
+                  onChange={handleSelectChange(str)}
+                  value={questionDetails[str]}
+                >
+                  {selectList[str].length ? (
+                    selectList[str].map((val) => <Option value={val}>{val}</Option>)
+                  ) : (
+                    <Option value={null}>Select Previous Fields</Option>
+                  )}
+                </Select>
+              </div>
+            ))}
           </Row>
-          {data.map((str) => {
-            if (addState[str]) {
-              return (
-                <Row className='add-field-container'>
-                  <Col className='add-field' style={{ width: '100px' }}>
-                    Add&nbsp;{str}
-                  </Col>
-                  <Col className='add-field' style={{ maxWidth: '360px' }}>
-                    <Input
-                      value={questionDetails.AddField}
-                      onChange={handleInputChange('AddField')}
-                    />
-                  </Col>
-                  <Col className='add-field' style={{ width: '80px' }}>
-                    <Button onClick={() => handleAddSelectValue(str)}>Add</Button>
-                  </Col>
-                </Row>
-              );
-            }
-          })}
           <Row className='form-container' style={{ alignItems: 'center' }}>
             <div className='video-form-container'>
               <Form>
